@@ -1,6 +1,17 @@
 const mineflayer = require('mineflayer')
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder')
-const { Vec3 } = require('vec3')
+const {
+  missingWoodTypes,
+  nextAction,
+  isOscillating,
+  nearestUnblacklisted,
+  blacklistTree,
+  rememberHere,
+  pickExploreGoal,
+  posKey,
+  mapLocal,
+  bestStepUp,
+} = require('./brain')
 
 const bot = mineflayer.createBot({
   host: 'localhost',
@@ -12,15 +23,11 @@ bot.loadPlugin(pathfinder)
 bot.loadPlugin(require('mineflayer-collectblock').plugin)
 
 let mcData
+let busy = false
 const blacklist = new Set()
-
-// Scratchpad: LIFO trail for backtracking, FIFO frontier for where to explore next
 const trail = []
-const frontier = []
-const TRAIL_MAX = 20
-const FRONTIER_BATCH = 4
-const EXPLORE_MIN = 40
-const EXPLORE_MAX = 80
+const recentPathLens = []
+const recentHopKeys = new Set()
 
 bot.once('spawn', () => {
   mcData = require('minecraft-data')(bot.version)
@@ -31,7 +38,7 @@ bot.once('spawn', () => {
   bot.chat('/give @s cobblestone 192')
 
   const p = bot.entity.position.floored()
-  rememberHere()
+  rememberHere(trail, p)
   bot.chat(`/setblock ${p.x + 2} ${p.y} ${p.z + 2} minecraft:chest`)
 })
 
@@ -41,43 +48,74 @@ bot.on('chat', (username, message) => {
 })
 
 bot.on('path_update', (r) => {
-  console.log('path:', r.status, '-', r.path.length, 'moves')
+  const len = r.path ? r.path.length : 0
+  console.log('path:', r.status, '-', len, 'moves')
+  recentPathLens.push(len)
+  if (recentPathLens.length > 8) recentPathLens.shift()
+  if (isOscillating(recentPathLens)) {
+    console.log('oscillating — stopping pathfinder')
+    recentPathLens.length = 0
+    bot.pathfinder.stop()
+  }
 })
 
-const WOOD_TYPES = [
-  'oak', 'spruce', 'birch', 'jungle', 'acacia',
-  'dark_oak', 'mangrove', 'cherry', 'pale_oak',
-]
-
 async function collectAllWood () {
-  while (true) {
-    const missing = WOOD_TYPES.filter(type => !hasLog(type))
-    console.log('missing:', missing.join(', ') || '(none)')
+  if (busy) return
+  busy = true
+  try {
+    while (true) {
+      const missing = missingWoodTypes(bot.inventory.items().map(item => item.name))
+      console.log('missing:', missing.join(', ') || '(none)')
 
-    if (missing.length === 0) {
-      bot.chat('I have every wood type!')
-      return
-    }
+      const target = missing.length ? findNearestMissingLog(missing) : null
+      const targetDist = target ? bot.entity.position.distanceTo(target.position) : null
+      const action = nextAction({ missing, nearbyTarget: target, targetDist })
+      const toward = target ? target.position : null
 
-    const target = findNearestMissingLog(missing)
-    if (target) {
-      console.log('found', target.name, 'at', target.position)
-      try {
-        await bot.collectBlock.collect(target)
-        rememberHere()
-      } catch (err) {
-        console.log('collect failed:', err.message, '- skipping that tree')
-        blacklist.add(target.position.toString())
+      if (action.type === 'done') {
+        bot.chat('I have every wood type!')
+        return
       }
-    } else {
-      console.log('nothing nearby, exploring...')
-      await explore()
-    }
-  }
-}
 
-function hasLog (type) {
-  return bot.inventory.items().some(item => item.name === `${type}_log`)
+      if (await escapeHole(toward)) continue
+
+      if (action.type === 'approach') {
+        console.log('approach', target.name, 'at', target.position, 'dist', targetDist.toFixed(1))
+        rememberHere(trail, bot.entity.position.floored())
+        try {
+          await bot.pathfinder.goto(new goals.GoalNear(
+            target.position.x,
+            target.position.y,
+            target.position.z,
+            3,
+          ))
+          rememberHere(trail, bot.entity.position.floored())
+        } catch (err) {
+          console.log('approach failed:', err.message)
+          blacklistTree(blacklist, target.position)
+        }
+        continue
+      }
+
+      if (action.type === 'collect') {
+        console.log('collect', target.name, 'at', target.position)
+        try {
+          await bot.collectBlock.collect(target)
+          rememberHere(trail, bot.entity.position.floored())
+          blacklistTree(blacklist, target.position)
+        } catch (err) {
+          console.log('collect failed:', err.message, '- skipping that tree')
+          blacklistTree(blacklist, target.position)
+        }
+        continue
+      }
+
+      console.log('nothing nearby, exploring...')
+      await explore(toward)
+    }
+  } finally {
+    busy = false
+  }
 }
 
 function findNearestMissingLog (missing) {
@@ -94,51 +132,63 @@ function findNearestMissingLog (missing) {
     count: 10,
   })
 
-  const pos = positions.find(p => !blacklist.has(p.toString()))
+  const pos = nearestUnblacklisted(positions, blacklist, bot.entity.position)
   return pos ? bot.blockAt(pos) : null
 }
 
-function rememberHere () {
-  const p = bot.entity.position.floored()
-  const last = trail[trail.length - 1]
-  if (last && last.equals(p)) return
-  trail.push(p)
-  if (trail.length > TRAIL_MAX) trail.shift()
-}
+async function escapeHole (toward) {
+  const map = mapLocal(bot)
+  if (!map.inHole) return false
 
-function refillFrontier () {
-  const here = bot.entity.position
-  for (let i = 0; i < FRONTIER_BATCH; i++) {
-    const angle = Math.random() * Math.PI * 2
-    const dist = EXPLORE_MIN + Math.random() * (EXPLORE_MAX - EXPLORE_MIN)
-    frontier.push(new Vec3(
-      Math.floor(here.x + Math.cos(angle) * dist),
-      Math.floor(here.y),
-      Math.floor(here.z + Math.sin(angle) * dist),
-    ))
-  }
-}
+  const step = bestStepUp(map, bot.entity.position, toward, { mustFace: false })
+  const exit = step || map.holeExit
+  if (!exit) return false
 
-async function explore () {
-  if (frontier.length === 0) refillFrontier()
-
-  const goal = frontier.shift()
-  rememberHere()
-  console.log('explore →', goal.toString(), '| trail', trail.length, '| frontier', frontier.length)
-
+  const from = bot.entity.position.floored()
+  const dest = from.offset(exit.dx, 1, exit.dz)
+  console.log('in hole, stepping', exit.name)
+  rememberHere(trail, from)
   try {
-    await bot.pathfinder.goto(new goals.GoalXZ(goal.x, goal.z))
-    rememberHere()
+    await bot.pathfinder.goto(new goals.GoalNear(dest.x, dest.y, dest.z, 1))
+    rememberHere(trail, bot.entity.position.floored())
   } catch (err) {
-    console.log('explore failed:', err.message, '- backtracking')
-    await backtrack()
+    console.log('hole escape failed:', err.message)
   }
+  return true
+}
+
+async function explore (toward) {
+  rememberHere(trail, bot.entity.position.floored())
+  const recentKeys = new Set([
+    ...trail.map(p => posKey(p)),
+    ...recentHopKeys,
+  ])
+  const dest = pickExploreGoal(bot, bot.entity.position, toward, recentKeys, null)
+
+  if (dest) {
+    recentHopKeys.add(posKey(dest))
+    if (recentHopKeys.size > 20) {
+      const first = recentHopKeys.values().next().value
+      recentHopKeys.delete(first)
+    }
+    console.log('explore hop →', dest.toString(), '| trail', trail.length)
+    try {
+      await bot.pathfinder.goto(new goals.GoalNear(dest.x, dest.y, dest.z, 1))
+      rememberHere(trail, bot.entity.position.floored())
+      return
+    } catch (err) {
+      console.log('explore hop failed:', err.message, '- backtracking')
+    }
+  } else {
+    console.log('no hop, backtracking')
+  }
+
+  await backtrack()
 }
 
 async function backtrack () {
   if (trail.length === 0) {
-    console.log('no trail left; inventing new frontier')
-    refillFrontier()
+    console.log('no trail left; waiting for a new hop next loop')
     return
   }
 
