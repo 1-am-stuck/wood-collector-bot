@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FruitFly — live training</title>
+  <title>FruitFly — live POV</title>
   <style>
     :root {
       --bg: #0b0d10;
@@ -14,6 +14,8 @@
       --accent: #7ee0a3;
       --warn: #f0c36a;
       --hot: #ff6b6b;
+      --dn: #f0a36a;
+      --cb: #7eb6ff;
     }
     * { box-sizing: border-box; }
     html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
@@ -25,116 +27,99 @@
     header .meta { color: var(--muted); }
     header .live { color: var(--accent); font-weight: 600; }
     header .live.off { color: var(--hot); }
-    .grid { display: grid; grid-template-columns: 1fr 1fr; height: calc(100% - 46px); }
+    .grid { display: grid; grid-template-columns: 1.4fr 0.9fr 1fr; height: calc(100% - 46px); }
     section { display: flex; flex-direction: column; min-width: 0; border-right: 1px solid var(--line); }
     section:last-child { border-right: 0; }
     section h2 {
       margin: 0; padding: 8px 14px; font-size: 11px; letter-spacing: .12em;
       text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line);
     }
-    .body { flex: 1; overflow: auto; padding: 12px 14px 18px; }
-    .row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+    .pane { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 10px 12px 14px; min-height: 0; }
+    .pane.scroll { overflow: auto; }
+    canvas { width: 100%; image-rendering: pixelated; background: #0a0c0f; border: 1px solid var(--line); border-radius: 6px; }
+    #worldCanvas { flex: 1; min-height: 280px; }
+    #flyCanvas { height: 280px; flex: 1; min-height: 180px; }
+    #brainCanvas { height: 260px; }
+    .hint { color: var(--muted); font-size: 12px; }
+    .row { display: flex; gap: 8px; flex-wrap: wrap; }
     .chip {
       background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
-      padding: 6px 8px; min-width: 88px;
+      padding: 6px 8px; min-width: 72px;
     }
     .chip b { display: block; color: var(--muted); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
-    canvas { width: 100%; image-rendering: pixelated; background: #0a0c0f; border: 1px solid var(--line); border-radius: 6px; }
-    .bars { display: grid; grid-template-columns: 52px 1fr 36px; gap: 2px 8px; align-items: center; }
+    .chip.on { border-color: var(--accent); color: var(--accent); }
+    .bars { display: grid; grid-template-columns: 64px 1fr 40px; gap: 2px 8px; align-items: center; }
     .bars span { color: var(--muted); font-variant-numeric: tabular-nums; }
     .bar { height: 7px; background: #1c232c; border-radius: 99px; overflow: hidden; }
     .bar i { display: block; height: 100%; background: var(--accent); width: 0; }
-    .bar.loom i { background: var(--hot); }
-    iframe.eye {
-      flex: 1; width: 100%; border: 0; background: #000; min-height: 0;
-    }
-    .fallback {
-      flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 12px 14px;
-    }
-    #eyeCanvas { flex: 1; min-height: 280px; }
-    .hint { color: var(--muted); font-size: 12px; }
+    .bar.dn i { background: var(--dn); }
+    .bar.cb i { background: var(--cb); }
   </style>
 </head>
 <body>
   <header>
     <h1>FruitFly</h1>
     <span id="live" class="live off">WAITING</span>
-    <span class="meta" id="run">rarest-log-mc · localhost only</span>
+    <span class="meta" id="run">open world · no GoalSpec</span>
     <span class="meta" id="clock"></span>
+    <span class="meta" id="ckpt"></span>
   </header>
   <div class="grid">
     <section>
-      <h2>Training signals — one SensoryFrame</h2>
-      <div class="body">
-        <div class="row">
-          <div class="chip"><b>Epoch / ep / step</b><span id="kEpoch">—</span></div>
-          <div class="chip"><b>Action</b><span id="kAction">—</span></div>
-          <div class="chip"><b>Reward</b><span id="kReward">—</span></div>
-          <div class="chip"><b>Value</b><span id="kValue">—</span></div>
-          <div class="chip"><b>Rarest</b><span id="kRarest">—</span></div>
-          <div class="chip"><b>Distance</b><span id="kDist">—</span></div>
-        </div>
-        <p class="hint">64-column fly retina (L then R). Bright = luminance the connectome actually receives.</p>
-        <canvas id="retina" height="72"></canvas>
-        <p class="hint" style="margin-top:12px">Object channels</p>
-        <div class="bars" id="obj"></div>
-        <p class="hint" style="margin-top:12px">Olfaction (glomeruli)</p>
-        <div class="bars" id="odor"></div>
-        <p class="hint" style="margin-top:12px">Taste (GRNs)</p>
-        <div class="bars" id="taste"></div>
-        <p class="hint" style="margin-top:12px">Census</p>
-        <div id="census" class="row"></div>
+      <h2>Minecraft world frame · displayed 2K</h2>
+      <div class="pane">
+        <p class="hint" id="worldHint">RGB for us: what FruitFly would have seen. Same eye rays as the visual cortex; the policy still only gets 64 luminance columns.</p>
+        <canvas id="worldCanvas"></canvas>
       </div>
     </section>
     <section>
-      <h2>FruitFly POV — visual-cortex world frame</h2>
-      <iframe class="eye" id="viewer" title="FruitFly first-person" hidden></iframe>
-      <div class="fallback" id="fallback">
-        <p class="hint" id="eyeHint">Live ray grid from the same Minecraft blocks the fly retina samples. Policy still gets the 64-column luminance on the left.</p>
-        <canvas id="eyeCanvas"></canvas>
+      <h2>Fly visual input · 64-col + 64×64</h2>
+      <div class="pane">
+        <div class="row">
+          <div class="chip"><b>Action</b><span id="kAction">—</span></div>
+          <div class="chip"><b>Value</b><span id="kValue">—</span></div>
+          <div class="chip"><b>Step</b><span id="kStep">—</span></div>
+        </div>
+        <p class="hint">Policy retina is <b>64 columns</b> (L then R), not 64×64. The connectome encoder only sees this strip.</p>
+        <canvas id="retina" height="56"></canvas>
+        <p class="hint">64×64 az/el luminance from the same albedo rays (display-only, Neuroscope-style).</p>
+        <canvas id="flyCanvas"></canvas>
+      </div>
+    </section>
+    <section>
+      <h2>Neuroscope · live connectome</h2>
+      <div class="pane scroll">
+        <p class="hint" id="brainHint">Live graph is the mini male-cns the policy actually runs (sensory → central → DN). Full ~176k is not loaded.</p>
+        <canvas id="brainCanvas"></canvas>
+        <p class="hint">Motor logits</p>
+        <div class="bars" id="logits"></div>
+        <p class="hint" style="margin-top:10px">Hidden rates (top)</p>
+        <div class="bars" id="rates"></div>
       </div>
     </section>
   </div>
   <script>
     const $ = (id) => document.getElementById(id)
-    function bars (el, obj, loom) {
-      const entries = Object.entries(obj || {}).filter(([, v]) => Number(v) > 0.004).sort((a, b) => b[1] - a[1]).slice(0, 14)
-      el.innerHTML = entries.map(([k, v]) => {
-        const pct = Math.min(100, Math.round(Number(v) * 100))
-        return `<span>${k}</span><div class="bar ${loom && k === 'LC4' ? 'loom' : ''}"><i style="width:${pct}%"></i></div><span>${Number(v).toFixed(2)}</span>`
-      }).join('') || '<span>—</span>'
+    function b64bytes (s) {
+      if (!s) return null
+      if (Array.isArray(s)) return Uint8Array.from(s)
+      const bin = atob(s)
+      const out = new Uint8Array(bin.length)
+      for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i)
+      return out
     }
-    function drawRetina (lum) {
-      const c = $('retina')
-      if (!c.parentElement) return
-      const w = c.parentElement.clientWidth - 4
-      c.width = Math.max(64, w)
-      const ctx = c.getContext('2d')
-      const n = (lum && lum.length) || 64
-      const bw = c.width / n
-      ctx.fillStyle = '#0a0c0f'
-      ctx.fillRect(0, 0, c.width, c.height)
-      for (let i = 0; i < n; i++) {
-        const v = lum[i] == null ? 0 : Number(lum[i])
-        const g = Math.max(0, Math.min(255, Math.round(Math.pow(v, 0.7) * 255)))
-        ctx.fillStyle = `rgb(${g},${Math.round(g * 0.95)},${Math.round(g * 0.7)})`
-        ctx.fillRect(i * bw, 0, Math.ceil(bw) + 1, c.height)
-      }
-      ctx.fillStyle = 'rgba(126,224,163,.35)'
-      ctx.fillRect(c.width / 2 - 1, 0, 2, c.height)
-    }
-    function sizeCanvas (c) {
+    function sizeCanvas (c, minW, minH) {
       const r = c.getBoundingClientRect()
-      c.width = Math.max(320, Math.round(r.width))
-      c.height = Math.max(240, Math.round(r.height))
-      return c.getContext('2d')
+      const dpr = window.devicePixelRatio || 1
+      c.width = Math.max(minW || 160, Math.round((r.width || minW || 160) * dpr))
+      c.height = Math.max(minH || 90, Math.round((r.height || minH || 90) * dpr))
+      const ctx = c.getContext('2d')
+      ctx.imageSmoothingEnabled = false
+      return ctx
     }
-    function drawPov (eye) {
-      const c = $('eyeCanvas')
-      const ctx = sizeCanvas(c)
-      const w = eye.w
-      const h = eye.h
-      const rgb = eye.rgb
+    function blitRgb (c, w, h, rgb) {
+      const ctx = sizeCanvas(c, 320, 180)
+      if (!rgb || !w || !h) return
       const img = ctx.createImageData(w, h)
       for (let i = 0, p = 0; i < rgb.length; i += 3, p += 4) {
         img.data[p] = rgb[i]
@@ -149,63 +134,131 @@
       ctx.imageSmoothingEnabled = false
       ctx.drawImage(tmp, 0, 0, c.width, c.height)
     }
-    function drawEye (lum, objects) {
-      const c = $('eyeCanvas')
-      const ctx = sizeCanvas(c)
-      const grd = ctx.createLinearGradient(0, 0, 0, c.height)
-      grd.addColorStop(0, '#1a2430')
-      grd.addColorStop(0.45, '#2a3a2a')
-      grd.addColorStop(1, '#1b140e')
-      ctx.fillStyle = grd
+    function blitLum (c, w, h, lum) {
+      const ctx = sizeCanvas(c, w, h)
+      if (!lum || !w || !h) return
+      const img = ctx.createImageData(w, h)
+      for (let i = 0, p = 0; i < lum.length; i++, p += 4) {
+        const g = lum[i]
+        img.data[p] = g
+        img.data[p + 1] = Math.round(g * 0.95)
+        img.data[p + 2] = Math.round(g * 0.7)
+        img.data[p + 3] = 255
+      }
+      const tmp = document.createElement('canvas')
+      tmp.width = w
+      tmp.height = h
+      tmp.getContext('2d').putImageData(img, 0, 0)
+      ctx.imageSmoothingEnabled = false
+      ctx.drawImage(tmp, 0, 0, c.width, c.height)
+    }
+    function drawRetina (lum) {
+      const c = $('retina')
+      const w = Math.max(64, (c.parentElement.clientWidth || 320) - 4)
+      c.width = w
+      const ctx = c.getContext('2d')
+      const n = (lum && lum.length) || 64
+      const bw = c.width / n
+      ctx.fillStyle = '#0a0c0f'
       ctx.fillRect(0, 0, c.width, c.height)
-      const n = (lum && lum.length) || 0
       for (let i = 0; i < n; i++) {
         const v = lum[i] == null ? 0 : Number(lum[i])
-        const x = (i / n) * c.width
-        const ht = v * c.height * 0.7
-        ctx.fillStyle = `rgba(${80 + v * 160},${90 + v * 140},${40 + v * 80},${0.35 + v * 0.5})`
-        ctx.fillRect(x, c.height * 0.35 - ht / 2, c.width / n + 1, ht)
+        const g = Math.max(0, Math.min(255, Math.round(Math.pow(v, 0.7) * 255)))
+        ctx.fillStyle = `rgb(${g},${Math.round(g * 0.95)},${Math.round(g * 0.7)})`
+        ctx.fillRect(i * bw, 0, Math.ceil(bw) + 1, c.height)
       }
-      ctx.fillStyle = 'rgba(232,237,244,.8)'
-      ctx.font = '12px ui-sans-serif'
-      const names = (objects || []).slice(0, 8).map(o => o.name || o).join('  ·  ')
-      ctx.fillText(names || 'waiting for visual-cortex world frame…', 12, c.height - 16)
+      ctx.fillStyle = 'rgba(126,224,163,.35)'
+      ctx.fillRect(c.width / 2 - 1, 0, 2, c.height)
     }
+    function bars (el, rows) {
+      el.innerHTML = rows.map(([k, v, cls]) => {
+        const pct = Math.min(100, Math.round(Math.abs(Number(v)) * 100))
+        return `<span>${k}</span><div class="bar ${cls || ''}"><i style="width:${pct}%"></i></div><span>${Number(v).toFixed(2)}</span>`
+      }).join('') || '<span>—</span>'
+    }
+    function drawBrain (brain) {
+      const c = $('brainCanvas')
+      const ctx = sizeCanvas(c, 320, 200)
+      ctx.fillStyle = '#0a0c0f'
+      ctx.fillRect(0, 0, c.width, c.height)
+      if (!brain || !brain.h) return
+      const names = brain.names || []
+      const roles = brain.roles || []
+      const h = brain.h
+      const groups = { sensory: [], central: [], dn: [] }
+      names.forEach((name, i) => {
+        const role = roles[i] || 'central'
+        ;(groups[role] || groups.central).push(i)
+      })
+      const cols = [
+        ['sensory', 0.16, '#7ee0a3'],
+        ['central', 0.50, '#7eb6ff'],
+        ['dn', 0.84, '#f0a36a'],
+      ]
+      cols.forEach(([role, xFrac, color]) => {
+        const ids = groups[role]
+        ids.forEach((i, k) => {
+          const x = c.width * xFrac
+          const y = c.height * (0.1 + 0.8 * (ids.length <= 1 ? 0.5 : k / (ids.length - 1)))
+          const v = Math.max(0, Math.min(1, h[i]))
+          ctx.beginPath()
+          ctx.arc(x, y, 3 + v * 7, 0, Math.PI * 2)
+          ctx.fillStyle = color
+          ctx.globalAlpha = 0.25 + 0.75 * v
+          ctx.fill()
+          ctx.globalAlpha = 1
+          if (v > 0.25 || role === 'dn') {
+            ctx.fillStyle = '#e8edf4'
+            ctx.font = '11px ui-sans-serif'
+            ctx.fillText(names[i], x + 10, y + 4)
+          }
+        })
+      })
+      ctx.globalAlpha = 0.9
+      ctx.fillStyle = '#8b97a8'
+      ctx.font = '11px ui-sans-serif'
+      ctx.fillText(`n=${brain.n}  edges=${brain.n_edges}  (not 176k)`, 10, c.height - 10)
+    }
+    const ACTIONS = ['forward','back','turn_left','turn_right','jump','mine','camera_up','camera_down','noop']
     function render (tick) {
       if (!tick || !tick.t) return
       $('live').textContent = 'LIVE'
       $('live').classList.remove('off')
       $('clock').textContent = new Date(tick.t * 1000).toLocaleTimeString()
-      $('kEpoch').textContent = `${tick.epoch ?? '—'} / ${tick.episode ?? '—'} / ${tick.step ?? '—'}`
+      $('run').textContent = tick.mode === 'play' ? 'open world · no GoalSpec' : 'training'
+      $('ckpt').textContent = tick.ckpt ? String(tick.ckpt).split('/').slice(-1)[0] : ''
       $('kAction').textContent = tick.action || '—'
-      $('kReward').textContent = tick.reward == null ? '—' : Number(tick.reward).toFixed(3)
       $('kValue').textContent = tick.value == null ? '—' : Number(tick.value).toFixed(3)
-      const facts = tick.facts || {}
-      $('kRarest').textContent = facts.rarest || 'exploring'
-      $('kDist').textContent = facts.distance == null ? '—' : Number(facts.distance).toFixed(1)
+      $('kStep').textContent = tick.step == null ? '—' : String(tick.step)
       const frame = tick.frame || {}
       drawRetina(frame.luminance)
-      if (tick.eye && tick.eye.rgb && tick.eye.w) {
-        $('eyeHint').textContent = `Live POV ${tick.eye.w}×${tick.eye.h} — same Minecraft block rays the visual cortex samples.`
-        drawPov(tick.eye)
+      const eye = tick.eye
+      if (eye && eye.w && eye.rgb) {
+        const rgb = b64bytes(eye.rgb)
+        $('worldHint').textContent = `What it would have seen — ${eye.w}×${eye.h} world rays, shown large for us. Not sent to the fly.`
+        blitRgb($('worldCanvas'), eye.w, eye.h, rgb)
       } else {
-        $('eyeHint').textContent = 'Waiting for the next world-frame tick…'
-        drawEye(frame.luminance, frame.objects)
+        $('worldHint').textContent = 'Waiting for the RGB world frame (same rays the fly sampled)…'
+        drawRetina(frame.luminance)
       }
-      bars($('obj'), frame.objectChannels, true)
-      bars($('odor'), frame.odor)
-      bars($('taste'), frame.taste)
-      const census = facts.census || {}
-      $('census').innerHTML = Object.entries(census).map(([k, v]) =>
-        `<div class="chip"><b>${k}</b>${v}</div>`).join('') || '<div class="chip"><b>census</b>empty</div>'
+      const fly = tick.fly
+      if (fly && fly.w) blitLum($('flyCanvas'), fly.w, fly.h, b64bytes(fly.lum))
+      const brain = tick.brain
+      if (brain) {
+        $('brainHint').textContent = `Neuroscope (fly-brain-minecraft style): live ${brain.n}-unit ChessFly settle, ${brain.n_edges} edges. Full male-cns ~176k is not in this process.`
+        drawBrain(brain)
+        const logits = brain.logits || []
+        bars($('logits'), ACTIONS.map((a, i) => [a, 1 / (1 + Math.exp(-(logits[i] || 0))), a === brain.action ? '' : '']))
+        const scored = (brain.names || []).map((n, i) => [n, brain.h[i] || 0, brain.roles[i] === 'dn' ? 'dn' : brain.roles[i] === 'central' ? 'cb' : ''])
+        scored.sort((a, b) => b[1] - a[1])
+        bars($('rates'), scored.slice(0, 14))
+      }
     }
     function connect () {
       const ws = new WebSocket(`ws://${location.host}/ws`)
       ws.onmessage = (ev) => render(JSON.parse(ev.data))
       ws.onclose = () => { $('live').textContent = 'RECONNECT'; $('live').classList.add('off'); setTimeout(connect, 800) }
     }
-    $('viewer').hidden = true
-    $('fallback').hidden = false
     connect()
   </script>
 </body>

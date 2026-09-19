@@ -10,11 +10,11 @@ const { Vec3 } = require('vec3')
 const { loadSenseConfig } = require('./loadConfig')
 const { sampleBot } = require('./senseBridge')
 const { applyGoal } = require('./goalToSense')
-const { applyAction } = require('./actions')
+const { applyAction, flyOffset, withTimeout } = require('./actions')
 const { censusLogs, rarestLog, WOOD_LOGS } = require('./rarity')
 const { compactFrame } = require('./logger')
 const { stepReward } = require('./mc_reward')
-const { sampleEyeView } = require('./eyeView')
+const { sampleEyeView, sampleFlyRetina, packEye, packFly } = require('./eyeView')
 
 const root = path.join(__dirname, '../..')
 const cfg = loadSenseConfig(root)
@@ -24,6 +24,7 @@ let bot = null
 let catalog = {}
 let exploreRadius = 32
 let lastFacts = {}
+let eyeOpts = { width: 64, height: 36, maxDist: 20 }
 
 function send (obj) {
   process.stdout.write(JSON.stringify(obj) + '\n')
@@ -106,7 +107,12 @@ function observe (goalSpec) {
   }
   const frame = goalSpec ? applyGoal(worldFrame, goalSpec, world) : worldFrame
   lastFacts = factsNow(goalSpec)
-  return { frame: compactFrame(frame), facts: lastFacts, eye: sampleEyeView(bot) }
+  return {
+    frame: compactFrame(frame),
+    facts: lastFacts,
+    eye: packEye(sampleEyeView(bot, eyeOpts)),
+    fly: packFly(sampleFlyRetina(bot, { width: 24, height: 24, maxDist: 20 })),
+  }
 }
 
 function sleep (ms) {
@@ -129,7 +135,7 @@ async function seedWoodsIfNeeded () {
     const block = mcData.blocksByName[name]
     if (!block) continue
     try {
-      await bot.creative.setBlock(origin.offset(dx, dy, dz), block.id)
+      await withTimeout(bot.creative.setBlock(origin.offset(dx, dy, dz), block.id), 400)
     } catch (_) {}
   }
 }
@@ -137,7 +143,7 @@ async function seedWoodsIfNeeded () {
 async function tossLogs () {
   for (const it of bot.inventory.items()) {
     if (String(it.name).endsWith('_log')) {
-      try { await bot.tossStack(it) } catch (_) {}
+      try { await withTimeout(bot.tossStack(it), 400) } catch (_) {}
     }
   }
 }
@@ -178,8 +184,24 @@ async function handle (msg) {
     return { ok: true, logs: Object.keys(catalog) }
   }
   if (msg.cmd === 'connect') {
+    if (msg.eye) {
+      eyeOpts = {
+        width: Math.min(96, msg.eye.width || 64),
+        height: Math.min(54, msg.eye.height || 36),
+        maxDist: msg.eye.maxDist || 20,
+      }
+    }
     await connect(msg.minecraft || {})
-    return { ok: true, username: bot.username }
+    return { ok: true, username: bot.username, eye: eyeOpts }
+  }
+  if (msg.cmd === 'play_reset') {
+    lastFacts = {}
+    try { bot.creative.startFlying() } catch (_) {}
+    const obs = observe(null)
+    return { ...obs, reward: 0, done: false }
+  }
+  if (msg.cmd === 'observe') {
+    return { ...observe(null), reward: 0, done: false }
   }
   if (msg.cmd === 'reset') {
     visited.length = 0
@@ -188,11 +210,10 @@ async function handle (msg) {
     try { bot.creative.startFlying() } catch (_) {}
     const ox = (Math.random() * 2 - 1) * 36
     const oz = (Math.random() * 2 - 1) * 36
-    try {
-      await bot.creative.flyTo(bot.entity.position.offset(ox, 5, oz))
-    } catch (_) {}
+    await flyOffset(bot, 0, 10, 0, 600)
+    await flyOffset(bot, ox, 8, oz, 1200)
     await seedWoodsIfNeeded()
-    await sleep(250)
+    await sleep(80)
     rememberVisit(bot)
     const peek = factsNow(null)
     const spec = peek.rarest ? catalog[peek.rarest] : null
@@ -206,7 +227,7 @@ async function handle (msg) {
       rarest: lastFacts.rarest,
       distance: lastFacts.distance,
     }
-    await applyAction(bot, msg.action || 'noop', cfg.actions.control)
+    await applyAction(bot, msg.action || 'noop', cfg.actions.control, lastFacts)
     const spec = lastFacts.rarest ? catalog[lastFacts.rarest] : null
     const obs = observe(spec)
     const scored = stepReward(prev, obs.facts)

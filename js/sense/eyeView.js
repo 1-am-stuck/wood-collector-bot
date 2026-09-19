@@ -125,4 +125,67 @@ function sampleEyeView (bot, opts = {}) {
   return { w: width, h: height, rgb }
 }
 
-module.exports = { sampleEyeView, colorForBlock }
+function packRgb (rgb) {
+  return Buffer.from(Uint8Array.from(rgb)).toString('base64')
+}
+
+function packLum (lum) {
+  const u8 = Uint8Array.from(lum, v => Math.max(0, Math.min(255, Math.round(Number(v) * 255))))
+  return Buffer.from(u8).toString('base64')
+}
+
+/** Display-only 2D luminance grid using the same rays/albedo as the 64-col retina. */
+function sampleFlyRetina (bot, opts = {}) {
+  const { albedoFor } = require('./senseBridge')
+  const width = opts.width || 64
+  const height = opts.height || 64
+  const maxDist = opts.maxDist || 24
+  const lum = new Array(width * height).fill(0)
+  if (!bot || !bot.entity) return { w: width, h: height, lum }
+  const yaw = bot.entity.yaw
+  const pitch = bot.entity.pitch
+  const eyeH = bot.entity.eyeHeight || 1.62
+  const from = bot.entity.position.offset(0, eyeH, 0)
+  const az0 = (opts.az0 == null ? -150 : opts.az0) * Math.PI / 180
+  const az1 = (opts.az1 == null ? 150 : opts.az1) * Math.PI / 180
+  const el0 = (opts.el0 == null ? 50 : opts.el0) * Math.PI / 180
+  const el1 = (opts.el1 == null ? -40 : opts.el1) * Math.PI / 180
+  for (let j = 0; j < height; j++) {
+    const el = el0 + (el1 - el0) * ((j + 0.5) / height)
+    for (let i = 0; i < width; i++) {
+      const az = az0 + (az1 - az0) * ((i + 0.5) / width)
+      const lookYaw = yaw - az
+      const lookPitch = pitch - el
+      const cp = Math.cos(lookPitch)
+      const dir = new Vec3(-Math.sin(lookYaw) * cp, -Math.sin(lookPitch), -Math.cos(lookYaw) * cp)
+      const hit = hitAlongRay(bot, from, dir, maxDist)
+      let v
+      if (!hit) {
+        v = dir.y > -0.2 ? 0.85 : 0.25
+      } else {
+        const fog = Math.min(1, hit.dist / maxDist)
+        v = (0.3 + 0.7 * albedoFor(hit.name)) * (1 - 0.45 * fog)
+      }
+      lum[j * width + i] = v
+    }
+  }
+  return { w: width, h: height, lum }
+}
+
+function packEye (eye) {
+  return { w: eye.w, h: eye.h, rgb: packRgb(eye.rgb) }
+}
+
+function packFly (fly) {
+  return { w: fly.w, h: fly.h, lum: packLum(fly.lum) }
+}
+
+module.exports = {
+  sampleEyeView,
+  sampleFlyRetina,
+  colorForBlock,
+  packRgb,
+  packLum,
+  packEye,
+  packFly,
+}

@@ -2,6 +2,8 @@
 
 Minecraft is mapped onto **named Drosophila sensory populations**, not a wood-only feature vector.
 
+The human-readable walkthrough (what the fly actually receives vs the 2K dashboard) lives in the README: [Fruit-fly connectome policy — How the world becomes something the fly can natively understand](../README.md#how-the-world-becomes-something-the-fly-can-natively-understand).
+
 ## Sources (read locally in `.research/`, not vendored)
 
 - [blendi-remade/fly-brain-minecraft](https://github.com/blendi-remade/fly-brain-minecraft)

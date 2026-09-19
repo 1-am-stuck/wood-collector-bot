@@ -1,0 +1,31 @@
+reset epoch=0 ep=0 rarest=acacia_log dist=6.172688589443931
+step 0.0.1 turn_left rew=-0.000 dist=6.172751407361461 rarest=acacia_log inv={}
+step 0.0.10 turn_left rew=0.000 dist=6.172928405332847 rarest=acacia_log inv={}
+step 0.0.20 turn_right rew=-0.059 dist=6.451995700863159 rarest=acacia_log inv={}
+step 0.0.30 turn_right rew=0.058 dist=4.876929830179812 rarest=acacia_log inv={}
+step 0.0.40 turn_right rew=-0.095 dist=5.899837313381857 rarest=acacia_log inv={}
+step 0.0.50 turn_right rew=-0.003 dist=6.445531353674226 rarest=acacia_log inv={}
+step 0.0.60 mine rew=0.191 dist=6.910913512795604 rarest=acacia_log inv={}
+step 0.0.70 turn_right rew=-0.068 dist=7.2909127020572 rarest=acacia_log inv={}
+step 0.0.80 turn_right rew=0.008 dist=9.059309321647014 rarest=acacia_log inv={}
+step 0.0.90 turn_right rew=0.004 dist=8.648926813137797 rarest=acacia_log inv={}
+step 0.0.100 turn_right rew=0.009 dist=12.192057258932552 rarest=acacia_log inv={}
+step 0.0.110 turn_right rew=0.000 dist=10.546220399246218 rarest=acacia_log inv={}
+step 0.0.120 turn_right rew=-0.006 dist=10.860048975108265 rarest=acacia_log inv={}
+step 0.0.130 turn_right rew=-0.000 dist=10.86631740382097 rarest=acacia_log inv={}
+step 0.0.140 turn_right rew=0.000 dist=11.043904260114417 rarest=acacia_log inv={}
+step 0.0.150 noop rew=0.000 dist=11.043900629754768 rarest=acacia_log inv={}
+step 0.0.160 forward rew=0.279 dist=11.082871425010323 rarest=acacia_log inv={}
+step 0.0.170 turn_right rew=0.000 dist=11.726017325952656 rarest=acacia_log inv={}
+step 0.0.180 camera_down rew=0.000 dist=11.724626665457015 rarest=acacia_log inv={}
+step 0.0.190 mine rew=0.000 dist=11.724626665456993 rarest=acacia_log inv={}
+step 0.0.200 turn_right rew=-0.000 dist=12.267688797442831 rarest=acacia_log inv={}
+reset epoch=0 ep=1 rarest=acacia_log dist=12.61805473869946
+step 0.1.1 turn_right rew=-0.000 dist=12.618060385634362 rarest=acacia_log inv={}
+step 0.1.10 turn_right rew=-0.000 dist=13.316609193622392 rarest=acacia_log inv={}
+step 0.1.20 mine rew=0.000 dist=13.316609195685265 rarest=acacia_log inv={}
+step 0.1.30 turn_right rew=0.000 dist=12.731721575487356 rarest=acacia_log inv={}
+reset epoch=0 ep=0 rarest=acacia_log dist=13.382421042627062
+step 0.0.1 turn_right rew=-0.000 dist=13.382424894099348 rarest=acacia_log inv={}
+step 0.0.10 turn_right rew=-0.000 dist=13.382433960143878 rarest=acacia_log inv={}
+step 0.0.20 turn_right rew=0.000 dist=13.382433960150218 rarest=acacia_log inv={}

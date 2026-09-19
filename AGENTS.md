@@ -101,7 +101,7 @@ Minecraft-in-the-loop IL from `brain.js` is wired (`fly.logExpert` when logging 
 
 ## Live dashboard
 
-`train.py` starts FastAPI on **127.0.0.1:8766**. Left pane is the current `SensoryFrame` + rarest census + action/reward. Right pane is a live first-person grid from the same Minecraft `blockAt` rays the visual cortex uses (`js/sense/eyeView.js`); the policy still only sees 64 luminance columns. Ticks are published from each Minecraft PPO step (`dashboard.hub.publish`). Live control is **1 Hz** (`control_dt_ms: 1000`) with ~10-block creative hops so each tick covers ground.
+`train.py` starts FastAPI on **127.0.0.1:8766**. Left pane is the current `SensoryFrame` + rarest census + action/reward. Right pane is an RGB first-person grid from the same Minecraft `blockAt` rays the visual cortex uses (`js/sense/eyeView.js`) — **for us**, so we can see what FruitFly would have seen. The policy still only sees 64 luminance columns. Ticks are published from each Minecraft PPO step (`dashboard.hub.publish`). Live control is **1 Hz** (`control_dt_ms: 1000`) with ~10-block creative hops so each tick covers ground.
 
 ## Next loops (suggested)
 

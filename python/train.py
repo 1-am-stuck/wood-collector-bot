@@ -47,7 +47,7 @@ def minecraft_up(host: str, port: int, timeout: float = 2.0) -> bool:
         return False
 
 
-def _emit(epoch: int, episode: int, step: int, action: str, value, pkt: dict):
+def _emit(epoch: int, episode: int, step: int, action: str, value, pkt: dict, brain: dict | None = None):
     import time
     publish({
         "t": time.time(),
@@ -61,7 +61,16 @@ def _emit(epoch: int, episode: int, step: int, action: str, value, pkt: dict):
         "frame": pkt.get("frame") or {},
         "facts": pkt.get("facts") or {},
         "eye": pkt.get("eye"),
+        "fly": pkt.get("fly"),
+        "brain": brain,
     })
+
+
+def _log_step(fh, line: str):
+    print(line, flush=True)
+    if fh is not None:
+        fh.write(line + "\n")
+        fh.flush()
 
 
 def rollout_mc(
@@ -71,10 +80,20 @@ def rollout_mc(
     epoch: int = 0,
     episode: int = 0,
     dt_s: float = 1.0,
+    log_fh=None,
 ):
     import time
+    _emit(epoch, episode, 0, "resetting", None, {})
     pkt = env.reset()
-    _emit(epoch, episode, 0, "reset", None, pkt)
+    o0 = model.frames_to_obs(pkt.get("frame") or {})
+    with torch.no_grad():
+        boot = model.inspect(o0, greedy=True)
+    facts0 = pkt.get("facts") or {}
+    _log_step(
+        log_fh,
+        f"reset epoch={epoch} ep={episode} rarest={facts0.get('rarest')} dist={facts0.get('distance')}",
+    )
+    _emit(epoch, episode, 0, "reset", None, pkt, boot)
     obs, acts, logps, vals, rewards = [], [], [], [], []
     last = pkt
     done = False
@@ -83,7 +102,9 @@ def rollout_mc(
         o = model.frames_to_obs(pkt.get("frame") or {})
         with torch.no_grad():
             action, logp, value, _ = model.act(o, greedy=False)
+            brain = model.inspect(o, greedy=True)
         name = ACTIONS[int(action.item())]
+        brain["action"] = name
         pkt = env.step(name)
         obs.append(o)
         acts.append(action)
@@ -92,7 +113,15 @@ def rollout_mc(
         rewards.append(float(pkt.get("reward") or 0.0))
         done = bool(pkt.get("done"))
         last = pkt
-        _emit(epoch, episode, len(obs), name, float(value.item()), pkt)
+        _emit(epoch, episode, len(obs), name, float(value.item()), pkt, brain)
+        if len(obs) == 1 or len(obs) % 10 == 0 or done:
+            facts = pkt.get("facts") or {}
+            _log_step(
+                log_fh,
+                f"step {epoch}.{episode}.{len(obs)} {name} "
+                f"rew={rewards[-1]:.3f} dist={facts.get('distance')} "
+                f"rarest={facts.get('rarest')} inv={facts.get('inventory')}",
+            )
         leftover = dt_s - (time.monotonic() - t0)
         if leftover > 0:
             time.sleep(leftover)
@@ -116,7 +145,7 @@ def train_minecraft(model: FlyPolicy, env: MinecraftEnv, cfg: dict, log_path: Pa
             for i in range(episodes):
                 dt_s = float(train.get("control_dt_ms") or 1000) / 1000.0
                 obs, acts, logps, vals, rewards, last = rollout_mc(
-                    env, model, max_steps, epoch=ep, episode=i, dt_s=dt_s,
+                    env, model, max_steps, epoch=ep, episode=i, dt_s=dt_s, log_fh=fh,
                 )
                 vs = [float(v.item()) for v in vals]
                 adv, ret = advantages(rewards, vs, gamma=gamma)

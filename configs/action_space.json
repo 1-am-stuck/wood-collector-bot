@@ -16,7 +16,7 @@
     "turnDeg": 25,
     "pitchDeg": 12,
     "hopBlocks": 10,
-    "flyTimeoutMs": 900,
+    "flyTimeoutMs": 500,
     "jumpForce": true
   }
 }

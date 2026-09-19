@@ -33,10 +33,20 @@ class MinecraftEnv:
             catalog = load_goal_catalog(catalog)
         radius = (self.cfg.get("goal") or {}).get("explore_radius", 32)
         self._rpc({"cmd": "load_catalog", "catalog": catalog or {}, "explore_radius": radius})
-        return self._rpc({"cmd": "connect", "minecraft": self.cfg.get("minecraft") or {}})
+        eye = (self.cfg.get("view") or {}).get("eye")
+        payload = {"cmd": "connect", "minecraft": self.cfg.get("minecraft") or {}}
+        if eye:
+            payload["eye"] = eye
+        return self._rpc(payload)
 
     def reset(self) -> dict:
         return self._rpc({"cmd": "reset"})
+
+    def play_reset(self) -> dict:
+        return self._rpc({"cmd": "play_reset"})
+
+    def observe(self) -> dict:
+        return self._rpc({"cmd": "observe"})
 
     def step(self, action: str) -> dict:
         return self._rpc({"cmd": "step", "action": action})

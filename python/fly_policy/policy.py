@@ -80,6 +80,34 @@ class FlyPolicy(nn.Module):
         logp = dist.log_prob(action)
         return action, logp, value, logits
 
+    def inspect(self, obs: torch.Tensor, greedy: bool = True) -> dict:
+        """Hidden rates + action for the neuroscope (ChessFly h, not the 176k graph)."""
+        if obs.dim() == 1:
+            batch = obs.unsqueeze(0)
+        else:
+            batch = obs
+        with torch.no_grad():
+            u = self.encode_u(batch)
+            h = self.forward_hidden(batch)
+            dn = h.index_select(-1, self.dn_idx)
+            logits = self.decoder(dn)
+            value = self.value(dn).squeeze(-1)
+            idx = int(logits[0].argmax().item()) if greedy else int(
+                torch.distributions.Categorical(logits=logits[0]).sample().item()
+            )
+        return {
+            "action": ACTIONS[idx],
+            "index": idx,
+            "value": float(value[0].item()),
+            "logits": [float(x) for x in logits[0].tolist()],
+            "h": [float(x) for x in h[0].tolist()],
+            "u": [float(x) for x in u[0].tolist()],
+            "names": list(self.graph.names),
+            "roles": list(self.graph.roles),
+            "n": int(self.n),
+            "n_edges": int(self.graph.n_edges),
+        }
+
     def frames_to_obs(self, frames) -> torch.Tensor:
         if isinstance(frames, dict):
             frames = [frames]

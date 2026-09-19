@@ -13,6 +13,12 @@ minecraft:
   username: FruitFly
   required: true
 
+view:
+  eye:
+    width: 64
+    height: 36
+    maxDist: 20
+
 goal:
   selector: rarest_log
   catalog: configs/goals/log_collect.yaml

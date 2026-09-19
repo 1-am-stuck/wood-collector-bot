@@ -10,15 +10,27 @@ function isCreative (bot) {
   return mode === 'creative' || mode === 1
 }
 
-async function flyOffset (bot, dx, dy, dz, timeoutMs = 900) {
+function withTimeout (p, ms) {
+  let t
+  return Promise.race([
+    Promise.resolve(p).finally(() => clearTimeout(t)),
+    new Promise(resolve => { t = setTimeout(resolve, ms) }),
+  ])
+}
+
+/** Long hops in open air; crawl once XZ distance is inside the hop. */
+function hopDistance (hop, distance) {
+  const h = hop == null ? 10 : Number(hop)
+  if (distance == null || Number(distance) >= h) return h
+  return Math.max(2, Math.min(h, Number(distance) + 1.5))
+}
+
+async function flyOffset (bot, dx, dy, dz, timeoutMs = 500) {
   if (!bot.creative || !bot.entity) return false
   try { bot.creative.startFlying() } catch (_) {}
   const dest = bot.entity.position.offset(dx, dy, dz)
   try {
-    await Promise.race([
-      bot.creative.flyTo(dest),
-      sleep(timeoutMs),
-    ])
+    await withTimeout(bot.creative.flyTo(dest), timeoutMs)
     return true
   } catch (_) {
     return false
@@ -30,18 +42,19 @@ function headingOffset (bot, dist) {
   return { dx: -Math.sin(yaw) * dist, dz: -Math.cos(yaw) * dist }
 }
 
-async function applyAction (bot, name, control = {}) {
+async function applyAction (bot, name, control = {}, facts = {}) {
   const turn = (control.turnDeg || 25) * Math.PI / 180
   const pitch = (control.pitchDeg || 10) * Math.PI / 180
   const hold = control.forwardTicks || 4
-  const hop = control.hopBlocks || 10
-  const flyMs = control.flyTimeoutMs || 900
+  const hop = hopDistance(control.hopBlocks || 10, facts.distance)
+  const flyMs = control.flyTimeoutMs || 500
   const flying = isCreative(bot)
+  const lift = (facts.distance != null && facts.distance < 6) ? 3 : 0
   switch (name) {
     case 'forward': {
       if (flying) {
         const { dx, dz } = headingOffset(bot, hop)
-        const dy = bot.entity.pitch > 0.35 ? -2 : bot.entity.pitch < -0.35 ? 2 : 0
+        const dy = (bot.entity.pitch > 0.35 ? -2 : bot.entity.pitch < -0.35 ? 2 : 0) + lift
         if (await flyOffset(bot, dx, dy, dz, flyMs)) break
       }
       bot.setControlState('forward', true)
@@ -103,4 +116,12 @@ function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
-module.exports = { ACTIONS, actionIndex, applyAction, expertActionFromIntent }
+module.exports = {
+  ACTIONS,
+  actionIndex,
+  applyAction,
+  expertActionFromIntent,
+  hopDistance,
+  withTimeout,
+  flyOffset,
+}
