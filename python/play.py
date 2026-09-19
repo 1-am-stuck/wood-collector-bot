@@ -133,9 +133,10 @@ def main():
         "mode": "navigate",
         "census": False,
         "seed_woods": False,
+        "seed_rich": True,
         "view": {
             "eye": {"width": args.eye_w, "height": args.eye_h, "maxDist": 24},
-            "stream": {"hz": 30, "radiusXZ": 20, "radiusY": 12},
+            "stream": {"hz": 30, "radiusXZ": 28, "radiusY": 24},
         },
     }
     env = MinecraftEnv(cfg, on_stream=publish_stream)

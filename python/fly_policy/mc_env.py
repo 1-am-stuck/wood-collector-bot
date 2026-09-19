@@ -56,7 +56,7 @@ class MinecraftEnv:
             payload["view"] = view["stream"]
         # `mode: navigate` scores covering ground with no goal, and switches off the
         # census and the planted trees on the Node side, so it must reach `connect`.
-        for key in ("seed_woods", "census", "mode"):
+        for key in ("seed_woods", "seed_rich", "census", "mode"):
             if key in self.cfg:
                 payload[key] = self.cfg[key]
         return self._rpc(payload)

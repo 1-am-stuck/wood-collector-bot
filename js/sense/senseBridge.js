@@ -366,8 +366,10 @@ function sampleBot (bot, cfg, state = {}) {
   const blocks = []
   const origin = p.floored()
   const r = cfg.blockOdor.blockRadius
+  // A fly smells in 3D. The old ±3 slab was a walking-player nose: takeoff put
+  // every log and fruit outside the volume and the glomeruli went quiet.
   for (let dx = -r; dx <= r; dx++) {
-    for (let dy = -3; dy <= 3; dy++) {
+    for (let dy = -r; dy <= r; dy++) {
       for (let dz = -r; dz <= r; dz++) {
         const b = bot.blockAt(origin.offset(dx, dy, dz))
         if (!b || b.boundingBox === 'empty') continue

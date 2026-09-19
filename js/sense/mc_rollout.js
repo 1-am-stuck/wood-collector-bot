@@ -16,6 +16,7 @@ const { compactFrame } = require('./logger')
 const { stepReward } = require('./mc_reward')
 const { navReward, newVisitSet } = require('./nav_reward')
 const { sampleVoxels, samplePose, snapshotStale } = require('./voxelSnapshot')
+const { planGrove, plantGrove } = require('./seedRich')
 
 const root = path.join(__dirname, '../..')
 const cfg = loadSenseConfig(root)
@@ -29,6 +30,8 @@ let lastMc = { host: '127.0.0.1', port: 25565, username: 'FruitFly' }
 // Open-world exploring wants neither of these: no planted trees, no omniscient
 // 64-block block search. Training turns them on.
 let seedWoods = true
+let seedRich = false
+let richSeeded = false
 let censusEnabled = true
 // 'rarest' scores progress toward the rarest log. 'navigate' scores covering ground
 // without collisions and involves no goal, no census and no planted trees -- it is the
@@ -272,7 +275,16 @@ async function connect (opts) {
   // stream instead, so there is nothing to start here.
   view.voxels = null
   startStream(view)
-  if (seedWoods) await seedWoodsIfNeeded()
+  if (seedRich) await seedRichIfNeeded()
+  else if (seedWoods) await seedWoodsIfNeeded()
+}
+
+async function seedRichIfNeeded () {
+  if (!botAlive() || richSeeded) return
+  const plan = planGrove(cfg.blockOdor, cfg.itemOdor)
+  await plantGrove(bot, plan)
+  richSeeded = true
+  view.voxels = null
 }
 
 async function handle (msg) {
@@ -292,10 +304,11 @@ async function handle (msg) {
       view.radiusY = msg.view.radiusY || view.radiusY
     }
     if (msg.seed_woods != null) seedWoods = !!msg.seed_woods
+    if (msg.seed_rich != null) seedRich = !!msg.seed_rich
     if (msg.census != null) censusEnabled = !!msg.census
     if (msg.mode) mode = msg.mode
-    // Navigating has no goal, so a census and planted trees would be doing nothing but
-    // costing a 64-block block search every second.
+    // Navigating has no GoalSpec and no rarest-log census. A rich odor grove is
+    // still a world, not a goal: the fly has to have something to smell.
     if (mode === 'navigate') {
       seedWoods = false
       censusEnabled = false
@@ -306,6 +319,7 @@ async function handle (msg) {
       username: bot && bot.username,
       view: { hz: view.hz, radiusXZ: view.radiusXZ, radiusY: view.radiusY },
       seed_woods: seedWoods,
+      seed_rich: seedRich,
       census: censusEnabled,
       mode,
     }
@@ -318,6 +332,7 @@ async function handle (msg) {
     // the body look dead, because DNp01 is takeoff and walking keys do nothing
     // with gravity off unless we translate the pose ourselves.
     keepFlying(bot)
+    if (seedRich) await seedRichIfNeeded()
     const obs = observe(null)
     if (mode === 'navigate') navReward(null, obs.facts.nav, navCells)
     return { ...obs, reward: null, done: false }
