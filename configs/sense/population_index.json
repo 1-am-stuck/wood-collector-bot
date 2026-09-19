@@ -45,19 +45,33 @@
     "moist": "HRN_VP5,HRN_VP1d"
   },
   "vision": {
-    "photoreceptors": ["R1-6", "R7", "R8"],
+    "photoreceptors": ["R1-R6", "R7", "R8"],
     "lamina": ["L1", "L2", "L3"],
-    "objectChannels": ["LC4", "LPLC2", "LC11", "LC18", "LC10a", "LC15", "HSE", "HSN", "HSS"]
+    "objectChannels": ["LC4", "LPLC2", "LC11", "LC18", "LC10a", "LC15", "HSE", "HSN", "HSS"],
+    "wideField": {
+      "horizontal": ["HSE", "HSN", "HSS", "HST"],
+      "vertical": ["VS", "VST1", "VST2", "VSm"]
+    }
   },
   "descending": {
     "forward": ["DNp09", "DNg100", "DNge053"],
-    "yawLeft": ["DNa02"],
-    "yawRight": ["DNa02"],
+    "yaw": ["DNa02"],
     "backward": ["MDN"],
     "halt": ["DNg60"],
     "escape": ["DNp01", "TTMn"],
     "feed": ["MN9"],
-    "groom": ["aDN1", "aDN2"],
+    "groom": ["DNg62", "DNge078"],
     "flight": ["DNg02"]
+  },
+  "commonNames": {
+    "note": "Literature names that are not male-cns type strings. The type string is what the graph carries; these are for labels only.",
+    "DNg62": "aDN1",
+    "DNge078": "aDN2",
+    "DNg100": "BDN2",
+    "DNge053": "BDN1",
+    "MDN": "DNp50, moonwalker",
+    "DNg60": "bluebell",
+    "DNp01": "giant fibre",
+    "DNp15": "DNHS1"
   }
 }

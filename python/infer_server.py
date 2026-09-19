@@ -15,16 +15,11 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
 from load_env import load_repo_env
-from fly_policy.graph import FlyGraph
-from fly_policy.policy import ACTIONS, FlyPolicy, default_graph_path
-from tools.build_mini_graph import build
+from fly_policy.policy import ACTIONS, FlyPolicy, load_graph
 
 
 def load_policy(ckpt: Path | None):
-    gpath = default_graph_path(ROOT)
-    if not gpath.exists():
-        build()
-    graph = FlyGraph(gpath)
+    graph = load_graph(ROOT)
     if ckpt and ckpt.exists():
         model = FlyPolicy.load(graph, ckpt)
     else:

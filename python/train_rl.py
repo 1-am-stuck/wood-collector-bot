@@ -15,12 +15,10 @@ sys.path.insert(0, str(ROOT / "python"))
 
 from load_env import load_repo_env
 from fly_policy.export import export_safetensors
-from fly_policy.graph import FlyGraph
-from fly_policy.policy import ACTIONS, FlyPolicy, default_graph_path
+from fly_policy.policy import ACTIONS, FlyPolicy, load_graph
 from fly_policy.synth_env import OdorTaxisEnv
 from sense.frame import frame_to_vector
 from sense.goal_to_sense import load_goal
-from tools.build_mini_graph import build
 
 
 def rollout(env, model, max_steps=80):
@@ -28,7 +26,10 @@ def rollout(env, model, max_steps=80):
     obs, acts, logps, vals, rewards, dones = [], [], [], [], [], []
     done = False
     while not done and len(obs) < max_steps:
-        o = torch.tensor(frame_to_vector(frame), dtype=torch.float32)
+        # Eye size comes from the model, not a default: the vector reserves one slot
+        # per ommatidium and everything after the retina shifts with it, so a
+        # hard-coded 64 would silently misalign every other modality.
+        o = torch.tensor(frame_to_vector(frame, model.n_retina), dtype=torch.float32)
         with torch.no_grad():
             action, logp, value, _ = model.act(o, greedy=False)
         a = int(action.item())
@@ -57,25 +58,49 @@ def advantages(rewards, values, gamma=0.98, lam=0.95):
     return adv, ret
 
 
-def ppo_epoch_update(model, obs_t, act_t, oldlp, adv, ret, opt, clip=0.2):
+def ppo_epoch_update(model, obs_t, act_t, oldlp, adv, ret, opt, clip=0.2,
+                     minibatch: int | None = None):
+    """One PPO pass, in minibatches.
+
+    Minibatching is not a tuning nicety here, it is a memory requirement. The settle
+    keeps every intermediate rate for the backward pass, so peak memory is
+    `batch x edges x settle steps`. On the full male-cns graph one step of a single
+    sample is already 6.29M edge activations; a whole epoch's batch of a few thousand
+    steps would need tens of gigabytes and be killed. Advantages are still normalised
+    over the full batch, so the update itself is unchanged -- only the arithmetic is
+    split up.
+
+    `minibatch=None` keeps the old single-pass behaviour, which is what the small
+    synthetic-environment runs want.
+    """
     adv_t = torch.as_tensor(adv, dtype=torch.float32)
     adv_t = (adv_t - adv_t.mean()) / (adv_t.std() + 1e-8)
     ret_t = torch.as_tensor(ret, dtype=torch.float32)
-    logits, values = model(obs_t)
-    dist = torch.distributions.Categorical(logits=logits)
-    logp = dist.log_prob(act_t)
-    ratio = torch.exp(logp - oldlp)
-    surr1 = ratio * adv_t
-    surr2 = torch.clamp(ratio, 1 - clip, 1 + clip) * adv_t
-    policy_loss = -torch.min(surr1, surr2).mean()
-    value_loss = F.mse_loss(values, ret_t)
-    entropy = dist.entropy().mean()
-    loss = policy_loss + 0.5 * value_loss - 0.01 * entropy
-    opt.zero_grad()
-    loss.backward()
-    torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-    opt.step()
-    return float(loss.item())
+    n = obs_t.shape[0]
+    size = n if not minibatch else max(1, int(minibatch))
+
+    total = 0.0
+    batches = 0
+    for start in range(0, n, size):
+        stop = min(n, start + size)
+        logits, values = model(obs_t[start:stop])
+        dist = torch.distributions.Categorical(logits=logits)
+        logp = dist.log_prob(act_t[start:stop])
+        ratio = torch.exp(logp - oldlp[start:stop])
+        chunk_adv = adv_t[start:stop]
+        surr1 = ratio * chunk_adv
+        surr2 = torch.clamp(ratio, 1 - clip, 1 + clip) * chunk_adv
+        policy_loss = -torch.min(surr1, surr2).mean()
+        value_loss = F.mse_loss(values, ret_t[start:stop])
+        entropy = dist.entropy().mean()
+        loss = policy_loss + 0.5 * value_loss - 0.01 * entropy
+        opt.zero_grad()
+        loss.backward()
+        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+        opt.step()
+        total += float(loss.item())
+        batches += 1
+    return total / max(1, batches)
 
 
 def ppo(model, goal, epochs=8, episodes=16, lr=3e-4, clip=0.2):
@@ -117,10 +142,7 @@ def main():
     p.add_argument("--epochs", type=int, default=6)
     p.add_argument("--episodes", type=int, default=12)
     args = p.parse_args()
-    gpath = default_graph_path(ROOT)
-    if not gpath.exists():
-        build()
-    graph = FlyGraph(gpath)
+    graph = load_graph(ROOT)
     ckpt = Path(args.ckpt)
     if ckpt.exists():
         model = FlyPolicy.load(graph, ckpt)

@@ -2,7 +2,7 @@ const { test } = require('node:test')
 const assert = require('node:assert/strict')
 const path = require('path')
 const { loadSenseConfig } = require('../../js/sense/loadConfig')
-const { sampleWorld } = require('../../js/sense/senseBridge')
+const { sampleWorld, retinaDirections, retinaLayout } = require('../../js/sense/senseBridge')
 
 const cfg = loadSenseConfig(path.join(__dirname, '../..'))
 
@@ -66,6 +66,77 @@ test('spider eye tarsal bitter and cake labellar sugar', () => {
   assert.ok((bitter.taste.LgAG1 || 0) > 0.5)
   const sugar = sampleWorld(baseWorld({ standingOn: 'cake', proboscisOut: true }), cfg)
   assert.ok((sugar.taste.LB3b || 0) > 0.5)
+})
+
+// The eye is no longer a grid, so there are no rows, columns or diagonals to check.
+// What is worth checking is that the directions really are the measured ones and that
+// each eye looks at its own side of the world.
+
+test('rays are measured ommatidia, one per sampled column, not a synthetic grid', () => {
+  const dirs = retinaDirections(cfg.retina)
+  assert.equal(dirs.length, cfg.retina.columns)
+  assert.equal(dirs.length, cfg.retina.rays.length)
+  for (const dir of dirs) {
+    // Every ray names the ommatidium it came from, so it can be traced to a column.
+    assert.ok(Number.isInteger(dir.hex1) && Number.isInteger(dir.hex2))
+    assert.ok(dir.eye === 'L' || dir.eye === 'R')
+    const norm = Math.hypot(dir.dx, dir.dy, dir.dz)
+    assert.ok(Math.abs(norm - 1) < 1e-6, 'direction must be a unit vector')
+  }
+  // Two ommatidia must not share a direction, or the eye has duplicate pixels.
+  const keys = new Set(dirs.map(d => `${d.eye}:${d.hex1}:${d.hex2}`))
+  assert.equal(keys.size, dirs.length)
+})
+
+test('each eye looks at its own hemifield, meeting near the midline', () => {
+  const dirs = retinaDirections(cfg.retina)
+  // Azimuth degenerates near the poles, so judge the field in the horizontal band.
+  const band = dirs.filter(d => Math.abs(d.el) < 20)
+  const left = band.filter(d => d.eye === 'L').map(d => d.az)
+  const right = band.filter(d => d.eye === 'R').map(d => d.az)
+  assert.ok(left.length > 0 && right.length > 0)
+  // + is the fly's right, matching odorBearingDeg.
+  assert.ok(Math.min(...left) < -100, 'left eye must see well behind on its own side')
+  assert.ok(Math.max(...left) < 20, 'left eye must not sweep across to the right')
+  assert.ok(Math.max(...right) > 100, 'right eye must see well behind on its own side')
+  assert.ok(Math.min(...right) > -20, 'right eye must not sweep across to the left')
+  const overlap = Math.max(...left) - Math.min(...right)
+  assert.ok(overlap > 0 && overlap < 40, `frontal overlap should be narrow, got ${overlap}`)
+})
+
+test('rays are split evenly between the eyes', () => {
+  const { perEye, eyes, count } = retinaLayout(cfg.retina)
+  assert.deepEqual(eyes.slice().sort(), ['L', 'R'])
+  const dirs = retinaDirections(cfg.retina)
+  for (const eye of eyes) {
+    assert.equal(dirs.filter(d => d.eye === eye).length, perEye)
+  }
+  assert.equal(count, perEye * eyes.length)
+})
+
+test('a missing generated direction file is an error, not a silent fallback', () => {
+  assert.throws(() => retinaDirections({ maxDistance: 24 }), /retina_columns\.json/)
+})
+
+test('a tree straight ahead darkens frontal columns in both eyes', () => {
+  const trunk = []
+  for (let y = 63; y <= 68; y++) {
+    // yaw 0 faces +z in Minecraft, so a tree "ahead" is at positive z
+    for (const x of [-1, 0]) trunk.push({ name: 'oak_log', x, y, z: 4, light: 12 })
+  }
+  const seen = sampleWorld(baseWorld({ blocks: trunk }), cfg)
+  const dirs = retinaDirections(cfg.retina)
+  const { perEye } = retinaLayout(cfg.retina)
+  const frontal = eye => dirs
+    .map((d, i) => ({ d, i }))
+    .filter(({ d }) => d.eye === eye && Math.abs(d.az) <= 25 && Math.abs(d.el) <= 25)
+  for (const eye of ['L', 'R']) {
+    const idx = frontal(eye)
+    assert.ok(idx.length > 0, `${eye} eye must have frontal rays`)
+    const lit = idx.some(({ i }) => seen.luminance[i] > 0 && seen.luminance[i] < 0.5)
+    assert.ok(lit, `${eye} eye should register the trunk ahead`)
+  }
+  assert.equal(dirs.filter(d => d.eye === 'L').length, perEye)
 })
 
 test('self-motion JO wind and collision bristles', () => {

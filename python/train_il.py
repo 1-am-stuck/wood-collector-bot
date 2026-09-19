@@ -17,12 +17,10 @@ sys.path.insert(0, str(ROOT / "python"))
 
 from load_env import load_repo_env
 from fly_policy.export import export_safetensors
-from fly_policy.graph import FlyGraph
-from fly_policy.policy import ACTIONS, FlyPolicy, default_graph_path
+from fly_policy.policy import ACTIONS, FlyPolicy, load_graph
 from fly_policy.synth_env import collect_expert_jsonl
 from sense.frame import frame_to_vector, vector_size
 from sense.goal_to_sense import load_goal
-from tools.build_mini_graph import build
 
 
 def load_jsonl(path: Path):
@@ -35,7 +33,13 @@ def load_jsonl(path: Path):
     return rows
 
 
-def rows_to_tensors(rows):
+def rows_to_tensors(rows, n_retina: int = 64):
+    """Pack logged frames into an observation batch.
+
+    `n_retina` has to match the graph being trained: it sets how many ommatidial
+    columns the vector reserves, and everything after the retina shifts with it. A
+    demo logged against one eye size cannot be fed to a policy built for another.
+    """
     xs, ys = [], []
     for row in rows:
         frame = row.get("frame") or row.get("sensory")
@@ -43,7 +47,7 @@ def rows_to_tensors(rows):
         if frame is None or act is None:
             continue
         idx = ACTIONS.index(act) if isinstance(act, str) else int(act)
-        xs.append(frame_to_vector(frame))
+        xs.append(frame_to_vector(frame, n_retina))
         ys.append(idx)
     x = torch.tensor(xs, dtype=torch.float32)
     y = torch.tensor(ys, dtype=torch.long)
@@ -88,10 +92,7 @@ def main():
     p.add_argument("--epochs", type=int, default=40)
     p.add_argument("--out", default=str(ROOT / "checkpoints" / "fly_mc.pt"))
     args = p.parse_args()
-    gpath = default_graph_path(ROOT)
-    if not gpath.exists():
-        build()
-    graph = FlyGraph(gpath)
+    graph = load_graph(ROOT)
     if args.demos:
         rows = load_jsonl(Path(args.demos))
     else:

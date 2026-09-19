@@ -7,13 +7,15 @@ Read this before changing sense, goals, or the policy. The plan file is history;
 Two stacked agents:
 
 1. **Legacy lumberjack** — [`bot.js`](bot.js) + [`brain.js`](brain.js). Chat `go`. Pathfinder checklist for nine woods. Expert teacher only.
-2. **Fly policy** — Minecraft (or a synthetic stand-in) → **real fly sensory populations** → frozen connectome + learnable encoder/gains/decoder → discrete Mineflayer actions.
+2. **Fly policy** — Minecraft → **real male-cns cells** → frozen connectome + learnable encoder/gains/decoder → discrete Mineflayer actions.
+
+The running graph is **male-cns:v1.0**, 176,422 traced neurons and 6,287,749 measured connections (`data/connectome/malecns_full.npz`). It is derived, not drawn: selectors in [`python/connectome/anchors.py`](python/connectome/anchors.py) name the real sensory and motor types, and [`python/tools/build_graph_from_flyb.py`](python/tools/build_graph_from_flyb.py) writes the NPZ from `malecns-v1.0.flyb.gz`. There is no hand-built mini graph.
 
 Goals are **not** a wood enum into an MLP. A `GoalSpec` adds drive on the same `SensoryFrame` the world already fills.
 
-**Rarest log** is an outer loop only: census explored `*_log` blocks → `rarest_log()` → pick a spec from [`configs/goals/log_collect.yaml`](configs/goals/log_collect.yaml) → `applyGoal`. Do not teach GoalToSense about rarity.
+**Navigate first.** [`configs/train/navigate_minecraft.yaml`](configs/train/navigate_minecraft.yaml) has no GoalSpec: the reward is covering new ground without colliding (`js/sense/nav_reward.js`). Rarest-log census is an outer loop for a later recipe only.
 
-The fly **must** run in Minecraft (`fly.js` or `python/train.py`). Training YAML: [`configs/train/rarest_minecraft.yaml`](configs/train/rarest_minecraft.yaml). Live PPO starts from `checkpoints/fly_mc_ppo.pt` and writes `checkpoints/fly_mc_rarest.pt`.
+The fly **must** run in Minecraft (`fly.js`, `python/play.py`, or `python/train.py`). Paper is local (`./start-server.sh`, 127.0.0.1:25565).
 
 Secrets live in **`.env`** (`WANDB_API_KEY=`). Load via `python/load_env.py` / `js/sense/loadEnv.js`. Never send the key to the dashboard HTML.
 
@@ -21,8 +23,9 @@ Secrets live in **`.env`** (`WANDB_API_KEY=`). Load via `python/load_env.py` / `
 
 - Add `requirements.txt` / `pip install`. Python is **`uv`** (`pyproject.toml`, `.venv`).
 - Hardcode “wood odor” as the world model. Woods are rows in generic odor tables.
-- Vendor the full male-cns / FlyWire graph. Mini graph only; see `python/tools/fetch_connectome.py`.
-- Overwrite `checkpoints/fly_mc.pt` with PPO. Oak PPO is `fly_mc_ppo.pt`. Minecraft rarest PPO is `fly_mc_rarest.pt`.
+- Vendor `malecns-v1.0.flyb.gz` (23 MB, belongs to its publishers). The derived NPZ is local.
+- Invent neuron types. If a cell is not in male-cns, it is not in the graph. Abdominal touch is a declared gap (`unknown_sensory`), not an `SNta_abdomen`.
+- Overwrite `checkpoints/fly_mc.pt` with PPO. Navigate writes `fly_mc_navigate.pt`. Oak PPO is `fly_mc_ppo.pt`. Rarest PPO is `fly_mc_rarest.pt`.
 - Commit `.env` or paste `WANDB_API_KEY` into the browser client.
 - Edit the Cursor plan file.
 
@@ -30,9 +33,10 @@ Secrets live in **`.env`** (`WANDB_API_KEY=`). Load via `python/load_env.py` / `
 
 ```bash
 ./start-server.sh            # Paper 1.21.11 on 127.0.0.1:25565 (not the public internet)
-node fly.js                  # FruitFly: explore + interact. Chat: stop | explore | log
-uv run python python/train.py configs/train/rarest_minecraft.yaml
-# dashboard (started by train.py): http://127.0.0.1:8766/  (right pane = fly POV world rays)
+uv run python python/tools/build_graph_from_flyb.py --variant full
+uv run python python/play.py --fresh          # open world, dashboard :8766
+uv run python python/train.py configs/train/navigate_minecraft.yaml
+# dashboard: http://127.0.0.1:8766/  (orbit world · fly retina · neuron→body)
 uv sync --group dev
 npm test
 uv run pytest
@@ -42,26 +46,25 @@ uv run pytest
 
 | Path | Role |
 |------|------|
-| `configs/sense/*` | Retina, odor (block/item/entity), taste, mechano, neuPrint `population_index` |
-| `configs/goals/*.json` | GoalSpecs: injections + `success` (eval/RL only) |
-| `js/sense/` | SenseBridge, GoalToSense, JSONL logger, action apply, policy TCP client, `flyLoop` |
-| `python/sense/` | Same GoalToSense + `frame_to_vector` |
-| `python/fly_policy/` | Mini graph, ChessFly settle, `FlyPolicy`, synthetic oak taxis env |
+| `configs/sense/*` | Retina, odor, taste, mechano, neuPrint `population_index` (real type strings) |
+| `configs/sense/retina_columns.json` | 128 measured ommatidial directions (generated) |
+| `data/connectome/malecns_full.npz` | Whole male-cns:v1.0, one node per neuron |
+| `python/connectome/` | FLYB reader, anchors, subgraph derive |
+| `js/sense/` | SenseBridge, GoalToSense, voxel stream, nav reward, `mc_rollout.js` |
+| `python/sense/` | Same GoalToSense + `frame_to_vector` + channel resolver |
+| `python/fly_policy/` | `FlyGraph`, ChessFly settle, `FlyPolicy` |
 | `python/train.py` | YAML trainer. Live Minecraft PPO when `minecraft.required` |
-| `python/dashboard/` | FastAPI live view: senses left, Minecraft eye right (`:8766`) |
-| `python/train_il.py` / `train_rl.py` / `eval_harness.py` / `infer_server.py` | IL / synth PPO / eval / TCP deploy |
-| `docs/SENSE_PROVENANCE.md` | Why each mapping exists (cloned refs in `.research/`, gitignored) |
-| `logs/learning_loop_001/` | Synthetic oak loop (read `SUMMARY.md`) |
-| `logs/learning_loop_002/` | Live rarest-log Minecraft PPO |
+| `python/play.py` | No-goal livestream of a (possibly fresh) policy |
+| `python/dashboard/` | FastAPI live view on `:8766` |
 
 ## Sensory contract
 
 Copied from fly-brain-minecraft `SensoryFrame` / `WorldSenses` (clone: `.research/fly-brain-minecraft`):
 
-- Vision: raycast luminance + analytic LC4 / LPLC2 / LC11 / LC10a / HS
-- Olfaction: class → glomerulus affinities, `exp(-d/6)`, L/R via `odorBearingDeg` (**+ = fly’s right**)
-- Gustation: contact → GRNs (`taste_table.json`)
-- JO / bristles / rain / damage / thermo-hygro
+- Vision: **measured ommatidial rays** (128, farthest-point sampled from `column_directions.csv`) + analytic LC4 / LPLC2 / LC11 / LC10a / HS. Lamina is driven by darkness (histaminergic R1–R6).
+- Olfaction: class → glomerulus affinities, `exp(-d/6)`, L/R via `odorBearingDeg` (**+ = fly’s right**). VP glomeruli are thermo/hygro, not ORNs.
+- Gustation: contact → GRNs (`taste_table.json`). Valence is downstream: bitter GRNs are cholinergic.
+- JO / bristles / hair plates / campaniform / rain / damage / thermo-hygro
 
 `js/sense/senseBridge.js` `sampleWorld(world, cfg)` is the testable core. `sampleBot(bot, cfg)` fills `world` from Mineflayer.
 
@@ -79,40 +82,28 @@ ChessFly dynamics (`huggingface.co/mlabonne/chessfly`):
 
 `h ← (1-a)h + a relu(γ (W h + u − μ)/σ + β)`, `W = sign * exp(θ)`.
 
-- Frozen: topology + signs (`data/connectome/mini_male_cns.npz`, 63 neurons, 233 edges, real ORN/GRN/LC/DN **names**)
-- Learned: encoder (obs → sensory currents), `log_gain`, homeostatic γ/μ/σ/β, decoder + value on DN units
+- Frozen: topology + Dale signs + synapse-count gains (`malecns_full.npz`)
+- Learned: encoder (obs → sensory currents, **masked by modality**), `log_gain`, homeostatic γ/μ/σ/β, decoder + value on DN / motor units
 - Actions: `forward back turn_left turn_right jump mine camera_up camera_down noop`
+  - `noop` is DNg60 (GABAergic halt), not an absence
+  - `turn_left` / `turn_right` both read DNa02; side is the signal
+  - `camera_up` ← MNnm* pool; `camera_down` ← ADNM/FNM; the decoder learns the sign
 
-Obs vector: 64 retina + glomeruli + bearing sin/cos + GRNs + object channels + mechano (`python/sense/frame.py`).
+Obs vector: 128 ommatidia + glomeruli + bearing sin/cos + GRNs + object channels + mechano (`python/sense/frame.py`). Routing keys live on the graph (`retina:37`, `glomerulus:DM1`) and are resolved by `python/sense/channels.py`.
 
 TCP: one JSON object per line. `{ "type": "act", "frame": {...}, "greedy": true }` → `{ "action": "forward", ... }`.
 
-## Learning loop 001 (already ran)
-
-Logged in [`logs/learning_loop_001/SUMMARY.md`](logs/learning_loop_001/SUMMARY.md).
-
-On synthetic oak taxis (20 episodes): **random 0% · expert 100% (16 steps) · IL 5% · PPO 45%**.
-
-Env heading is `bearing_right = -heading_error` so `turn_right` decreases yaw. Do not “fix” this without re-running the expert 20/20 test (`python/tests/test_synth_env.py`).
-
-IL uses **class-weighted** CE so `mine` is not dropped. PPO returns include +10 on collect.
-
-Minecraft-in-the-loop IL from `brain.js` is wired (`fly.logExpert` when logging is on) but **not yet run** — next session if the Paper server is up: `log` then `go`, then `uv run python python/train_il.py --demos logs/sense_*.jsonl`.
+The full graph settles in ~260 ms on CPU (~3.6 Hz). `control_dt_ms: 280`. PPO minibatches at 1 because the backward pass keeps every intermediate rate on 6.29M edges.
 
 ## Live dashboard
 
-`train.py` starts FastAPI on **127.0.0.1:8766**. Left pane is the current `SensoryFrame` + rarest census + action/reward. Right pane is an RGB first-person grid from the same Minecraft `blockAt` rays the visual cortex uses (`js/sense/eyeView.js`) — **for us**, so we can see what FruitFly would have seen. The policy still only sees 64 luminance columns. Ticks are published from each Minecraft PPO step (`dashboard.hub.publish`). Live control is **1 Hz** (`control_dt_ms: 1000`) with ~10-block creative hops so each tick covers ground.
+`train.py` / `play.py` start FastAPI on **127.0.0.1:8766**. Three collapsible panes:
 
-## Next loops (suggested)
+1. Minecraft world — WebGL2 voxels, orbit / first-person / follow. Pose at 30 Hz.
+2. What the fly sees — 128 measured ommatidia + glomeruli / GRNs / mechano.
+3. Neurons → body — descending populations (real male-cns cells), per-group activity over **every** cell, raster of a per-population sample. Topology is sent once; ticks carry rates only.
 
-1. Watch `http://127.0.0.1:8766/` while `train.py` runs; confirm wandb `fly-mc` gets epoch/return/collect.
-2. Record lumberjack JSONL and IL on real SenseBridge frames.
-3. Swap GoalSpecs (`feed`, `flee_creeper`, `collect_spruce`) without changing topology.
-4. Only then consider a larger connectome (neuPrint pull). Keep sensory + DN identities.
-
-## Research clones (gitignored)
-
-`.research/fly-brain-minecraft` and `.research/flybody` were cloned for implementation. ChessFly only publishes `flynet.safetensors` + `connectome_meta.json` (graph not redistributed). mujoco-py is deprecated; flybody uses official MuJoCo — not on the Minecraft path.
+The RGB/orbit view is **for us**. The policy still only sees luminance + the other mapped senses.
 
 ## Tests
 

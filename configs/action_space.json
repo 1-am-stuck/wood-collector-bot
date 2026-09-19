@@ -1,5 +1,6 @@
 {
-  "dtMs": 1000,
+  "dtMs": 67,
+  "note": "15 Hz policy tick. Drosophila course corrections / saccades land at 10-20 Hz, and Minecraft's own server tick is 20 Hz, so 15 Hz is the fastest rate that is both fly-like and not faster than the world changes.",
   "actions": [
     "forward",
     "back",
@@ -12,11 +13,12 @@
     "noop"
   ],
   "control": {
-    "forwardTicks": 4,
-    "turnDeg": 25,
-    "pitchDeg": 12,
-    "hopBlocks": 10,
-    "flyTimeoutMs": 500,
-    "jumpForce": true
+    "turnDeg": 12,
+    "pitchDeg": 8,
+    "reachBlocks": 5,
+    "lookTimeoutMs": 40,
+    "sprint": false,
+    "jumpForce": true,
+    "flySpeed": 8
   }
 }

@@ -14,10 +14,13 @@ minecraft:
   required: true
 
 view:
-  eye:
-    width: 64
-    height: 36
-    maxDist: 20
+  # The dashboard renders from a voxel stream, not from server-side raycasts, so
+  # the picture runs at 30 Hz regardless of the policy tick. Geometry is only
+  # resent when the bot leaves the cached box.
+  stream:
+    hz: 30
+    radiusXZ: 20
+    radiusY: 12
 
 goal:
   selector: rarest_log
@@ -37,9 +40,10 @@ train:
   algo: ppo
   epochs: 12
   episodes_per_epoch: 4
-  max_steps: 200
+  # 15 Hz: 900 steps is a 60 s episode. gamma 0.98 at 1 Hz looked 50 steps ahead;
+  # at 15 Hz the same horizon in seconds needs gamma ~0.9985.
+  max_steps: 900
   lr: 0.0003
-  gamma: 0.98
+  gamma: 0.998
   clip: 0.2
-  control_dt_ms: 1000
-  hop_blocks: 10
+  control_dt_ms: 67

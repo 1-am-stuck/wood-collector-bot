@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>FruitFly — live POV</title>
+  <title>FruitFly — live</title>
   <style>
     :root {
       --bg: #0b0d10;
@@ -12,254 +12,1100 @@
       --muted: #8b97a8;
       --line: #2a3340;
       --accent: #7ee0a3;
-      --warn: #f0c36a;
       --hot: #ff6b6b;
       --dn: #f0a36a;
       --cb: #7eb6ff;
+      --sens: #7ee0a3;
     }
     * { box-sizing: border-box; }
-    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
-    header {
-      display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap;
-      padding: 10px 16px; border-bottom: 1px solid var(--line); background: #10141a;
-    }
+    html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink);
+      font: 13px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    header { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap;
+      padding: 9px 14px; border-bottom: 1px solid var(--line); background: #10141a; }
     header h1 { font-size: 15px; margin: 0; letter-spacing: .04em; }
-    header .meta { color: var(--muted); }
+    header .meta { color: var(--muted); font-variant-numeric: tabular-nums; }
     header .live { color: var(--accent); font-weight: 600; }
     header .live.off { color: var(--hot); }
-    .grid { display: grid; grid-template-columns: 1.4fr 0.9fr 1fr; height: calc(100% - 46px); }
-    section { display: flex; flex-direction: column; min-width: 0; border-right: 1px solid var(--line); }
-    section:last-child { border-right: 0; }
-    section h2 {
-      margin: 0; padding: 8px 14px; font-size: 11px; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--muted); border-bottom: 1px solid var(--line);
-    }
-    .pane { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 10px 12px 14px; min-height: 0; }
-    .pane.scroll { overflow: auto; }
-    canvas { width: 100%; image-rendering: pixelated; background: #0a0c0f; border: 1px solid var(--line); border-radius: 6px; }
-    #worldCanvas { flex: 1; min-height: 280px; }
-    #flyCanvas { height: 280px; flex: 1; min-height: 180px; }
-    #brainCanvas { height: 260px; }
-    .hint { color: var(--muted); font-size: 12px; }
-    .row { display: flex; gap: 8px; flex-wrap: wrap; }
-    .chip {
-      background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
-      padding: 6px 8px; min-width: 72px;
-    }
-    .chip b { display: block; color: var(--muted); font-size: 10px; letter-spacing: .08em; text-transform: uppercase; }
-    .chip.on { border-color: var(--accent); color: var(--accent); }
-    .bars { display: grid; grid-template-columns: 64px 1fr 40px; gap: 2px 8px; align-items: center; }
-    .bars span { color: var(--muted); font-variant-numeric: tabular-nums; }
+    #panes { display: flex; gap: 0; height: calc(100% - 44px); align-items: stretch; }
+    details { border-right: 1px solid var(--line); min-width: 42px; display: flex;
+      flex-direction: column; overflow: hidden; flex: 1 1 0; }
+    details:last-child { border-right: 0; }
+    details:not([open]) { flex: 0 0 42px; }
+    details[open].wide { flex: 1.5 1 0; }
+    summary { cursor: pointer; list-style: none; padding: 9px 12px; font-size: 11px;
+      letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+      border-bottom: 1px solid var(--line); white-space: nowrap; user-select: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary:hover { color: var(--ink); }
+    details:not([open]) summary { writing-mode: vertical-rl; border-bottom: 0; height: 100%; }
+    .body { flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 10px 12px 12px; min-height: 0; }
+    .body.scroll { overflow: auto; }
+    canvas { width: 100%; display: block; background: #0a0c0f;
+      border: 1px solid var(--line); border-radius: 6px; }
+    #gl { flex: 1; min-height: 220px; cursor: grab; }
+    #gl.drag { cursor: grabbing; }
+    #retinaCanvas { height: 190px; }
+    #bodyCanvas { height: 300px; }
+    #rasterCanvas { height: 230px; image-rendering: pixelated; }
+    .hint { color: var(--muted); font-size: 12px; margin: 0; }
+    .row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+    .chip { background: var(--panel); border: 1px solid var(--line); border-radius: 6px;
+      padding: 5px 8px; min-width: 66px; }
+    .chip b { display: block; color: var(--muted); font-size: 10px; letter-spacing: .07em;
+      text-transform: uppercase; }
+    button { background: var(--panel); color: var(--ink); border: 1px solid var(--line);
+      border-radius: 6px; padding: 5px 9px; font: inherit; font-size: 12px; cursor: pointer; }
+    button:hover { border-color: var(--accent); }
+    button.on { border-color: var(--accent); color: var(--accent); }
+    .bars { display: grid; grid-template-columns: minmax(150px, 34%) 1fr 44px;
+      gap: 5px 8px; align-items: center; }
+    .bars span { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 11px; }
+    /* channel label: neuPrint name, what it is in the fly, what triggers it here */
+    .lbl { display: block; line-height: 1.32; }
+    .lbl b { color: var(--ink); font-family: ui-monospace, monospace; font-size: 11px; }
+    .lbl i, .lbl u { display: block; font-style: normal; text-decoration: none; font-size: 10px; }
+    .lbl i { color: var(--muted); }
+    .lbl u { color: var(--cb); }
     .bar { height: 7px; background: #1c232c; border-radius: 99px; overflow: hidden; }
-    .bar i { display: block; height: 100%; background: var(--accent); width: 0; }
+    .bar i { display: block; height: 100%; background: var(--sens); width: 0; }
     .bar.dn i { background: var(--dn); }
     .bar.cb i { background: var(--cb); }
+    .bar.neg i { background: var(--hot); }
+    /* descending populations: one block per function in population_index.json */
+    #dns { display: flex; flex-direction: column; gap: 4px; }
+    .dn { border: 1px solid var(--line); border-left: 3px solid #3a4452; border-radius: 6px;
+      padding: 5px 8px; background: var(--panel); }
+    .dn.live { border-left-color: var(--dn); }
+    .dn.unread { opacity: .62; }
+    .dn header { display: flex; align-items: baseline; gap: 8px; padding: 0; border: 0;
+      background: none; position: static; }
+    .dn .fn { font-weight: 600; font-size: 12px; letter-spacing: .04em; text-transform: uppercase; }
+    .dn.live .fn { color: var(--dn); }
+    .dn .act { color: var(--muted); font-size: 11px; }
+    .dn.live .act { color: var(--ink); }
+    .dn .part { color: var(--muted); font-size: 10px; margin-left: auto; }
+    .dn .units { display: grid; grid-template-columns: 104px 1fr 40px; gap: 2px 8px;
+      align-items: center; margin-top: 3px; }
+    .dn .units span { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .dn .units span.nm { color: var(--ink); font-family: ui-monospace, monospace; font-size: 10.5px; }
+    #groupStats { display: grid; grid-template-columns: minmax(120px, 34%) 1fr 72px;
+      gap: 4px 8px; align-items: center; }
+    #groupStats .grow { display: contents; }
+    #groupStats .nm { color: var(--ink); font-family: ui-monospace, monospace; font-size: 10.5px; }
+    #groupStats span { color: var(--muted); font-variant-numeric: tabular-nums; font-size: 11px; }
   </style>
 </head>
 <body>
   <header>
     <h1>FruitFly</h1>
     <span id="live" class="live off">WAITING</span>
-    <span class="meta" id="run">open world · no GoalSpec</span>
-    <span class="meta" id="clock"></span>
+    <span class="meta" id="run">—</span>
+    <span class="meta" id="rates">view — · policy —</span>
     <span class="meta" id="ckpt"></span>
+    <span class="meta" id="clock"></span>
   </header>
-  <div class="grid">
-    <section>
-      <h2>Minecraft world frame · displayed 2K</h2>
-      <div class="pane">
-        <p class="hint" id="worldHint">RGB for us: what FruitFly would have seen. Same eye rays as the visual cortex; the policy still only gets 64 luminance columns.</p>
-        <canvas id="worldCanvas"></canvas>
+
+  <div id="panes">
+    <details open class="wide" id="paneWorld">
+      <summary>1 · Minecraft world · orbit camera</summary>
+      <div class="body">
+        <div class="row">
+          <button id="btnOrbit" class="on">orbit</button>
+          <button id="btnFirst">fly's eye</button>
+          <button id="btnFollow">follow heading</button>
+          <div class="chip"><b>cam yaw</b><span id="kCamYaw">—</span></div>
+          <div class="chip"><b>cam pitch</b><span id="kCamPitch">—</span></div>
+          <div class="chip"><b>dist</b><span id="kCamDist">—</span></div>
+        </div>
+        <canvas id="gl"></canvas>
+        <p class="hint" id="worldHint">Drag to aim, scroll to zoom. Geometry streams as surface voxels and is
+          re-sent only when the bot leaves the cached box; pose arrives at 30 Hz, so the camera is free.</p>
       </div>
-    </section>
-    <section>
-      <h2>Fly visual input · 64-col + 64×64</h2>
-      <div class="pane">
+    </details>
+
+    <details open id="paneFly">
+      <summary>2 · What the fly actually sees</summary>
+      <div class="body scroll">
         <div class="row">
           <div class="chip"><b>Action</b><span id="kAction">—</span></div>
           <div class="chip"><b>Value</b><span id="kValue">—</span></div>
           <div class="chip"><b>Step</b><span id="kStep">—</span></div>
+          <div class="chip"><b>Reward</b><span id="kReward">—</span></div>
         </div>
-        <p class="hint">Policy retina is <b>64 columns</b> (L then R), not 64×64. The connectome encoder only sees this strip.</p>
-        <canvas id="retina" height="56"></canvas>
-        <p class="hint">64×64 az/el luminance from the same albedo rays (display-only, Neuroscope-style).</p>
-        <canvas id="flyCanvas"></canvas>
+        <p class="hint">The policy's entire visual input: <b id="retinaHint">measured ommatidia</b>,
+          one luminance sample per sampled column, placed where that ommatidium actually looks.</p>
+        <canvas id="retinaCanvas"></canvas>
+        <p class="hint" style="margin-top:6px">Olfaction &mdash; glomeruli</p>
+        <div class="bars" id="odor"></div>
+        <p class="hint" style="margin-top:8px">Optic glomeruli &mdash; object channels</p>
+        <div class="bars" id="objects"></div>
+        <p class="hint" style="margin-top:8px">Taste &mdash; gustatory receptor neurons (contact only)</p>
+        <div class="bars" id="taste"></div>
+        <p class="hint" style="margin-top:8px">Mechano / thermo / hygro</p>
+        <div class="bars" id="mechano"></div>
       </div>
-    </section>
-    <section>
-      <h2>Neuroscope · live connectome</h2>
-      <div class="pane scroll">
-        <p class="hint" id="brainHint">Live graph is the mini male-cns the policy actually runs (sensory → central → DN). Full ~176k is not loaded.</p>
-        <canvas id="brainCanvas"></canvas>
-        <p class="hint">Motor logits</p>
-        <div class="bars" id="logits"></div>
-        <p class="hint" style="margin-top:10px">Hidden rates (top)</p>
-        <div class="bars" id="rates"></div>
+    </details>
+
+    <details open id="paneBrain">
+      <summary>3 · Neurons &rarr; body</summary>
+      <div class="body scroll">
+        <p class="hint" id="brainHint">Named populations placed where they sit in the fly, coloured by live rate.
+          Each action is read from one descending population.</p>
+        <canvas id="bodyCanvas"></canvas>
+        <p class="hint" style="margin-top:6px">Descending populations &mdash; the nine functions of
+          <code>configs/sense/population_index.json</code>, plus the neck motor pool for head pitch.
+          Bar = that unit's live rate; <b>groom</b> and <b>flight</b> are real outputs with no
+          Minecraft action, so nothing reads them.</p>
+        <div id="dns"></div>
+        <p class="hint" style="margin-top:8px">Populations by live rate &mdash; computed over
+          <b>every</b> cell of each one, not just the sampled ones. Count is how many of
+          them are firing this tick.</p>
+        <div id="groupStats"></div>
+        <p class="hint" style="margin-top:8px" id="rasterHint">Raster &mdash; tracked units over time</p>
+        <canvas id="rasterCanvas"></canvas>
       </div>
-    </section>
+    </details>
   </div>
-  <script>
-    const $ = (id) => document.getElementById(id)
-    function b64bytes (s) {
-      if (!s) return null
-      if (Array.isArray(s)) return Uint8Array.from(s)
-      const bin = atob(s)
-      const out = new Uint8Array(bin.length)
-      for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i)
-      return out
+
+<script>
+const $ = (id) => document.getElementById(id)
+// The graph: neuron names, groups, body parts, action wiring. Fetched once, because
+// on the full connectome it is megabytes and by definition cannot change mid-run.
+let TOPO = {}
+const clamp = (v, lo, hi) => Math.max(lo, Math.min(hi, v))
+
+function b64bytes (s) {
+  if (!s) return null
+  if (Array.isArray(s)) return Uint8Array.from(s)
+  const bin = atob(s)
+  const out = new Uint8Array(bin.length)
+  for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i)
+  return out
+}
+
+/* ---------------------------------------------------------------- block colours
+   Mirrors js/sense/eyeView.js so the picture matches what the server would draw. */
+const BLOCK_COLORS = [
+  [/oak_log|oak_wood/, [124, 88, 50]],
+  [/spruce/, [78, 55, 36]],
+  [/birch/, [196, 176, 128]],
+  [/cherry/, [168, 92, 98]],
+  [/acacia/, [150, 78, 42]],
+  [/dark_oak/, [52, 36, 22]],
+  [/jungle|mangrove/, [92, 62, 32]],
+  [/pale_oak/, [186, 176, 164]],
+  [/leaves|vine|moss/, [46, 110, 42]],
+  [/grass_block|grass|fern/, [72, 130, 52]],
+  [/dirt|podzol|mud|rooted/, [110, 78, 48]],
+  [/sand/, [210, 196, 130]],
+  [/gravel/, [136, 130, 126]],
+  [/water|kelp|seagrass/, [40, 90, 180]],
+  [/lava|magma/, [214, 110, 40]],
+  [/snow/, [228, 234, 240]],
+  [/ice/, [160, 200, 232]],
+  [/deepslate|basalt|blackstone/, [70, 70, 76]],
+  [/stone|cobble|andesite|diorite|granite|ore|tuff/, [116, 116, 124]],
+  [/plank|fence|door|stair|slab/, [162, 130, 84]],
+  [/log|wood|stem/, [100, 72, 40]],
+  [/flower|poppy|dandelion|tulip/, [190, 90, 110]],
+]
+function blockColor (name) {
+  const n = String(name || '').replace(/^minecraft:/, '')
+  for (const [re, rgb] of BLOCK_COLORS) if (re.test(n)) return rgb
+  return [96, 100, 78]
+}
+
+/* ------------------------------------------------------------------- 4x4 maths */
+function mul (a, b) {
+  const o = new Float32Array(16)
+  for (let c = 0; c < 4; c++) {
+    for (let r = 0; r < 4; r++) {
+      o[c * 4 + r] = a[r] * b[c * 4] + a[4 + r] * b[c * 4 + 1] + a[8 + r] * b[c * 4 + 2] + a[12 + r] * b[c * 4 + 3]
     }
-    function sizeCanvas (c, minW, minH) {
-      const r = c.getBoundingClientRect()
-      const dpr = window.devicePixelRatio || 1
-      c.width = Math.max(minW || 160, Math.round((r.width || minW || 160) * dpr))
-      c.height = Math.max(minH || 90, Math.round((r.height || minH || 90) * dpr))
-      const ctx = c.getContext('2d')
-      ctx.imageSmoothingEnabled = false
-      return ctx
+  }
+  return o
+}
+function perspective (fovy, aspect, near, far) {
+  const f = 1 / Math.tan(fovy / 2)
+  const nf = 1 / (near - far)
+  return new Float32Array([f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0])
+}
+function lookAt (eye, target, up) {
+  let zx = eye[0] - target[0], zy = eye[1] - target[1], zz = eye[2] - target[2]
+  let zl = Math.hypot(zx, zy, zz) || 1
+  zx /= zl; zy /= zl; zz /= zl
+  let xx = up[1] * zz - up[2] * zy, xy = up[2] * zx - up[0] * zz, xz = up[0] * zy - up[1] * zx
+  let xl = Math.hypot(xx, xy, xz) || 1
+  xx /= xl; xy /= xl; xz /= xl
+  const yx = zy * xz - zz * xy, yy = zz * xx - zx * xz, yz = zx * xy - zy * xx
+  return new Float32Array([
+    xx, yx, zx, 0,
+    xy, yy, zy, 0,
+    xz, yz, zz, 0,
+    -(xx * eye[0] + xy * eye[1] + xz * eye[2]),
+    -(yx * eye[0] + yy * eye[1] + yz * eye[2]),
+    -(zx * eye[0] + zy * eye[1] + zz * eye[2]), 1,
+  ])
+}
+
+/* --------------------------------------------------------------- WebGL2 voxels */
+const VS = `#version 300 es
+layout(location=0) in vec3 aPos;
+layout(location=1) in vec3 aNormal;
+layout(location=2) in vec3 iOffset;
+layout(location=3) in vec3 iScale;
+layout(location=4) in vec3 iColor;
+uniform mat4 uMVP;
+uniform vec3 uEye;
+out vec3 vColor;
+out float vShade;
+out float vDist;
+void main() {
+  vec3 world = iOffset + aPos * iScale;
+  gl_Position = uMVP * vec4(world, 1.0);
+  // Fixed light from above and slightly to one side, plus a face term, so flat
+  // terrain still reads as blocks.
+  vec3 l = normalize(vec3(0.35, 1.0, 0.25));
+  float lambert = max(dot(aNormal, l), 0.0);
+  vShade = 0.42 + 0.58 * lambert;
+  vColor = iColor;
+  vDist = length(world - uEye);
+}`
+const FS = `#version 300 es
+precision mediump float;
+in vec3 vColor;
+in float vShade;
+in float vDist;
+uniform float uFog;
+out vec4 outColor;
+void main() {
+  vec3 sky = vec3(0.494, 0.690, 0.910);
+  float f = clamp(vDist / uFog, 0.0, 1.0) * 0.65;
+  vec3 c = vColor * vShade / 255.0 * 255.0;
+  outColor = vec4(mix(c / 255.0, sky, f), 1.0);
+}`
+
+// Unit cube: 6 faces, 2 triangles each, with per-face normals.
+function cubeGeometry () {
+  const faces = [
+    [[0, 0, 1], [[0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 0, 1], [1, 1, 1], [0, 1, 1]]],
+    [[0, 0, -1], [[1, 0, 0], [0, 0, 0], [0, 1, 0], [1, 0, 0], [0, 1, 0], [1, 1, 0]]],
+    [[1, 0, 0], [[1, 0, 1], [1, 0, 0], [1, 1, 0], [1, 0, 1], [1, 1, 0], [1, 1, 1]]],
+    [[-1, 0, 0], [[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 0, 0], [0, 1, 1], [0, 1, 0]]],
+    [[0, 1, 0], [[0, 1, 1], [1, 1, 1], [1, 1, 0], [0, 1, 1], [1, 1, 0], [0, 1, 0]]],
+    [[0, -1, 0], [[0, 0, 0], [1, 0, 0], [1, 0, 1], [0, 0, 0], [1, 0, 1], [0, 0, 1]]],
+  ]
+  const out = []
+  for (const [n, verts] of faces) for (const v of verts) out.push(v[0], v[1], v[2], n[0], n[1], n[2])
+  return new Float32Array(out)
+}
+
+const cam = { yaw: 35, pitch: 22, dist: 12, mode: 'orbit', follow: false }
+const world = { pose: null, seq: -1, staticCount: 0 }
+
+const glCanvas = $('gl')
+const gl = glCanvas.getContext('webgl2', { antialias: true })
+let prog = null, vaoStatic = null, vaoDyn = null, bufStatic = null, bufDyn = null, uMVP, uEye, uFog
+
+function compile (type, src) {
+  const s = gl.createShader(type)
+  gl.shaderSource(s, src)
+  gl.compileShader(s)
+  if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) throw new Error(gl.getShaderInfoLog(s))
+  return s
+}
+
+function makeVao (instanceBuffer, cubeBuffer) {
+  const vao = gl.createVertexArray()
+  gl.bindVertexArray(vao)
+  gl.bindBuffer(gl.ARRAY_BUFFER, cubeBuffer)
+  gl.enableVertexAttribArray(0)
+  gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 24, 0)
+  gl.enableVertexAttribArray(1)
+  gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 12)
+  gl.bindBuffer(gl.ARRAY_BUFFER, instanceBuffer)
+  for (let i = 0; i < 3; i++) {
+    const loc = 2 + i
+    gl.enableVertexAttribArray(loc)
+    gl.vertexAttribPointer(loc, 3, gl.FLOAT, false, 36, i * 12)
+    gl.vertexAttribDivisor(loc, 1)
+  }
+  gl.bindVertexArray(null)
+  return vao
+}
+
+function initGl () {
+  if (!gl) {
+    $('worldHint').textContent = 'This browser has no WebGL2, so the world view cannot render.'
+    return false
+  }
+  prog = gl.createProgram()
+  gl.attachShader(prog, compile(gl.VERTEX_SHADER, VS))
+  gl.attachShader(prog, compile(gl.FRAGMENT_SHADER, FS))
+  gl.linkProgram(prog)
+  if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) throw new Error(gl.getProgramInfoLog(prog))
+  gl.useProgram(prog)
+  uMVP = gl.getUniformLocation(prog, 'uMVP')
+  uEye = gl.getUniformLocation(prog, 'uEye')
+  uFog = gl.getUniformLocation(prog, 'uFog')
+  const cube = gl.createBuffer()
+  gl.bindBuffer(gl.ARRAY_BUFFER, cube)
+  gl.bufferData(gl.ARRAY_BUFFER, cubeGeometry(), gl.STATIC_DRAW)
+  bufStatic = gl.createBuffer()
+  bufDyn = gl.createBuffer()
+  vaoStatic = makeVao(bufStatic, cube)
+  vaoDyn = makeVao(bufDyn, cube)
+  gl.enable(gl.DEPTH_TEST)
+  gl.enable(gl.CULL_FACE)
+  gl.cullFace(gl.BACK)
+  return true
+}
+
+/** Turn a voxel snapshot into one instance buffer. Runs only when geometry changes. */
+function uploadVoxels (snap) {
+  if (!gl || !snap) return
+  const offs = b64bytes(snap.offsets)
+  const states = b64bytes(snap.states)
+  const n = snap.count | 0
+  const data = new Float32Array(n * 9)
+  const colorCache = new Map()
+  for (let i = 0; i < n; i++) {
+    const state = states[i * 2] | (states[i * 2 + 1] << 8)
+    let col = colorCache.get(state)
+    if (!col) {
+      col = blockColor(snap.palette[state])
+      colorCache.set(state, col)
     }
-    function blitRgb (c, w, h, rgb) {
-      const ctx = sizeCanvas(c, 320, 180)
-      if (!rgb || !w || !h) return
-      const img = ctx.createImageData(w, h)
-      for (let i = 0, p = 0; i < rgb.length; i += 3, p += 4) {
-        img.data[p] = rgb[i]
-        img.data[p + 1] = rgb[i + 1]
-        img.data[p + 2] = rgb[i + 2]
-        img.data[p + 3] = 255
-      }
-      const tmp = document.createElement('canvas')
-      tmp.width = w
-      tmp.height = h
-      tmp.getContext('2d').putImageData(img, 0, 0)
-      ctx.imageSmoothingEnabled = false
-      ctx.drawImage(tmp, 0, 0, c.width, c.height)
+    const o = i * 9
+    data[o] = snap.origin.x + offs[i * 3]
+    data[o + 1] = snap.origin.y + offs[i * 3 + 1]
+    data[o + 2] = snap.origin.z + offs[i * 3 + 2]
+    data[o + 3] = 1; data[o + 4] = 1; data[o + 5] = 1
+    data[o + 6] = col[0]; data[o + 7] = col[1]; data[o + 8] = col[2]
+  }
+  gl.bindBuffer(gl.ARRAY_BUFFER, bufStatic)
+  gl.bufferData(gl.ARRAY_BUFFER, data, gl.STATIC_DRAW)
+  world.staticCount = n
+}
+
+function box (out, x, y, z, sx, sy, sz, r, g, b) {
+  out.push(x, y, z, sx, sy, sz, r, g, b)
+}
+
+/** The bot and nearby mobs, rebuilt each frame. */
+function uploadActors (pose) {
+  const parts = []
+  if (pose) {
+    const h = pose.height || 1.8
+    // A small marker body plus a heading spur, so which way it faces is visible.
+    box(parts, pose.x - 0.25, pose.y, pose.z - 0.25, 0.5, h * 0.62, 0.5, 240, 210, 90)
+    box(parts, pose.x - 0.18, pose.y + h * 0.62, pose.z - 0.18, 0.36, h * 0.34, 0.36, 250, 240, 160)
+    const fx = -Math.sin(pose.yaw || 0)
+    const fz = Math.cos(pose.yaw || 0)
+    box(parts, pose.x - 0.1 + fx * 0.75, pose.y + h * 0.7, pose.z - 0.1 + fz * 0.75, 0.2, 0.2, 0.2, 126, 224, 163)
+    for (const m of pose.mobs || []) {
+      const w = clamp(m.w || 0.6, 0.2, 4)
+      box(parts, m.x - w / 2, m.y, m.z - w / 2, w, clamp(m.h || 1, 0.2, 4), w, 190, 120, 200)
     }
-    function blitLum (c, w, h, lum) {
-      const ctx = sizeCanvas(c, w, h)
-      if (!lum || !w || !h) return
-      const img = ctx.createImageData(w, h)
-      for (let i = 0, p = 0; i < lum.length; i++, p += 4) {
-        const g = lum[i]
-        img.data[p] = g
-        img.data[p + 1] = Math.round(g * 0.95)
-        img.data[p + 2] = Math.round(g * 0.7)
-        img.data[p + 3] = 255
-      }
-      const tmp = document.createElement('canvas')
-      tmp.width = w
-      tmp.height = h
-      tmp.getContext('2d').putImageData(img, 0, 0)
-      ctx.imageSmoothingEnabled = false
-      ctx.drawImage(tmp, 0, 0, c.width, c.height)
-    }
-    function drawRetina (lum) {
-      const c = $('retina')
-      const w = Math.max(64, (c.parentElement.clientWidth || 320) - 4)
-      c.width = w
-      const ctx = c.getContext('2d')
-      const n = (lum && lum.length) || 64
-      const bw = c.width / n
-      ctx.fillStyle = '#0a0c0f'
-      ctx.fillRect(0, 0, c.width, c.height)
+  }
+  gl.bindBuffer(gl.ARRAY_BUFFER, bufDyn)
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(parts), gl.DYNAMIC_DRAW)
+  return parts.length / 9
+}
+
+function resizeGl () {
+  const r = glCanvas.getBoundingClientRect()
+  const dpr = Math.min(2, window.devicePixelRatio || 1)
+  const w = Math.max(64, Math.round(r.width * dpr))
+  const h = Math.max(64, Math.round(r.height * dpr))
+  if (glCanvas.width !== w || glCanvas.height !== h) {
+    glCanvas.width = w
+    glCanvas.height = h
+  }
+}
+
+let framesDrawn = 0
+const WORLD_HINT = 'Drag to aim, scroll to zoom. Geometry streams as surface voxels and is re-sent '
+  + 'only when the bot leaves the cached box; pose arrives at 30 Hz, so the camera is free.'
+const WORLD_WAITING = 'No world stream — this is empty sky, not a render failure. The pane needs a '
+  + 'Minecraft rollout (fly.js or train.py); the sense and neuron panes work without one.'
+
+function drawWorld () {
+  if (!gl || !prog) return
+  resizeGl()
+  gl.viewport(0, 0, glCanvas.width, glCanvas.height)
+  gl.clearColor(0.494, 0.690, 0.910, 1)
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
+  const pose = world.pose
+  // An empty sky and a broken renderer look the same, so say which it is.
+  if (!pose) { $('worldHint').textContent = WORLD_WAITING; return }
+  if (!world.staticCount) {
+    $('worldHint').textContent = 'Pose is arriving but no voxels yet — waiting for the first '
+      + 'surface snapshot from mc_rollout.'
+  } else if ($('worldHint').textContent !== WORLD_HINT) {
+    $('worldHint').textContent = WORLD_HINT
+  }
+  const target = [pose.x, pose.y + (pose.height || 1.8) * 0.55, pose.z]
+  let eye
+  if (cam.mode === 'first') {
+    eye = [pose.x, pose.y + 1.62, pose.z]
+    const cp = Math.cos(pose.pitch || 0)
+    target[0] = eye[0] - Math.sin(pose.yaw || 0) * cp
+    target[1] = eye[1] - Math.sin(pose.pitch || 0)
+    target[2] = eye[2] + Math.cos(pose.yaw || 0) * cp
+  } else {
+    const yaw = (cam.follow ? (pose.yaw || 0) * 180 / Math.PI + 180 : cam.yaw) * Math.PI / 180
+    const pitch = cam.pitch * Math.PI / 180
+    eye = [
+      target[0] + Math.cos(pitch) * Math.sin(yaw) * cam.dist,
+      target[1] + Math.sin(pitch) * cam.dist,
+      target[2] + Math.cos(pitch) * Math.cos(yaw) * cam.dist,
+    ]
+  }
+  const far = 220
+  const mvp = mul(perspective(70 * Math.PI / 180, glCanvas.width / glCanvas.height, 0.1, far), lookAt(eye, target, [0, 1, 0]))
+  gl.useProgram(prog)
+  gl.uniformMatrix4fv(uMVP, false, mvp)
+  gl.uniform3fv(uEye, new Float32Array(eye))
+  gl.uniform1f(uFog, 90)
+  if (world.staticCount) {
+    gl.bindVertexArray(vaoStatic)
+    gl.drawArraysInstanced(gl.TRIANGLES, 0, 36, world.staticCount)
+  }
+  const actors = uploadActors(cam.mode === 'first' ? null : pose)
+  if (actors) {
+    gl.bindVertexArray(vaoDyn)
+    gl.drawArraysInstanced(gl.TRIANGLES, 0, 36, actors)
+  }
+  gl.bindVertexArray(null)
+  framesDrawn++
+  $('kCamYaw').textContent = cam.mode === 'first' ? 'eye' : `${Math.round(cam.follow ? (pose.yaw || 0) * 180 / Math.PI + 180 : cam.yaw)}°`
+  $('kCamPitch').textContent = cam.mode === 'first' ? '—' : `${Math.round(cam.pitch)}°`
+  $('kCamDist').textContent = cam.mode === 'first' ? '—' : cam.dist.toFixed(1)
+}
+
+/* ------------------------------------------------------------- camera controls */
+let dragging = null
+glCanvas.addEventListener('pointerdown', (e) => {
+  dragging = { x: e.clientX, y: e.clientY }
+  glCanvas.classList.add('drag')
+  glCanvas.setPointerCapture(e.pointerId)
+})
+glCanvas.addEventListener('pointermove', (e) => {
+  if (!dragging) return
+  cam.follow = false
+  $('btnFollow').classList.remove('on')
+  cam.yaw = (cam.yaw - (e.clientX - dragging.x) * 0.4 + 360) % 360
+  cam.pitch = clamp(cam.pitch + (e.clientY - dragging.y) * 0.3, -85, 85)
+  dragging = { x: e.clientX, y: e.clientY }
+})
+glCanvas.addEventListener('pointerup', () => { dragging = null; glCanvas.classList.remove('drag') })
+glCanvas.addEventListener('wheel', (e) => {
+  e.preventDefault()
+  cam.dist = clamp(cam.dist * (1 + Math.sign(e.deltaY) * 0.12), 1.5, 120)
+}, { passive: false })
+$('btnOrbit').onclick = () => {
+  cam.mode = 'orbit'
+  $('btnOrbit').classList.add('on')
+  $('btnFirst').classList.remove('on')
+}
+$('btnFirst').onclick = () => {
+  cam.mode = 'first'
+  $('btnFirst').classList.add('on')
+  $('btnOrbit').classList.remove('on')
+}
+$('btnFollow').onclick = () => {
+  cam.follow = !cam.follow
+  $('btnFollow').classList.toggle('on', cam.follow)
+}
+
+/* ------------------------------------------------------- pane 2: what it sees */
+// Rays are real ommatidial directions from /api/retina, not an 8×4 grid.
+let RETINA_RAYS = []
+fetch('/api/retina').then(r => r.json()).then(cfg => {
+  RETINA_RAYS = cfg.rays || []
+  const n = RETINA_RAYS.length
+  const per = cfg.raysPerEye || (n / 2)
+  $('retinaHint').textContent = `${n} measured ommatidia (${per} per eye)`
+}).catch(() => {})
+
+function drawRetina (lum) {
+  const c = $('retinaCanvas')
+  const dpr = Math.min(2, window.devicePixelRatio || 1)
+  const rect = c.getBoundingClientRect()
+  c.width = Math.max(200, Math.round(rect.width * dpr))
+  c.height = Math.max(120, Math.round(rect.height * dpr))
+  const ctx = c.getContext('2d')
+  ctx.fillStyle = '#0a0c0f'
+  ctx.fillRect(0, 0, c.width, c.height)
+  if (!lum || !lum.length) return
+  const pad = 10 * dpr
+  const gap = 18 * dpr
+  const labelH = 16 * dpr
+  const gridW = (c.width - pad * 2 - gap) / 2
+  const gridH = c.height - pad * 2 - labelH
+  const rays = RETINA_RAYS.length === lum.length ? RETINA_RAYS : null
+  ;['L', 'R'].forEach((eye, e) => {
+    const x0 = pad + e * (gridW + gap)
+    const y0 = pad + labelH
+    ctx.strokeStyle = '#2a3340'
+    ctx.lineWidth = dpr
+    ctx.strokeRect(x0, y0, gridW, gridH)
+    ctx.fillStyle = '#8b97a8'
+    ctx.font = `${11 * dpr}px ui-sans-serif, sans-serif`
+    ctx.fillText(`${eye} eye`, x0, pad + 11 * dpr)
+    if (!rays) {
+      // Topology not in yet: fall back to a row of samples so the pane is not blank.
+      const n = Math.ceil(lum.length / 2)
+      const start = e * Math.floor(lum.length / 2)
       for (let i = 0; i < n; i++) {
-        const v = lum[i] == null ? 0 : Number(lum[i])
-        const g = Math.max(0, Math.min(255, Math.round(Math.pow(v, 0.7) * 255)))
-        ctx.fillStyle = `rgb(${g},${Math.round(g * 0.95)},${Math.round(g * 0.7)})`
-        ctx.fillRect(i * bw, 0, Math.ceil(bw) + 1, c.height)
+        const v = Number(lum[start + i] || 0)
+        const g = clamp(Math.round(Math.pow(clamp(v, 0, 1), 0.7) * 255), 0, 255)
+        ctx.fillStyle = `rgb(${g},${Math.round(g * 0.95)},${Math.round(g * 0.72)})`
+        const cw = gridW / Math.max(1, n)
+        ctx.fillRect(x0 + i * cw, y0 + gridH * 0.35, Math.ceil(cw), gridH * 0.3)
       }
-      ctx.fillStyle = 'rgba(126,224,163,.35)'
-      ctx.fillRect(c.width / 2 - 1, 0, 2, c.height)
+      return
     }
-    function bars (el, rows) {
-      el.innerHTML = rows.map(([k, v, cls]) => {
-        const pct = Math.min(100, Math.round(Math.abs(Number(v)) * 100))
-        return `<span>${k}</span><div class="bar ${cls || ''}"><i style="width:${pct}%"></i></div><span>${Number(v).toFixed(2)}</span>`
-      }).join('') || '<span>—</span>'
+    for (let i = 0; i < rays.length; i++) {
+      if (rays[i].side !== eye) continue
+      const az = Number(rays[i].azimuthRightDeg)
+      const el = Number(rays[i].elevationDeg)
+      const u = clamp((az + 150) / 300, 0, 1)
+      const v = clamp((50 - el) / 90, 0, 1)
+      const val = Number(lum[i] || 0)
+      const g = clamp(Math.round(Math.pow(clamp(val, 0, 1), 0.7) * 255), 0, 255)
+      ctx.fillStyle = `rgb(${g},${Math.round(g * 0.95)},${Math.round(g * 0.72)})`
+      ctx.beginPath()
+      ctx.arc(x0 + u * gridW, y0 + v * gridH, 2.4 * dpr, 0, Math.PI * 2)
+      ctx.fill()
     }
-    function drawBrain (brain) {
-      const c = $('brainCanvas')
-      const ctx = sizeCanvas(c, 320, 200)
-      ctx.fillStyle = '#0a0c0f'
-      ctx.fillRect(0, 0, c.width, c.height)
-      if (!brain || !brain.h) return
-      const names = brain.names || []
-      const roles = brain.roles || []
-      const h = brain.h
-      const groups = { sensory: [], central: [], dn: [] }
-      names.forEach((name, i) => {
-        const role = roles[i] || 'central'
-        ;(groups[role] || groups.central).push(i)
-      })
-      const cols = [
-        ['sensory', 0.16, '#7ee0a3'],
-        ['central', 0.50, '#7eb6ff'],
-        ['dn', 0.84, '#f0a36a'],
-      ]
-      cols.forEach(([role, xFrac, color]) => {
-        const ids = groups[role]
-        ids.forEach((i, k) => {
-          const x = c.width * xFrac
-          const y = c.height * (0.1 + 0.8 * (ids.length <= 1 ? 0.5 : k / (ids.length - 1)))
-          const v = Math.max(0, Math.min(1, h[i]))
-          ctx.beginPath()
-          ctx.arc(x, y, 3 + v * 7, 0, Math.PI * 2)
-          ctx.fillStyle = color
-          ctx.globalAlpha = 0.25 + 0.75 * v
-          ctx.fill()
-          ctx.globalAlpha = 1
-          if (v > 0.25 || role === 'dn') {
-            ctx.fillStyle = '#e8edf4'
-            ctx.font = '11px ui-sans-serif'
-            ctx.fillText(names[i], x + 10, y + 4)
-          }
-        })
-      })
-      ctx.globalAlpha = 0.9
-      ctx.fillStyle = '#8b97a8'
-      ctx.font = '11px ui-sans-serif'
-      ctx.fillText(`n=${brain.n}  edges=${brain.n_edges}  (not 176k)`, 10, c.height - 10)
+  })
+}
+
+// What each channel is in the fly, and what excites it in Minecraft. Fetched once
+// from /api/glossary, which derives the Minecraft side from configs/sense/*.json.
+let gloss = {}
+fetch('/api/glossary').then(r => r.json()).then(g => { gloss = g }).catch(() => {})
+
+function bars (el, rows, limit, group) {
+  const use = limit ? rows.slice(0, limit) : rows
+  const book = (group && gloss[group]) || {}
+  el.innerHTML = use.map(([k, v, cls]) => {
+    const n = Number(v) || 0
+    const pct = clamp(Math.round(Math.abs(n) * 100), 0, 100)
+    const klass = [cls || '', n < 0 ? 'neg' : ''].join(' ').trim()
+    const info = book[k]
+    const label = info
+      ? `<span class="lbl"><b>${k}</b><i>${info.what || ''}</i>`
+        + `${info.keys && info.keys.length ? `<u>${info.keys.join(' · ')}</u>` : ''}</span>`
+      : `<span class="lbl"><b>${k}</b></span>`
+    return `${label}<div class="bar ${klass}"><i style="width:${pct}%"></i></div><span>${n.toFixed(2)}</span>`
+  }).join('') || '<span class="hint">silent</span>'
+}
+
+function activeRows (obj, limit) {
+  const rows = Object.entries(obj || {})
+    .map(([k, v]) => [k, Number(v) || 0])
+    .filter(([, v]) => Math.abs(v) > 0.001)
+  rows.sort((a, b) => Math.abs(b[1]) - Math.abs(a[1]))
+  return rows.slice(0, limit || 10)
+}
+
+const MECHANO_KEYS = ['windLeft', 'windRight', 'tilt', 'soundLow', 'soundHigh', 'song',
+  'touchHead', 'touchWing', 'touchLegs', 'touchNotum', 'touchAbdomen', 'groomDust',
+  'damage', 'hot', 'cold', 'dry', 'moist', 'airborne', 'legsOnGround', 'wingbeat']
+
+/* ------------------------------------------------ pane 3: neurons on the body */
+// Where each anatomical group sits in a top-down fly drawing, in 0..1 body space.
+const GROUP_SPOTS = {
+  photoreceptor: { x: 0.5, y: 0.11, spread: 0.2, side: true },
+  lamina: { x: 0.5, y: 0.17, spread: 0.15, side: true },
+  optic_glomerulus: { x: 0.5, y: 0.22, spread: 0.13, side: true },
+  antennal_lobe: { x: 0.5, y: 0.28, spread: 0.11, side: true },
+  thermo_hygro: { x: 0.5, y: 0.06, spread: 0.08, side: false },
+  lateral_horn: { x: 0.5, y: 0.33, spread: 0.13, side: true },
+  mushroom_body: { x: 0.5, y: 0.30, spread: 0.07, side: false },
+  central_complex: { x: 0.5, y: 0.37, spread: 0.07, side: false },
+  lateral_accessory_lobe: { x: 0.5, y: 0.42, spread: 0.11, side: true },
+  subesophageal: { x: 0.5, y: 0.47, spread: 0.04, side: false },
+  johnston_organ: { x: 0.5, y: 0.09, spread: 0.13, side: true },
+  gustatory: { x: 0.5, y: 0.02, spread: 0.06, side: false },
+  bristle: { x: 0.5, y: 0.62, spread: 0.19, side: false },
+  proprioceptor: { x: 0.5, y: 0.74, spread: 0.17, side: false },
+  nociceptor: { x: 0.5, y: 0.83, spread: 0.06, side: false },
+  descending: { x: 0.5, y: 0.53, spread: 0.10, side: true },
+  neck_motor: { x: 0.5, y: 0.49, spread: 0.06, side: false },
+  proboscis_motor: { x: 0.5, y: 0.04, spread: 0.04, side: false },
+}
+const GROUP_COLOR = {
+  photoreceptor: '#7ee0a3', retina: '#7ee0a3', lamina: '#7ee0a3', medulla: '#6ad0a0',
+  optic_glomerulus: '#8ce8c0', optic_glomeruli: '#8ce8c0', lobula_plate: '#8ce8c0',
+  antennal_lobe: '#7eb6ff', lateral_horn: '#9cc8ff', mushroom_body: '#b49cff',
+  central_complex: '#ffd08a', lateral_accessory_lobe: '#ffb066', central: '#9aa4b2',
+  subesophageal: '#f0a36a', gnathal: '#f0a36a',
+  johnston_organ: '#7fd8e8', johnstons_organ: '#7fd8e8', thermo_hygro: '#ff9aa2',
+  gustatory: '#ffc9de', bristle: '#a8b4c4', bristles: '#a8b4c4', tactile: '#a8b4c4',
+  proprioceptor: '#8b97a8', proprioceptive: '#8b97a8',
+  nociceptor: '#ff6b6b', descending: '#f0a36a', motor: '#f0c36a',
+  neck_motor: '#f0c36a', proboscis_motor: '#ffc9de',
+}
+const GROUP_ALIAS = {
+  retina: 'photoreceptor', optic_glomeruli: 'optic_glomerulus',
+  johnstons_organ: 'johnston_organ', bristles: 'bristle', tactile: 'bristle',
+  proprioceptive: 'proprioceptor', gnathal: 'subesophageal',
+  medulla: 'lamina', lobula_plate: 'optic_glomerulus',
+}
+function groupSpot (group) {
+  if (GROUP_SPOTS[group]) return GROUP_SPOTS[group]
+  if (group.startsWith('motor:')) return GROUP_SPOTS.descending
+  return GROUP_SPOTS[GROUP_ALIAS[group]] || null
+}
+function isLeft (name) { return /_L(?:_|$)/.test(name) }
+function isRight (name) { return /_R(?:_|$)/.test(name) }
+// Body parts each output unit drives, drawn as highlights.
+const BODY_SHAPES = {
+  legs: 'all six legs', legs_left: 'left legs', legs_right: 'right legs',
+  wings: 'wings', wings_legs: 'wings + legs', head: 'head / neck',
+  proboscis: 'proboscis', antennae: 'antennae',
+}
+// Where to write each descending function's label, and where its body part sits,
+// so a leader line runs from the name to the thing it moves.
+// Keys are the population names the graph itself uses (`motor:<name>` groups).
+const DN_LABEL = {
+  groom: { u: 0.03, v: 0.06 }, neck_nm: { u: 0.97, v: 0.14 },
+  neck_adn: { u: 0.97, v: 0.22 }, feed: { u: 0.97, v: 0.04 },
+  forward: { u: 0.03, v: 0.44 }, backward: { u: 0.03, v: 0.54 },
+  halt: { u: 0.03, v: 0.64 }, yaw: { u: 0.03, v: 0.74 },
+  gazeYaw: { u: 0.03, v: 0.84 }, gazePitch: { u: 0.97, v: 0.84 },
+  escape: { u: 0.97, v: 0.54 }, flight: { u: 0.97, v: 0.44 },
+}
+const PART_ANCHOR = {
+  legs: [0.32, 0.55], legs_left: [0.26, 0.64], legs_right: [0.74, 0.64],
+  wings: [0.70, 0.58], wings_legs: [0.70, 0.62], proboscis: [0.50, 0.03],
+  antennae: [0.42, 0.05], head: [0.54, 0.35],
+}
+
+function drawFlyBody (brain) {
+  const c = $('bodyCanvas')
+  const dpr = Math.min(2, window.devicePixelRatio || 1)
+  const rect = c.getBoundingClientRect()
+  c.width = Math.max(260, Math.round(rect.width * dpr))
+  c.height = Math.max(240, Math.round(rect.height * dpr))
+  const ctx = c.getContext('2d')
+  ctx.fillStyle = '#0a0c0f'
+  ctx.fillRect(0, 0, c.width, c.height)
+  const W = c.width, H = c.height
+  const cx = W * 0.5
+  const px = (u) => cx + (u - 0.5) * W * 0.88
+  const py = (v) => H * (0.05 + v * 0.9)
+
+  // Body outline: head, thorax, abdomen, wings, six legs.
+  ctx.strokeStyle = '#2f3947'
+  ctx.lineWidth = 1.4 * dpr
+  ctx.fillStyle = '#12171d'
+  const ellipse = (x, y, rx, ry) => {
+    ctx.beginPath()
+    ctx.ellipse(x, y, rx, ry, 0, 0, Math.PI * 2)
+    ctx.fill()
+    ctx.stroke()
+  }
+  const names = (brain && brain.names) || []
+  const bodies = (brain && brain.bodies) || []
+  const active = {}
+  names.forEach((_, i) => {
+    const part = bodies[i]
+    if (part) active[part] = Math.max(active[part] || 0, norm(brain.h[i]))
+  })
+  const glow = (part) => clamp(active[part] || 0, 0, 1)
+  const legLit = clamp(Math.max(glow('legs'), glow('wings_legs')), 0, 1)
+
+  ellipse(cx, py(0.66), W * 0.11, H * 0.085)          // abdomen
+  ellipse(cx, py(0.52), W * 0.13, H * 0.075)          // thorax
+  ellipse(cx, py(0.22), W * 0.15, H * 0.10)           // head
+  // wings
+  ctx.globalAlpha = 0.35 + 0.65 * Math.max(glow('wings'), glow('wings_legs'))
+  ctx.fillStyle = '#1b2530'
+  ctx.strokeStyle = glow('wings') > 0.05 ? '#7ee0a3' : '#2f3947'
+  ellipse(cx - W * 0.20, py(0.58), W * 0.085, H * 0.045)
+  ellipse(cx + W * 0.20, py(0.58), W * 0.085, H * 0.045)
+  ctx.globalAlpha = 1
+  // legs
+  ctx.lineWidth = 2 * dpr
+  for (let i = 0; i < 3; i++) {
+    const y = py(0.46 + i * 0.09)
+    const lit = Math.max(legLit, glow('legs_left'))
+    ctx.strokeStyle = `rgba(240,163,106,${0.25 + 0.75 * lit})`
+    ctx.beginPath(); ctx.moveTo(cx - W * 0.10, y); ctx.lineTo(cx - W * 0.30, y + H * 0.05); ctx.stroke()
+    const litR = Math.max(legLit, glow('legs_right'))
+    ctx.strokeStyle = `rgba(240,163,106,${0.25 + 0.75 * litR})`
+    ctx.beginPath(); ctx.moveTo(cx + W * 0.10, y); ctx.lineTo(cx + W * 0.30, y + H * 0.05); ctx.stroke()
+  }
+  // antennae + proboscis
+  ctx.lineWidth = 2 * dpr
+  ctx.strokeStyle = `rgba(127,216,232,${0.3 + 0.7 * glow('antennae')})`
+  ctx.beginPath(); ctx.moveTo(cx - W * 0.05, py(0.14)); ctx.lineTo(cx - W * 0.10, py(0.04)); ctx.stroke()
+  ctx.beginPath(); ctx.moveTo(cx + W * 0.05, py(0.14)); ctx.lineTo(cx + W * 0.10, py(0.04)); ctx.stroke()
+  ctx.strokeStyle = `rgba(255,201,222,${0.3 + 0.7 * glow('proboscis')})`
+  ctx.beginPath(); ctx.moveTo(cx, py(0.12)); ctx.lineTo(cx, py(0.02)); ctx.stroke()
+  ctx.strokeStyle = `rgba(240,195,106,${0.3 + 0.7 * glow('head')})`
+  ctx.beginPath(); ctx.moveTo(cx - W * 0.04, py(0.35)); ctx.lineTo(cx + W * 0.04, py(0.35)); ctx.stroke()
+
+  if (!brain || !brain.h) {
+    ctx.fillStyle = '#8b97a8'
+    ctx.font = `${12 * dpr}px ui-sans-serif, sans-serif`
+    ctx.fillText('waiting for a policy tick…', 12 * dpr, H - 12 * dpr)
+    return
+  }
+
+  // Populations, placed by anatomical group and lateralised by name suffix.
+  const groups = {}
+  ;(brain.groups || []).forEach((g, i) => {
+    if (!groups[g]) groups[g] = []
+    groups[g].push(i)
+  })
+  for (const [group, ids] of Object.entries(groups)) {
+    const spot = groupSpot(group)
+    if (!spot) continue
+    const color = GROUP_COLOR[group] || GROUP_COLOR[group.split(':')[0]] || '#7eb6ff'
+    ids.forEach((i, k) => {
+      const name = brain.names[i] || ''
+      const v = norm(brain.h[i])
+      let u = spot.x
+      if (spot.side) {
+        const lane = ids.length <= 1 ? 0.5 : k / (ids.length - 1)
+        const jitter = (lane - 0.5) * spot.spread * 0.9
+        u = isLeft(name) ? spot.x - spot.spread * 0.55 + jitter * 0.4
+          : isRight(name) ? spot.x + spot.spread * 0.55 + jitter * 0.4
+          : spot.x + jitter
+      } else {
+        const lane = ids.length <= 1 ? 0.5 : k / (ids.length - 1)
+        u = spot.x + (lane - 0.5) * spot.spread * 2
+      }
+      const x = px(u)
+      const y = py(spot.y + ((k % 3) - 1) * 0.012)
+      ctx.beginPath()
+      ctx.arc(x, y, (1.6 + v * 5) * dpr, 0, Math.PI * 2)
+      ctx.fillStyle = color
+      ctx.globalAlpha = 0.22 + 0.78 * v
+      ctx.fill()
+      ctx.globalAlpha = 1
+    })
+  }
+  // Label each descending function where it acts, with a leader line to the part.
+  ctx.font = `${10.5 * dpr}px ui-sans-serif, sans-serif`
+  const pops = brain.descending || {}
+  for (const [pop, units] of Object.entries(pops)) {
+    const label = DN_LABEL[pop]
+    if (!label) continue
+    const rates = units.map(u => {
+      const i = brain.names.indexOf(u)
+      return i >= 0 ? norm(brain.h[i]) : 0
+    })
+    const v = Math.max(0, ...rates)
+    const part = units.map(u => bodies[brain.names.indexOf(u)]).find(Boolean)
+    const anchor = PART_ANCHOR[part]
+    const x = px(label.u), y = py(label.v)
+    if (anchor) {
+      ctx.strokeStyle = `rgba(240,163,106,${0.10 + 0.55 * v})`
+      ctx.lineWidth = 1 * dpr
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(px(anchor[0]), py(anchor[1])); ctx.stroke()
     }
-    const ACTIONS = ['forward','back','turn_left','turn_right','jump','mine','camera_up','camera_down','noop']
-    function render (tick) {
-      if (!tick || !tick.t) return
+    ctx.textAlign = label.u < 0.5 ? 'left' : 'right'
+    ctx.fillStyle = v > 0.05 ? '#f0a36a' : '#5c6675'
+    ctx.fillText(`${pop} ${v.toFixed(2)}`, x, y)
+    ctx.fillStyle = v > 0.05 ? '#8b97a8' : '#404a58'
+    ctx.font = `${9 * dpr}px ui-monospace, monospace`
+    ctx.fillText(units.join(' '), x, y + 11 * dpr)
+    ctx.font = `${10.5 * dpr}px ui-sans-serif, sans-serif`
+  }
+  ctx.textAlign = 'left'
+}
+
+/* --------------------------------------------------------------- rate scaling */
+// ChessFly rates are relu outputs with no ceiling: they routinely sit in the tens.
+// Clamping at 1.0 pinned every bar and every dot to full brightness, which made
+// the whole pane read as "all neurons maximally active". Normalise against a
+// slowly-decaying peak instead, and print the raw number next to the bar.
+const rateScale = { peak: 1 }
+function updateRateScale (h) {
+  let m = 0
+  for (const v of h) if (v > m) m = v
+  rateScale.peak = Math.max(1e-3, m, rateScale.peak * 0.98)
+}
+const norm = (v) => clamp((v || 0) / rateScale.peak, 0, 1)
+
+/* ------------------------------------ descending populations (population_index) */
+// What each population does comes from the server (sense/routing.py DESCENDING_WHAT),
+// so this pane cannot drift from the graph it is describing.
+
+function drawDescending (brain) {
+  const host = $('dns')
+  const pops = brain.descending || {}
+  const acts = brain.action_populations || {}
+  const what = brain.descending_what || {}
+  // A population can drive more than one action: DNa02 is one type, and which side
+  // of it is firing is the turn direction, so `turn_left` and `turn_right` both
+  // read it. Keeping a list here is what makes that visible instead of one
+  // overwriting the other.
+  const byPop = {}
+  for (const [action, pop] of Object.entries(acts)) (byPop[pop] = byPop[pop] || []).push(action)
+  const names = brain.names || []
+  const bodies = brain.bodies || []
+  const index = new Map(names.map((n, i) => [n, i]))
+  const frag = document.createDocumentFragment()
+  for (const [pop, units] of Object.entries(pops)) {
+    const actions = byPop[pop] || []
+    const rates = units.map(u => {
+      const i = index.has(u) ? index.get(u) : -1
+      return i >= 0 ? (brain.h[i] || 0) : null
+    })
+    const peak = norm(Math.max(0, ...rates.filter(v => v != null)))
+    const chosen = actions.includes(brain.action)
+    const part = units.map(u => bodies[index.get(u)]).find(Boolean) || ''
+    const box = document.createElement('div')
+    box.className = 'dn' + (peak > 0.05 ? ' live' : '') + (actions.length ? '' : ' unread')
+    const head = document.createElement('header')
+    const label = actions.length
+      ? (chosen ? '▶ ' : '→ ') + actions.join(' / ')
+      : 'no Minecraft action'
+    head.innerHTML = `<span class="fn">${(what[pop] || [pop])[0]}</span>`
+      + `<span class="act">${label}</span>`
+      + `<span class="part">${BODY_SHAPES[part] || part}</span>`
+    box.appendChild(head)
+    const grid = document.createElement('div')
+    grid.className = 'units'
+    // The full graph names every cell individually, so a population can be dozens
+    // of rows. Show the loudest and say how many are behind them.
+    const order = units.map((u, k) => k).sort((a, b) => (rates[b] || 0) - (rates[a] || 0))
+    const show = order.slice(0, 8)
+    show.forEach(k => {
+      const v = rates[k]
+      grid.innerHTML += `<span class="nm">${units[k]}</span>`
+        + `<span class="bar dn"><i style="width:${v == null ? 0 : norm(v) * 100}%"></i></span>`
+        + `<span>${v == null ? 'absent' : v.toFixed(1)}</span>`
+    })
+    if (units.length > show.length) {
+      grid.innerHTML += `<span class="nm">+${units.length - show.length} more</span>`
+        + '<span class="bar dn"></span><span></span>'
+    }
+    box.appendChild(grid)
+    box.title = (what[pop] || []).join(' — ')
+    frag.appendChild(box)
+  }
+  host.replaceChildren(frag)
+}
+
+/* --------------------------------------- per-population activity over every cell */
+// The raster only follows a sample of each population. These bars are computed over
+// all of its cells on the server, so a population that lights up cannot be hidden by
+// the sampling.
+function drawGroupStats (brain) {
+  const host = $('groupStats')
+  if (!host) return
+  const stats = brain.group_stats || {}
+  const sizes = brain.group_sizes || {}
+  const rows = Object.entries(stats)
+    .filter(([, s]) => s.peak > 1e-6)
+    .sort((a, b) => b[1].peak - a[1].peak)
+    .slice(0, 14)
+  host.replaceChildren()
+  for (const [group, s] of rows) {
+    const row = document.createElement('div')
+    row.className = 'grow'
+    const colour = GROUP_COLOR[group] || GROUP_COLOR[group.split(':')[0]] || '#7fb2ff'
+    row.innerHTML = `<span class="nm">${group}</span>`
+      + `<span class="bar"><i style="width:${norm(s.peak) * 100}%;background:${colour}"></i></span>`
+      + `<span>${Math.round(s.active * (sizes[group] || 0))}/${sizes[group] || 0}</span>`
+    host.appendChild(row)
+  }
+}
+
+/* --------------------------------------------------------------- raster buffer */
+const raster = { cols: [], max: 200, order: null, labels: [] }
+function rasterOrder (brain) {
+  const order = []
+  const labels = []
+  const seen = new Set()
+  const priority = ['retina', 'photoreceptor', 'lamina', 'medulla', 'optic_glomeruli',
+    'optic_glomerulus', 'lobula_plate', 'thermo_hygro', 'antennal_lobe', 'gustatory',
+    'johnstons_organ', 'johnston_organ', 'bristles', 'bristle', 'tactile',
+    'proprioceptive', 'proprioceptor', 'nociceptor', 'lateral_horn', 'mushroom_body',
+    'central_complex', 'lateral_accessory_lobe', 'gnathal', 'subesophageal',
+    'descending', 'motor', 'neck_motor', 'proboscis_motor']
+  for (const group of priority) {
+    const ids = (brain.groups || []).map((g, i) => g === group || g.startsWith(group + ':') ? i : -1).filter(i => i >= 0)
+    if (!ids.length) continue
+    labels.push({ group, start: order.length, count: ids.length })
+    for (const i of ids) { order.push(i); seen.add(i) }
+  }
+  ;(brain.names || []).forEach((_, i) => { if (!seen.has(i)) order.push(i) })
+  return { order, labels }
+}
+function pushRaster (brain) {
+  if (!brain || !brain.h) return
+  if (!raster.order || raster.order.length !== brain.h.length) {
+    const built = rasterOrder(brain)
+    raster.order = built.order
+    raster.labels = built.labels
+    raster.cols = []
+  }
+  raster.cols.push(Float32Array.from(brain.h))
+  while (raster.cols.length > raster.max) raster.cols.shift()
+}
+function drawRaster () {
+  const c = $('rasterCanvas')
+  const dpr = Math.min(2, window.devicePixelRatio || 1)
+  const rect = c.getBoundingClientRect()
+  const W = Math.max(200, Math.round(rect.width * dpr))
+  const H = Math.max(160, Math.round(rect.height * dpr))
+  if (c.width !== W || c.height !== H) { c.width = W; c.height = H }
+  const ctx = c.getContext('2d')
+  ctx.fillStyle = '#0a0c0f'
+  ctx.fillRect(0, 0, W, H)
+  if (!raster.order || !raster.cols.length) return
+  const rows = raster.order.length
+  const gutter = 92 * dpr
+  const plotW = W - gutter - 4 * dpr
+  const img = ctx.createImageData(raster.max, rows)
+  for (let t = 0; t < raster.cols.length; t++) {
+    const col = raster.cols[t]
+    const x = raster.max - raster.cols.length + t
+    for (let r = 0; r < rows; r++) {
+      const v = norm(col[raster.order[r]])
+      const p = (r * raster.max + x) * 4
+      // dark -> teal -> amber, so strong units stand out
+      img.data[p] = Math.round(30 + 225 * Math.pow(v, 0.8))
+      img.data[p + 1] = Math.round(35 + 190 * Math.pow(v, 0.6))
+      img.data[p + 2] = Math.round(45 + 70 * v)
+      img.data[p + 3] = 255
+    }
+  }
+  const tmp = document.createElement('canvas')
+  tmp.width = raster.max
+  tmp.height = rows
+  tmp.getContext('2d').putImageData(img, 0, 0)
+  ctx.imageSmoothingEnabled = false
+  ctx.drawImage(tmp, gutter, 0, plotW, H)
+  ctx.font = `${9.5 * dpr}px ui-sans-serif, sans-serif`
+  for (const band of raster.labels) {
+    const y = (band.start + band.count / 2) / rows * H
+    ctx.fillStyle = GROUP_COLOR[band.group] || '#8b97a8'
+    ctx.fillText(`${band.group.replace(/_/g, ' ')} (${band.count})`, 4 * dpr, y + 3 * dpr)
+    const yTop = band.start / rows * H
+    ctx.fillRect(gutter - 3 * dpr, yTop, 2 * dpr, band.count / rows * H)
+  }
+}
+
+/* ------------------------------------------------------------------ tick render */
+let policyTicks = 0
+let lastTickT = null
+function renderTick (tick) {
+  if (!tick) return
+  policyTicks++
+  $('clock').textContent = new Date((tick.t || Date.now() / 1000) * 1000).toLocaleTimeString()
+  $('run').textContent = tick.mode === 'play' ? 'open world · no GoalSpec'
+    : `training · epoch ${tick.epoch ?? '—'} ep ${tick.episode ?? '—'}`
+  $('ckpt').textContent = tick.ckpt ? String(tick.ckpt).split('/').slice(-1)[0] : ''
+  $('kAction').textContent = tick.action || '—'
+  $('kValue').textContent = tick.value == null ? '—' : Number(tick.value).toFixed(3)
+  $('kStep').textContent = tick.step == null ? '—' : String(tick.step)
+  $('kReward').textContent = tick.reward == null ? 'no goal' : Number(tick.reward).toFixed(2)
+
+  const frame = tick.frame || {}
+  drawRetina(frame.luminance)
+  bars($('odor'), activeRows(frame.odor, 10), 0, 'glomeruli')
+  bars($('objects'),
+    Object.entries(frame.objectChannels || {}).map(([k, v]) => [k, v, 'cb']), 0, 'object_channels')
+  bars($('taste'), activeRows(frame.taste, 6), 0, 'grns')
+  bars($('mechano'), MECHANO_KEYS
+    .map(k => [k, Number(frame[k] === true ? 1 : frame[k] === false ? 0 : frame[k] || 0)])
+    .filter(([, v]) => Math.abs(v) > 0.001), 10, 'mechano')
+
+  // The tick carries only what changes: rates for the tracked neurons, plus a
+  // per-group summary over every cell. Names, groups and wiring come from the
+  // topology, fetched once, because on the full connectome they are megabytes.
+  const brain = tick.brain && TOPO.names ? Object.assign({}, TOPO, tick.brain) : null
+  if (brain) {
+    updateRateScale(brain.h || [])
+    const shown = (TOPO.tracked || []).length
+    const sampled = brain.n > shown
+      ? `raster follows ${shown.toLocaleString()} of them, sampled evenly per population; `
+        + 'the group bars below cover all of them. '
+      : 'every one is in the raster. '
+    $('brainHint').textContent =
+      `${Number(brain.n).toLocaleString()} neurons · `
+      + `${Number(brain.n_edges).toLocaleString()} connections · ${TOPO.dataset}. `
+      + sampled
+      + `${Number(brain.active || 0).toLocaleString()} firing this tick, peak `
+      + `${Number(brain.peak || 0).toFixed(1)}. Bars scale to the running peak `
+      + `(${rateScale.peak.toFixed(1)}); numbers are raw.`
+    brain.action = tick.action
+    drawFlyBody(brain)
+    pushRaster(brain)
+    drawDescending(brain)
+    drawGroupStats(brain)
+  } else if (tick.brain) {
+    $('brainHint').textContent = 'waiting for the connectome topology…'
+  }
+  lastTickT = tick.t
+}
+
+/* ---------------------------------------------------------------- 30 Hz loop */
+let streamFrames = 0
+function loop () {
+  drawWorld()
+  drawRaster()
+  requestAnimationFrame(loop)
+}
+requestAnimationFrame(loop)
+
+let policyHz = 0
+setInterval(() => {
+  // A full-connectome tick is a few hundred ms, so a 1 s bin is often empty and
+  // the header would read "policy 0 Hz" while the step counter is climbing.
+  policyHz = policyHz * 0.6 + policyTicks * 0.4
+  $('rates').textContent =
+    `view ${streamFrames} Hz · draw ${framesDrawn} fps · policy ${policyHz.toFixed(1)} Hz`
+  streamFrames = 0
+  framesDrawn = 0
+  policyTicks = 0
+}, 1000)
+
+function connect () {
+  const ws = new WebSocket(`ws://${location.host}/ws`)
+  ws.onmessage = (ev) => {
+    const msg = JSON.parse(ev.data)
+    if (msg.topology && msg.topology.names) TOPO = msg.topology
+    if (msg.pose) {
+      world.pose = msg.pose
+      streamFrames++
       $('live').textContent = 'LIVE'
       $('live').classList.remove('off')
-      $('clock').textContent = new Date(tick.t * 1000).toLocaleTimeString()
-      $('run').textContent = tick.mode === 'play' ? 'open world · no GoalSpec' : 'training'
-      $('ckpt').textContent = tick.ckpt ? String(tick.ckpt).split('/').slice(-1)[0] : ''
-      $('kAction').textContent = tick.action || '—'
-      $('kValue').textContent = tick.value == null ? '—' : Number(tick.value).toFixed(3)
-      $('kStep').textContent = tick.step == null ? '—' : String(tick.step)
-      const frame = tick.frame || {}
-      drawRetina(frame.luminance)
-      const eye = tick.eye
-      if (eye && eye.w && eye.rgb) {
-        const rgb = b64bytes(eye.rgb)
-        $('worldHint').textContent = `What it would have seen — ${eye.w}×${eye.h} world rays, shown large for us. Not sent to the fly.`
-        blitRgb($('worldCanvas'), eye.w, eye.h, rgb)
-      } else {
-        $('worldHint').textContent = 'Waiting for the RGB world frame (same rays the fly sampled)…'
-        drawRetina(frame.luminance)
-      }
-      const fly = tick.fly
-      if (fly && fly.w) blitLum($('flyCanvas'), fly.w, fly.h, b64bytes(fly.lum))
-      const brain = tick.brain
-      if (brain) {
-        $('brainHint').textContent = `Neuroscope (fly-brain-minecraft style): live ${brain.n}-unit ChessFly settle, ${brain.n_edges} edges. Full male-cns ~176k is not in this process.`
-        drawBrain(brain)
-        const logits = brain.logits || []
-        bars($('logits'), ACTIONS.map((a, i) => [a, 1 / (1 + Math.exp(-(logits[i] || 0))), a === brain.action ? '' : '']))
-        const scored = (brain.names || []).map((n, i) => [n, brain.h[i] || 0, brain.roles[i] === 'dn' ? 'dn' : brain.roles[i] === 'central' ? 'cb' : ''])
-        scored.sort((a, b) => b[1] - a[1])
-        bars($('rates'), scored.slice(0, 14))
-      }
     }
-    function connect () {
-      const ws = new WebSocket(`ws://${location.host}/ws`)
-      ws.onmessage = (ev) => render(JSON.parse(ev.data))
-      ws.onclose = () => { $('live').textContent = 'RECONNECT'; $('live').classList.add('off'); setTimeout(connect, 800) }
+    if (msg.voxels && msg.seq !== world.seq) {
+      world.seq = msg.seq
+      uploadVoxels(msg.voxels)
     }
-    connect()
-  </script>
+    if (msg.tick) renderTick(msg.tick)
+  }
+  ws.onclose = () => {
+    $('live').textContent = 'RECONNECT'
+    $('live').classList.add('off')
+    setTimeout(connect, 800)
+  }
+}
+
+if (initGl()) {
+  fetch('/api/world').then(r => r.json()).then(w => {
+    if (w.pose) world.pose = w.pose
+    if (w.voxels) { world.seq = w.seq; uploadVoxels(w.voxels) }
+  }).catch(() => {})
+}
+fetch('/api/topology').then(r => r.json()).then(t => {
+  if (t && t.names) TOPO = t
+}).catch(() => {})
+connect()
+</script>
 </body>
 </html>

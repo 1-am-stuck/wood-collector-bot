@@ -2,11 +2,10 @@ from pathlib import Path
 
 import torch
 
-from fly_policy.graph import FlyGraph
+from conftest import graph_or_skip
 from fly_policy.policy import ACTIONS, FlyPolicy
 from play import latest_ckpt
 from sense.frame import vector_size
-from tools.build_mini_graph import build
 
 ROOT = Path(__file__).resolve().parents[2]
 
@@ -22,13 +21,21 @@ def test_latest_ckpt_prefers_rarest_then_ppo(tmp_path, monkeypatch):
 
 
 def test_inspect_returns_named_hidden_rates():
-    g = FlyGraph(build())
-    model = FlyPolicy(g, vector_size(64))
-    obs = torch.zeros(vector_size(64))
+    g = graph_or_skip()
+    model = FlyPolicy(g, vector_size(g.n_retina))
+    obs = torch.zeros(vector_size(g.n_retina))
+    topo = model.topology()
     brain = model.inspect(obs, greedy=True)
     assert brain["action"] in ACTIONS
-    assert len(brain["h"]) == g.n
-    assert len(brain["names"]) == g.n
-    assert "DNp09" in brain["names"]
+    # The tick is the tracked sample; names and wiring come from the topology, once.
+    assert len(brain["h"]) == len(topo["tracked"])
+    assert len(topo["names"]) == len(topo["tracked"])
+    assert brain["n"] == g.n
     assert brain["n_edges"] == g.n_edges
-    assert brain["n"] < 200
+    forward = topo["descending"]["forward"]
+    assert any(n.startswith("DNp09") for n in forward), forward
+    assert topo["descending_what"]["forward"][0] == "forward walking"
+    assert "group_stats" in brain
+    merged = {**topo, **brain}
+    assert merged["names"][0] == topo["names"][0]
+    assert len(merged["h"]) == len(merged["names"])

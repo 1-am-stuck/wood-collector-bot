@@ -10,17 +10,14 @@ import sys
 import time
 from pathlib import Path
 
-import torch
-
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
-from dashboard.hub import publish
-from fly_policy.graph import FlyGraph
+from dashboard.hub import publish, publish_stream, publish_topology
 from fly_policy.mc_env import MinecraftEnv
-from fly_policy.policy import FlyPolicy, default_graph_path
+from fly_policy.policy import ACTIONS, FlyPolicy, load_graph
 from load_env import load_repo_env
-from tools.build_mini_graph import build
+from sense.frame import vector_size
 
 
 def latest_ckpt(root: Path) -> Path:
@@ -72,19 +69,19 @@ def main():
     load_repo_env(ROOT)
     p = argparse.ArgumentParser()
     p.add_argument("--ckpt", default="", help="checkpoint path; default = newest trained model")
+    p.add_argument("--fresh", action="store_true",
+                   help="start from the connectome itself, no checkpoint")
     p.add_argument("--host", default="127.0.0.1")
     p.add_argument("--port", type=int, default=25565)
     p.add_argument("--username", default="FruitFlyPlay")
-    p.add_argument("--dashboard-port", type=int, default=8767)
-    p.add_argument("--dt-ms", type=int, default=1000)
+    p.add_argument("--dashboard-port", type=int, default=8766)
+    p.add_argument("--dt-ms", type=int, default=280)
     p.add_argument("--eye-w", type=int, default=160)
     p.add_argument("--eye-h", type=int, default=90)
-    p.add_argument("--greedy", action="store_true", default=True)
+    p.add_argument("--greedy", action="store_true",
+                   help="argmax every tick (default is to sample, which is how the fly chooses)")
     args = p.parse_args()
 
-    ckpt = Path(args.ckpt) if args.ckpt else latest_ckpt(ROOT)
-    if not ckpt.exists():
-        raise FileNotFoundError(ckpt)
     if not minecraft_up(args.host, args.port):
         print(
             f"Minecraft is not running at {args.host}:{args.port}.\n"
@@ -93,28 +90,55 @@ def main():
         )
         sys.exit(2)
 
-    gpath = default_graph_path(ROOT)
-    if not gpath.exists():
-        build()
-    model = FlyPolicy.load(FlyGraph(gpath), ckpt)
+    graph = load_graph(ROOT)
+    ckpt = Path(args.ckpt) if args.ckpt else None
+    if not args.fresh and ckpt is None:
+        try:
+            ckpt = latest_ckpt(ROOT)
+        except FileNotFoundError:
+            args.fresh = True
+    if args.fresh or ckpt is None or not ckpt.exists():
+        model = FlyPolicy(graph, vector_size(graph.n_retina), len(ACTIONS))
+        kept, dropped = [], []
+        ckpt = Path("(fresh connectome)")
+        print("starting from the connectome itself — no matching checkpoint", flush=True)
+    else:
+        # Tolerant load: the graph is rebuilt from the connectome far more often than a
+        # checkpoint is retrained, and everything indexed by neuron or edge changes shape
+        # when it is. Better to run with the parts that still fit and say which did not.
+        model, kept, dropped = FlyPolicy.load_compatible(graph, ckpt)
     model.eval()
     print(json.dumps({
         "ckpt": str(ckpt),
+        "graph": graph.provenance.get("dataset", ""),
+        "whole_connectome": bool(graph.provenance.get("whole_connectome")),
         "n": model.n,
         "n_edges": model.graph.n_edges,
+        "ommatidia": model.n_retina,
+        "tensors_kept": len(kept),
+        "tensors_reinitialised": dropped,
         "username": args.username,
         "goal": None,
     }, indent=2), flush=True)
 
     start_dashboard("127.0.0.1", args.dashboard_port)
+    publish_topology(model.topology())
+    dummy = model.frames_to_obs({"luminance": [0.55] * model.n_retina})
+    print("calibrated:", model.calibrate(dummy.unsqueeze(0).repeat(4, 1)), flush=True)
     time.sleep(0.5)
 
     cfg = {
         "minecraft": {"host": args.host, "port": args.port, "username": args.username},
         "goal": {"catalog": {}, "explore_radius": 32},
-        "view": {"eye": {"width": args.eye_w, "height": args.eye_h, "maxDist": 24}},
+        "mode": "navigate",
+        "census": False,
+        "seed_woods": False,
+        "view": {
+            "eye": {"width": args.eye_w, "height": args.eye_h, "maxDist": 24},
+            "stream": {"hz": 30, "radiusXZ": 20, "radiusY": 12},
+        },
     }
-    env = MinecraftEnv(cfg)
+    env = MinecraftEnv(cfg, on_stream=publish_stream)
     hello = env.start()
     print(f"joined minecraft as {hello.get('username')} (no GoalSpec)", flush=True)
     pkt = env.play_reset()
@@ -124,8 +148,10 @@ def main():
         while True:
             t0 = time.monotonic()
             obs = model.frames_to_obs(pkt.get("frame") or {})
-            with torch.no_grad():
-                brain = model.inspect(obs, greedy=args.greedy)
+            # Sample from the policy unless --greedy. inspect(..., greedy=True) was
+            # locking an untrained network onto DNp01 (jump) every tick, so the
+            # body never engaged locomotion.
+            _, _, _, brain = model.act_and_inspect(obs, greedy=args.greedy)
             emit(step, brain, pkt, ckpt)
             pkt = env.step(brain["action"])
             step += 1

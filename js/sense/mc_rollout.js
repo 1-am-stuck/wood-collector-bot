@@ -10,11 +10,12 @@ const { Vec3 } = require('vec3')
 const { loadSenseConfig } = require('./loadConfig')
 const { sampleBot } = require('./senseBridge')
 const { applyGoal } = require('./goalToSense')
-const { applyAction, flyOffset, withTimeout } = require('./actions')
+const { applyAction, flyOffset, keepFlying, releaseControls, withTimeout } = require('./actions')
 const { censusLogs, rarestLog, WOOD_LOGS } = require('./rarity')
 const { compactFrame } = require('./logger')
 const { stepReward } = require('./mc_reward')
-const { sampleEyeView, sampleFlyRetina, packEye, packFly } = require('./eyeView')
+const { navReward, newVisitSet } = require('./nav_reward')
+const { sampleVoxels, samplePose, snapshotStale } = require('./voxelSnapshot')
 
 const root = path.join(__dirname, '../..')
 const cfg = loadSenseConfig(root)
@@ -24,10 +25,55 @@ let bot = null
 let catalog = {}
 let exploreRadius = 32
 let lastFacts = {}
-let eyeOpts = { width: 64, height: 36, maxDist: 20 }
+let lastMc = { host: '127.0.0.1', port: 25565, username: 'FruitFly' }
+// Open-world exploring wants neither of these: no planted trees, no omniscient
+// 64-block block search. Training turns them on.
+let seedWoods = true
+let censusEnabled = true
+// 'rarest' scores progress toward the rarest log. 'navigate' scores covering ground
+// without collisions and involves no goal, no census and no planted trees -- it is the
+// stage that has to work before a GoalSpec goes back on top.
+let mode = 'rarest'
+let navCells = newVisitSet()
+const view = { hz: 30, radiusXZ: 20, radiusY: 12, timer: null, voxels: null, voxelAt: 0 }
 
 function send (obj) {
   process.stdout.write(JSON.stringify(obj) + '\n')
+}
+
+/**
+ * Push pose at `view.hz` and the surrounding voxels only when they go stale.
+ * The browser renders from these, so the camera costs no round trip and the
+ * picture stays smooth even though the policy only decides once a second.
+ */
+function startStream (opts = {}) {
+  stopStream()
+  view.hz = Math.max(1, Math.min(60, opts.hz || view.hz))
+  view.radiusXZ = opts.radiusXZ || view.radiusXZ
+  view.radiusY = opts.radiusY || view.radiusY
+  view.timer = setInterval(() => {
+    if (!botAlive()) return
+    try {
+      const pose = samplePose(bot)
+      if (pose) send({ stream: 'pose', t: Date.now(), pose })
+      const now = Date.now()
+      const stale = !view.voxels || snapshotStale(view.voxels, bot) || now - view.voxelAt > 4000
+      if (stale) {
+        const snap = sampleVoxels(bot, { radiusXZ: view.radiusXZ, radiusY: view.radiusY })
+        if (snap) {
+          view.voxels = snap
+          view.voxelAt = now
+          send({ stream: 'voxels', t: now, voxels: snap })
+        }
+      }
+    } catch (_) {}
+  }, Math.round(1000 / view.hz))
+  if (view.timer.unref) view.timer.unref()
+}
+
+function stopStream () {
+  if (view.timer) clearInterval(view.timer)
+  view.timer = null
 }
 
 function inventoryCounts (bot) {
@@ -52,6 +98,22 @@ function scanLogs (bot) {
   })
 }
 
+// findBlocks over a 64-block radius is far too slow to run at the policy tick,
+// and the rarest-log census is an outer-loop fact anyway: it only changes as the
+// bot explores. Refresh it about once a second and derive distance/bearing from
+// the cached list every tick.
+const CENSUS_TTL_MS = 1000
+const censusCache = { at: 0, logs: [] }
+
+function cachedLogs () {
+  const now = Date.now()
+  if (now - censusCache.at > CENSUS_TTL_MS) {
+    censusCache.logs = scanLogs(bot)
+    censusCache.at = now
+  }
+  return censusCache.logs
+}
+
 function rememberVisit (bot) {
   const p = bot.entity.position
   const x = Math.floor(p.x)
@@ -61,8 +123,11 @@ function rememberVisit (bot) {
 }
 
 function factsNow (goalSpec) {
-  const logs = scanLogs(bot)
   rememberVisit(bot)
+  if (!censusEnabled) {
+    return { census: {}, rarest: null, inventory: inventoryCounts(bot), distance: null, bearing: null, goal_id: null }
+  }
+  const logs = cachedLogs()
   const census = censusLogs(logs, visited, exploreRadius)
   const rarest = rarestLog(census)
   const inv = inventoryCounts(bot)
@@ -94,12 +159,30 @@ function factsNow (goalSpec) {
   }
 }
 
+/**
+ * What the open-world navigation reward needs: where the fly is, and what it is
+ * touching. Read off the frame the policy itself saw, so the reward cannot be scored
+ * against contacts the fly was never told about.
+ */
+function navState (frame) {
+  const p = bot.entity.position
+  return {
+    x: p.x, y: p.y, z: p.z,
+    touchHead: !!frame.touchHead,
+    touchWing: !!frame.touchWing,
+    touchLegs: !!frame.touchLegs,
+    touchNotum: !!frame.touchNotum,
+    damage: frame.damage || 0,
+    dead: bot.health != null && bot.health <= 0,
+    onGround: !!frame.legsOnGround,
+  }
+}
+
 function observe (goalSpec) {
   const worldFrame = sampleBot(bot, cfg, senseState)
-  const logs = scanLogs(bot)
   const world = {
     position: { x: bot.entity.position.x, y: bot.entity.position.y, z: bot.entity.position.z },
-    blocks: logs,
+    blocks: goalSpec ? cachedLogs() : [],
     visited,
     exploreRadius,
     census: lastFacts.census,
@@ -107,12 +190,8 @@ function observe (goalSpec) {
   }
   const frame = goalSpec ? applyGoal(worldFrame, goalSpec, world) : worldFrame
   lastFacts = factsNow(goalSpec)
-  return {
-    frame: compactFrame(frame),
-    facts: lastFacts,
-    eye: packEye(sampleEyeView(bot, eyeOpts)),
-    fly: packFly(sampleFlyRetina(bot, { width: 24, height: 24, maxDist: 20 })),
-  }
+  lastFacts.nav = navState(frame)
+  return { frame: compactFrame(frame), facts: lastFacts }
 }
 
 function sleep (ms) {
@@ -140,7 +219,17 @@ async function seedWoodsIfNeeded () {
   }
 }
 
+function botAlive () {
+  return !!(bot && bot.entity && bot.game)
+}
+
+async function startFlying () {
+  if (!bot || !bot.creative) return
+  try { bot.creative.startFlying() } catch (_) {}
+}
+
 async function tossLogs () {
+  if (!bot || !bot.inventory) return
   for (const it of bot.inventory.items()) {
     if (String(it.name).endsWith('_log')) {
       try { await withTimeout(bot.tossStack(it), 400) } catch (_) {}
@@ -148,29 +237,42 @@ async function tossLogs () {
   }
 }
 
+async function ensureBot () {
+  if (botAlive()) return
+  bot = null
+  await connect(lastMc)
+  if (!botAlive()) throw new Error('minecraft bot not connected')
+}
+
 async function connect (opts) {
-  if (bot) return
+  lastMc = {
+    host: (opts && opts.host) || lastMc.host,
+    port: (opts && opts.port) || lastMc.port,
+    username: (opts && opts.username) || lastMc.username,
+  }
+  if (botAlive()) return
+  if (bot) {
+    try { bot.end() } catch (_) {}
+    bot = null
+  }
   await new Promise((resolve, reject) => {
     bot = mineflayer.createBot({
-      host: opts.host || '127.0.0.1',
-      port: opts.port || 25565,
-      username: opts.username || 'FruitFly',
+      host: lastMc.host,
+      port: lastMc.port,
+      username: lastMc.username,
     })
     const t = setTimeout(() => reject(new Error('minecraft connect timeout')), 30000)
     bot.once('spawn', () => { clearTimeout(t); resolve() })
     bot.once('error', reject)
     bot.once('end', () => { bot = null })
   })
-  try { bot.creative.startFlying() } catch (_) {}
-  try {
-    const { mineflayer: mineflayerViewer } = require('prismarine-viewer')
-    mineflayerViewer(bot, { port: 3007, firstPerson: true, viewDistance: 6 })
-    console.error('first-person viewer http://127.0.0.1:3007/')
-  } catch (err) {
-    console.error('prismarine-viewer:', err.message)
-  }
-  await seedWoodsIfNeeded()
-  bot.chat('ppo env ready — rarest log only')
+  await startFlying()
+  if (!botAlive()) return
+  // prismarine-viewer does not support 1.21.11; the dashboard renders the voxel
+  // stream instead, so there is nothing to start here.
+  view.voxels = null
+  startStream(view)
+  if (seedWoods) await seedWoodsIfNeeded()
 }
 
 async function handle (msg) {
@@ -184,56 +286,103 @@ async function handle (msg) {
     return { ok: true, logs: Object.keys(catalog) }
   }
   if (msg.cmd === 'connect') {
-    if (msg.eye) {
-      eyeOpts = {
-        width: Math.min(96, msg.eye.width || 64),
-        height: Math.min(54, msg.eye.height || 36),
-        maxDist: msg.eye.maxDist || 20,
-      }
+    if (msg.view) {
+      view.hz = msg.view.hz || view.hz
+      view.radiusXZ = msg.view.radiusXZ || view.radiusXZ
+      view.radiusY = msg.view.radiusY || view.radiusY
+    }
+    if (msg.seed_woods != null) seedWoods = !!msg.seed_woods
+    if (msg.census != null) censusEnabled = !!msg.census
+    if (msg.mode) mode = msg.mode
+    // Navigating has no goal, so a census and planted trees would be doing nothing but
+    // costing a 64-block block search every second.
+    if (mode === 'navigate') {
+      seedWoods = false
+      censusEnabled = false
     }
     await connect(msg.minecraft || {})
-    return { ok: true, username: bot.username, eye: eyeOpts }
+    return {
+      ok: true,
+      username: bot && bot.username,
+      view: { hz: view.hz, radiusXZ: view.radiusXZ, radiusY: view.radiusY },
+      seed_woods: seedWoods,
+      census: censusEnabled,
+      mode,
+    }
   }
   if (msg.cmd === 'play_reset') {
+    await ensureBot()
     lastFacts = {}
-    try { bot.creative.startFlying() } catch (_) {}
+    navCells = newVisitSet()
+    // Stay airborne. This is a fly, not a pedestrian: landing it is what made
+    // the body look dead, because DNp01 is takeoff and walking keys do nothing
+    // with gravity off unless we translate the pose ourselves.
+    keepFlying(bot)
     const obs = observe(null)
-    return { ...obs, reward: 0, done: false }
+    if (mode === 'navigate') navReward(null, obs.facts.nav, navCells)
+    return { ...obs, reward: null, done: false }
   }
   if (msg.cmd === 'observe') {
-    return { ...observe(null), reward: 0, done: false }
+    await ensureBot()
+    return { ...observe(null), reward: null, done: false }
   }
   if (msg.cmd === 'reset') {
+    await ensureBot()
     visited.length = 0
     lastFacts = {}
+    censusCache.at = 0
+    // Novelty is per episode: a fresh set, so ground covered last episode is new again.
+    navCells = newVisitSet()
+    releaseControls(bot)
     await tossLogs()
-    try { bot.creative.startFlying() } catch (_) {}
+    await startFlying()
     const ox = (Math.random() * 2 - 1) * 36
     const oz = (Math.random() * 2 - 1) * 36
     await flyOffset(bot, 0, 10, 0, 600)
     await flyOffset(bot, ox, 8, oz, 1200)
-    await seedWoodsIfNeeded()
+    keepFlying(bot)
+    if (seedWoods) await seedWoodsIfNeeded()
     await sleep(80)
     rememberVisit(bot)
     const peek = factsNow(null)
-    const spec = peek.rarest ? catalog[peek.rarest] : null
+    const spec = mode === 'navigate' || !peek.rarest ? null : catalog[peek.rarest]
     const obs = observe(spec)
-    if (obs.facts.rarest) bot.chat('rarest ' + obs.facts.rarest)
+    if (mode === 'navigate') {
+      // Registers the starting cell without paying for it.
+      navReward(null, obs.facts.nav, navCells)
+    } else if (obs.facts.rarest) {
+      bot.chat('rarest ' + obs.facts.rarest)
+    }
     return { ...obs, reward: 0, done: false }
   }
   if (msg.cmd === 'step') {
+    await ensureBot()
     const prev = {
       inventory: { ...(lastFacts.inventory || {}) },
       rarest: lastFacts.rarest,
       distance: lastFacts.distance,
     }
-    await applyAction(bot, msg.action || 'noop', cfg.actions.control, lastFacts)
-    const spec = lastFacts.rarest ? catalog[lastFacts.rarest] : null
+    const prevNav = lastFacts.nav
+    await applyAction(bot, msg.action || 'noop', {
+      ...cfg.actions.control,
+      dtMs: cfg.actions.dtMs,
+    })
+    const spec = mode === 'navigate' || !lastFacts.rarest ? null : catalog[lastFacts.rarest]
     const obs = observe(spec)
+    if (mode === 'navigate') {
+      const scored = navReward(prevNav, obs.facts.nav, navCells)
+      obs.facts.nav_cells = scored.cells
+      obs.facts.nav_new_cell = scored.newCell
+      obs.facts.nav_moved = scored.moved
+      return { ...obs, reward: scored.reward, done: scored.done }
+    }
+    // No census means no goal, so there is no reward to report either.
+    if (!censusEnabled) return { ...obs, reward: null, done: false }
     const scored = stepReward(prev, obs.facts)
     return { ...obs, reward: scored.reward, done: scored.done }
   }
   if (msg.cmd === 'close') {
+    stopStream()
     if (bot) bot.end()
     return { ok: true }
   }

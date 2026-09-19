@@ -15,12 +15,10 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
 from load_env import load_repo_env
-from fly_policy.graph import FlyGraph
-from fly_policy.policy import ACTIONS, FlyPolicy, default_graph_path
+from fly_policy.policy import ACTIONS, FlyPolicy, load_graph
 from fly_policy.synth_env import OdorTaxisEnv
 from sense.frame import frame_to_vector
 from sense.goal_to_sense import load_goal
-from tools.build_mini_graph import build
 
 
 def run_policy(env, choose, episodes=20):
@@ -66,10 +64,7 @@ def main():
 
     ckpt = Path(args.ckpt)
     if ckpt.exists():
-        gpath = default_graph_path(ROOT)
-        if not gpath.exists():
-            build()
-        model = FlyPolicy.load(FlyGraph(gpath), ckpt)
+        model = FlyPolicy.load(load_graph(ROOT), ckpt)
         model.eval()
 
         def trained_choose(frame, facts):

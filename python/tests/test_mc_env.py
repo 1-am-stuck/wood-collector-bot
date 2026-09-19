@@ -1,4 +1,3 @@
-from pathlib import Path
 
 
 def test_minecraft_env_speaks_jsonl(tmp_path):

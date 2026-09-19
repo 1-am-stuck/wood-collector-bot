@@ -15,13 +15,12 @@ import torch
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
-from dashboard.hub import publish
+from dashboard.hub import publish, publish_stream, publish_topology
 from load_env import load_repo_env, wandb_api_key
 from fly_policy.export import export_safetensors
-from fly_policy.graph import FlyGraph
 from fly_policy.mc_env import MinecraftEnv
-from fly_policy.policy import ACTIONS, FlyPolicy, default_graph_path
-from tools.build_mini_graph import build
+from fly_policy.policy import ACTIONS, FlyPolicy, load_graph
+from sense.frame import vector_size
 from train_config import load_goal_catalog, load_train_yaml, spec_for_log
 from train_rl import advantages, ppo_epoch_update
 from sense.rarity import rarest_log
@@ -60,8 +59,6 @@ def _emit(epoch: int, episode: int, step: int, action: str, value, pkt: dict, br
         "value": float(value) if value is not None else None,
         "frame": pkt.get("frame") or {},
         "facts": pkt.get("facts") or {},
-        "eye": pkt.get("eye"),
-        "fly": pkt.get("fly"),
         "brain": brain,
     })
 
@@ -100,11 +97,10 @@ def rollout_mc(
     while not done and len(obs) < max_steps:
         t0 = time.monotonic()
         o = model.frames_to_obs(pkt.get("frame") or {})
-        with torch.no_grad():
-            action, logp, value, _ = model.act(o, greedy=False)
-            brain = model.inspect(o, greedy=True)
+        # One settle for both the decision and the picture of it, so the dashboard
+        # shows the rates that actually chose this action.
+        action, logp, value, brain = model.act_and_inspect(o, greedy=False)
         name = ACTIONS[int(action.item())]
-        brain["action"] = name
         pkt = env.step(name)
         obs.append(o)
         acts.append(action)
@@ -171,6 +167,7 @@ def train_minecraft(model: FlyPolicy, env: MinecraftEnv, cfg: dict, log_path: Pa
                 batch_ret,
                 opt,
                 clip=clip,
+                minibatch=train.get("minibatch"),
             )
             line = (
                 f"ppo epoch {ep} return={last_ret:.3f} loss={loss:.4f} "
@@ -194,16 +191,22 @@ def main():
     p.add_argument("config", nargs="?", default=str(ROOT / "configs/train/rarest_minecraft.yaml"))
     args = p.parse_args()
     cfg = load_train_yaml(args.config)
-    catalog = load_goal_catalog(cfg["goal"]["catalog"])
+    goal = cfg.get("goal") or {}
+    catalog = load_goal_catalog(goal["catalog"]) if goal.get("catalog") else {}
     mc = cfg["minecraft"]
-    print(json.dumps({
+    banner = {
         "run": cfg["run"]["name"],
         "ckpt": cfg["run"]["ckpt"],
-        "selector": cfg["goal"]["selector"],
-        "catalog_logs": list(catalog),
-        "example_rarest": spec_for_log(catalog, rarest_log({"oak_log": 9, "cherry_log": 1}))["id"],
+        "mode": cfg.get("mode") or "rarest",
         "minecraft": f"{mc['host']}:{mc['port']}",
-    }, indent=2), flush=True)
+    }
+    if catalog:
+        banner["selector"] = goal.get("selector")
+        banner["catalog_logs"] = list(catalog)
+        banner["example_rarest"] = spec_for_log(
+            catalog, rarest_log({"oak_log": 9, "cherry_log": 1})
+        )["id"]
+    print(json.dumps(banner, indent=2), flush=True)
 
     if mc.get("required", True) and not minecraft_up(mc["host"], mc["port"]):
         print(
@@ -241,20 +244,56 @@ def main():
         except Exception as exc:
             print("wandb init failed, continuing without:", exc, flush=True)
 
-    gpath = default_graph_path(ROOT)
-    if not gpath.exists():
-        build()
-    graph = FlyGraph(gpath)
+    graph = load_graph(ROOT, cfg.get("graph", {}).get("variant"))
+    prov = graph.provenance
+    whole = prov.get("whole_connectome")
+    print(
+        f"graph: {prov['dataset']} "
+        f"{'whole connectome' if whole else 'derived subgraph'}, {graph.n:,} neurons / "
+        f"{graph.n_edges:,} connections carrying {graph.weight.sum():,.0f} synapses, "
+        f"{graph.n_retina} ommatidia",
+        flush=True,
+    )
     ckpt = Path(cfg["run"]["ckpt"])
-    if not ckpt.exists():
-        raise FileNotFoundError(f"best checkpoint missing: {ckpt}")
-    model = FlyPolicy.load(graph, ckpt)
-    print(f"loaded {ckpt}", flush=True)
+    model = None
+    if ckpt.exists():
+        model, kept, dropped = FlyPolicy.load_compatible(graph, ckpt)
+        if dropped:
+            print(
+                f"loaded {ckpt} partially: kept {len(kept)} tensors, reinitialised "
+                f"{len(dropped)} that the current connectome changed shape on "
+                f"({', '.join(dropped[:6])}{'…' if len(dropped) > 6 else ''})",
+                flush=True,
+            )
+        else:
+            print(f"loaded {ckpt}", flush=True)
+    elif cfg["run"].get("allow_fresh"):
+        # Changing the connectome changes the shape of every neuron- and edge-indexed
+        # tensor, so there is nothing to carry over from a run on a different graph.
+        # Starting from the wiring is the honest initial condition: measured synapse
+        # counts as gains, and each receptor reading only its own modality.
+        model = FlyPolicy(graph, vector_size(graph.n_retina), len(ACTIONS))
+        print(f"no checkpoint at {ckpt}; starting from the connectome itself", flush=True)
+    else:
+        raise FileNotFoundError(
+            f"checkpoint missing: {ckpt}. Set `run.allow_fresh: true` to start from "
+            "the untrained connectome instead."
+        )
 
     start_dashboard()
+    publish_topology(model.topology())
+    dummy = torch.zeros(4, model.n_obs)
+    dummy[:, : model.n_retina] = 0.55
+    cal = model.calibrate(dummy)
+    print(
+        f"calibrated: motor_peak={cal['motor_peak']:.3f} "
+        f"motor_active={cal['motor_active']} rate_peak={cal['rate_peak']:.2f} "
+        f"silent={cal['silent_neurons']:,}",
+        flush=True,
+    )
     import time as _time
     _time.sleep(0.6)
-    env = MinecraftEnv(cfg)
+    env = MinecraftEnv(cfg, on_stream=publish_stream)
     log_path = ROOT / "logs" / "learning_loop_002" / "train.txt"
     try:
         hello = env.start()

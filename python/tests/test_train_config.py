@@ -20,3 +20,15 @@ def test_rarest_yaml_loads_and_catalog_has_nine_logs():
     rare = rarest_log({"oak_log": 12, "cherry_log": 1, "spruce_log": 4})
     assert rare == "cherry_log"
     assert spec_for_log(catalog, rare)["id"] == "collect:cherry_log"
+
+
+def test_navigate_yaml_uses_the_full_connectome_and_has_no_goal():
+    from train_config import load_train_yaml
+
+    cfg = load_train_yaml(ROOT / "configs/train/navigate_minecraft.yaml")
+    assert cfg["graph"]["variant"] == "full"
+    assert cfg["mode"] == "navigate"
+    assert cfg["run"]["allow_fresh"] is True
+    assert not (cfg.get("goal") or {}).get("catalog")
+    assert cfg["train"]["minibatch"] == 1
+    assert cfg["minecraft"]["required"] is True
