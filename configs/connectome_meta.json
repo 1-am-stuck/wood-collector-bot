@@ -1,0 +1,32 @@
+{
+  "dataset": "male-cns:v1.0 (Berg et al., Cell 2026) — mini training graph by default",
+  "preferredFull": {
+    "neuprint": "male-cns:v1.0",
+    "neurons": 176422,
+    "edgesMin5": 6290000,
+    "license": "CC BY 4.0",
+    "sources": [
+      "https://male-cns.janelia.org/",
+      "https://neuprint.janelia.org/?dataset=male-cns%3Av1.0"
+    ],
+    "note": "Full graph is not vendored. python/tools/fetch_connectome.py documents the neuPrint pull used by fly-brain-minecraft."
+  },
+  "miniGraph": {
+    "path": "data/connectome/mini_male_cns.npz",
+    "builder": "python/tools/build_mini_graph.py",
+    "note": "Frozen topology using real sensory and DN type names. Sensory + DN identities retained; hidden units are a documented prune for Mineflayer training."
+  },
+  "dynamics": {
+    "kind": "chessfly_rate",
+    "formula": "h <- (1-a)h + a relu(gamma (W h + u - mu)/sigma + beta)",
+    "W": "sign_ij * exp(theta_ij)",
+    "steps": 5,
+    "a": 0.5
+  },
+  "references": [
+    "https://doi.org/10.1016/j.cell.2026.08.015",
+    "https://doi.org/10.1038/s41586-024-07763-9",
+    "https://huggingface.co/mlabonne/chessfly",
+    "https://github.com/blendi-remade/fly-brain-minecraft"
+  ]
+}

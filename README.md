@@ -2,6 +2,26 @@
 
 A Minecraft bot whose purpose is to find and collect every type of wood in the overworld.
 
+## Fruit-fly connectome policy (in progress)
+
+Mineflayer body + ChessFly-style frozen connectome. Minecraft maps onto real fly sensory populations; goals are extra sensory drive. Details: [docs/SENSE_PROVENANCE.md](docs/SENSE_PROVENANCE.md) and [AGENTS.md](AGENTS.md).
+
+```bash
+npm test
+uv sync --group dev
+npm test
+uv run pytest
+uv run python python/tools/build_mini_graph.py
+uv run python python/train_il.py          # writes checkpoints/fly_mc.pt + logs/expert_synth.jsonl
+uv run python python/train_rl.py          # PPO on the oak GoalSpec
+uv run python python/eval_harness.py      # random vs expert vs trained
+uv run python python/infer_server.py      # TCP 8765 for the bot
+```
+
+In game (`node bot.js`): `sense`, `goal collect_oak`, `log`, `fly` (needs infer_server), `go` (legacy lumberjack expert).
+
+---
+
 I made this to get a hang of game logic fundamentals and scripting using mineflayer.
 
 ## Abstract

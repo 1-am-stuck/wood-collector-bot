@@ -1,0 +1,128 @@
+# Ordinary GoalSpecs, one per log type. The trainer does NOT rewrite GoalToSense.
+# Outer loop: census explored logs → rarest_log() → pick the spec below → apply_goal().
+
+oak_log:
+  id: collect:oak_log
+  injections:
+    - modality: olfaction
+      pattern: { DM1: 0.4, DL5: 0.7, VA3: 0.4 }
+      strength: 0.15
+      falloff: tonic
+    - modality: vision
+      population: LC11
+      strength: 0.4
+      falloff: when_seen
+      source_query: { kind: block, name: oak_log }
+  success: { type: inventory_contains, item: oak_log, count: 1 }
+
+spruce_log:
+  id: collect:spruce_log
+  injections:
+    - modality: olfaction
+      pattern: { DM1: 0.3, DL5: 0.8, DC2: 0.4 }
+      strength: 0.15
+      falloff: tonic
+    - modality: vision
+      population: LC11
+      strength: 0.4
+      falloff: when_seen
+      source_query: { kind: block, name: spruce_log }
+  success: { type: inventory_contains, item: spruce_log, count: 1 }
+
+birch_log:
+  id: collect:birch_log
+  injections:
+    - modality: olfaction
+      pattern: { DM1: 0.35, DL5: 0.6, VA3: 0.5 }
+      strength: 0.15
+      falloff: tonic
+    - modality: vision
+      population: LC11
+      strength: 0.4
+      falloff: when_seen
+      source_query: { kind: block, name: birch_log }
+  success: { type: inventory_contains, item: birch_log, count: 1 }
+
+jungle_log:
+  id: collect:jungle_log
+  injections:
+    - modality: olfaction
+      pattern: { DM1: 0.5, DL5: 0.5, VA2: 0.3 }
+      strength: 0.15
+      falloff: tonic
+    - modality: vision
+      population: LC11
+      strength: 0.4
+      falloff: when_seen
+      source_query: { kind: block, name: jungle_log }
+  success: { type: inventory_contains, item: jungle_log, count: 1 }
+
+acacia_log:
+  id: collect:acacia_log
+  injections:
+    - modality: olfaction
+      pattern: { DM1: 0.3, DL5: 0.6, D: 0.4 }
+      strength: 0.15
+      falloff: tonic
+    - modality: vision
+      population: LC11
+      strength: 0.4
+      falloff: when_seen
+      source_query: { kind: block, name: acacia_log }
+  success: { type: inventory_contains, item: acacia_log, count: 1 }
+
+dark_oak_log:
+  id: collect:dark_oak_log
+  injections:
+    - modality: olfaction
+      pattern: { DM1: 0.3, DL5: 0.8, DC2: 0.3 }
+      strength: 0.15
+      falloff: tonic
+    - modality: vision
+      population: LC11
+      strength: 0.4
+      falloff: when_seen
+      source_query: { kind: block, name: dark_oak_log }
+  success: { type: inventory_contains, item: dark_oak_log, count: 1 }
+
+mangrove_log:
+  id: collect:mangrove_log
+  injections:
+    - modality: olfaction
+      pattern: { DM1: 0.4, VP5: 0.5, DL5: 0.5 }
+      strength: 0.15
+      falloff: tonic
+    - modality: vision
+      population: LC11
+      strength: 0.4
+      falloff: when_seen
+      source_query: { kind: block, name: mangrove_log }
+  success: { type: inventory_contains, item: mangrove_log, count: 1 }
+
+cherry_log:
+  id: collect:cherry_log
+  injections:
+    - modality: olfaction
+      pattern: { VL2a: 0.7, D: 0.5, VA6: 0.4, DM1: 0.3 }
+      strength: 0.15
+      falloff: tonic
+    - modality: vision
+      population: LC11
+      strength: 0.4
+      falloff: when_seen
+      source_query: { kind: block, name: cherry_log }
+  success: { type: inventory_contains, item: cherry_log, count: 1 }
+
+pale_oak_log:
+  id: collect:pale_oak_log
+  injections:
+    - modality: olfaction
+      pattern: { DL5: 0.6, VA3: 0.3, DM1: 0.2 }
+      strength: 0.15
+      falloff: tonic
+    - modality: vision
+      population: LC11
+      strength: 0.4
+      falloff: when_seen
+      source_query: { kind: block, name: pale_oak_log }
+  success: { type: inventory_contains, item: pale_oak_log, count: 1 }

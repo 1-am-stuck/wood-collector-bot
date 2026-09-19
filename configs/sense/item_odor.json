@@ -1,0 +1,33 @@
+{
+  "radius": 16,
+  "falloffBlocks": 6,
+  "sources": {
+    "apple": { "DM1": 1.0, "DM2": 0.9, "VA2": 0.6, "DM4": 0.5 },
+    "golden_apple": { "DM1": 1.0, "DM2": 1.0, "VA2": 0.8 },
+    "chorus_fruit": { "DM1": 1.0, "DM2": 0.8, "VA2": 0.5 },
+    "sweet_berries": { "DM1": 0.8, "DM2": 0.7, "VA2": 0.5 },
+    "glow_berries": { "DM1": 0.8, "DM2": 0.7, "VA2": 0.5, "VL2a": 0.3 },
+    "melon_slice": { "DM1": 0.7, "DM2": 0.6, "VM5d": 0.5 },
+    "honey_bottle": { "VL2a": 0.9, "D": 0.6, "DM1": 0.4 },
+    "honeycomb": { "VL2a": 0.9, "D": 0.6 },
+    "cake": { "VA2": 0.8, "DP1l": 0.6, "DM1": 0.5 },
+    "cookie": { "VA2": 0.8, "DP1l": 0.5, "DM1": 0.4 },
+    "pumpkin_pie": { "VA2": 0.8, "DM1": 0.5 },
+    "bread": { "VA2": 0.7, "DP1l": 0.5, "DM1": 0.4 },
+    "sugar": { "VA2": 0.8, "DP1l": 0.6, "DM1": 0.5 },
+    "fermented_spider_eye": { "DP1l": 0.9, "VA2": 0.7, "DM5": 0.6 },
+    "rotten_flesh": { "VM1": 1.0, "VC5": 0.9, "DA2": 0.8 },
+    "spider_eye": { "DA2": 1.0, "DL4": 0.4 },
+    "poisonous_potato": { "DA2": 1.0, "DL4": 0.4 },
+    "pufferfish": { "DA2": 1.0, "DL4": 0.5 },
+    "oak_log": { "DM1": 0.4, "DL5": 0.7, "VA3": 0.4 },
+    "spruce_log": { "DM1": 0.3, "DL5": 0.8, "DC2": 0.4 },
+    "birch_log": { "DM1": 0.35, "DL5": 0.6, "VA3": 0.5 },
+    "jungle_log": { "DM1": 0.5, "DL5": 0.5 },
+    "acacia_log": { "DM1": 0.3, "DL5": 0.6 },
+    "dark_oak_log": { "DM1": 0.3, "DL5": 0.8 },
+    "mangrove_log": { "DM1": 0.4, "VP5": 0.5, "DL5": 0.5 },
+    "cherry_log": { "VL2a": 0.7, "D": 0.5, "DM1": 0.3 },
+    "pale_oak_log": { "DL5": 0.6, "VA3": 0.3 }
+  }
+}

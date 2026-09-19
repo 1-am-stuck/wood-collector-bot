@@ -1,0 +1,37 @@
+# Entry point for the trainer:
+#   uv run python python/train.py configs/train/rarest_minecraft.yaml
+
+run:
+  name: rarest-log-mc
+  seed: 7
+  ckpt: checkpoints/fly_mc_ppo.pt
+  out: checkpoints/fly_mc_rarest.pt
+
+minecraft:
+  host: 127.0.0.1
+  port: 25565
+  username: FruitFly
+  required: true
+
+goal:
+  selector: rarest_log
+  catalog: configs/goals/log_collect.yaml
+  explore_radius: 32
+  # no census yet → keep walking (no GoalSpec / no collect reward)
+
+wandb:
+  project: fly-mc
+  entity: null
+  mode: online
+  base_url: http://127.0.0.1:8080
+  tags: [rarest_log, minecraft, ppo]
+
+train:
+  algo: ppo
+  epochs: 12
+  episodes_per_epoch: 4
+  max_steps: 200
+  lr: 0.0003
+  gamma: 0.98
+  clip: 0.2
+  control_dt_ms: 150

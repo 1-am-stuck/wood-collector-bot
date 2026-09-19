@@ -1,0 +1,31 @@
+{
+  "id": "flee:creeper",
+  "injections": [
+    {
+      "modality": "vision",
+      "population": "LC4",
+      "strength": 0.8,
+      "falloff": "when_near",
+      "source_query": { "kind": "entity", "name": "creeper" }
+    },
+    {
+      "modality": "vision",
+      "population": "LPLC2",
+      "strength": 0.6,
+      "falloff": "when_near",
+      "source_query": { "kind": "entity", "name": "creeper" }
+    },
+    {
+      "modality": "olfaction",
+      "pattern": { "DA2": 0.8, "V": 0.5 },
+      "strength": 0.3,
+      "falloff": "when_near",
+      "source_query": { "kind": "entity", "name": "creeper" }
+    }
+  ],
+  "success": {
+    "type": "distance_above",
+    "entity": "creeper",
+    "blocks": 16
+  }
+}

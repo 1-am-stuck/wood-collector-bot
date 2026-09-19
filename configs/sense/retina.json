@@ -1,0 +1,17 @@
+{
+  "columns": 64,
+  "eyes": ["L", "R"],
+  "azimuthDeg": [-150, 150],
+  "elevationDeg": [-40, 50],
+  "maxDistance": 24,
+  "rMaxHz": 150,
+  "gamma": 1.5,
+  "halfSat": 0.2,
+  "adaptTauS": 1.0,
+  "objectChannels": {
+    "LC4": { "note": "expansion / loom", "rMaxHz": 150 },
+    "LPLC2": { "note": "angular size ~60deg loom", "rMaxHz": 150 },
+    "LC11": { "note": "small moving objects", "rMaxHz": 80 },
+    "LC10a": { "note": "fly-like / player-sized frontal movers", "rMaxHz": 80 }
+  }
+}

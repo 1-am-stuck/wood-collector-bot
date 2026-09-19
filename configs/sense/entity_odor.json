@@ -1,0 +1,15 @@
+{
+  "radius": 16,
+  "falloffBlocks": 6,
+  "sources": {
+    "player": { "V": 0.4, "VM1": 0.3 },
+    "creeper": { "DA2": 0.8, "V": 0.5, "VC5": 0.4 },
+    "zombie": { "VM1": 0.8, "DA2": 0.5, "VC5": 0.4 },
+    "skeleton": { "VM1": 0.4, "DA2": 0.3 },
+    "spider": { "DA2": 0.6, "DL4": 0.3 },
+    "bee": { "VL2a": 0.5, "D": 0.3 },
+    "wolf": { "VM1": 0.3 },
+    "cat": { "VM1": 0.2 },
+    "villager": { "V": 0.3, "VM1": 0.2 }
+  }
+}

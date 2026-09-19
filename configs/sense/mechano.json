@@ -1,0 +1,20 @@
+{
+  "flightSpeedBlocksPerS": 8,
+  "windLateralGain": 0.4,
+  "collisionTouch": { "head": 0.8, "legs": 0.5 },
+  "rain": { "groomDust": 0.6, "moist": 0.8 },
+  "water": { "moist": 1.0, "touchLegs": 0.5 },
+  "hotTempAbove": 1.2,
+  "coldTempBelow": 0.15,
+  "dryTempAbove": 1.5,
+  "explosionSoundHigh": 1.0,
+  "thunderSoundHigh": 0.8,
+  "footstepSoundLow": 0.25,
+  "joAuditoryRMax": 150,
+  "joWindRMax": 180,
+  "joGroomRMax": 150,
+  "bristleRMax": 200,
+  "thermoRMax": 150,
+  "hygroRMax": 120,
+  "proprioRMax": 150
+}

@@ -1,0 +1,23 @@
+{
+  "id": "collect:spruce_log",
+  "injections": [
+    {
+      "modality": "olfaction",
+      "pattern": { "DM1": 0.3, "DL5": 0.8, "DC2": 0.4 },
+      "strength": 0.15,
+      "falloff": "tonic"
+    },
+    {
+      "modality": "vision",
+      "population": "LC11",
+      "strength": 0.4,
+      "falloff": "when_seen",
+      "source_query": { "kind": "block", "name": "spruce_log" }
+    }
+  ],
+  "success": {
+    "type": "inventory_contains",
+    "item": "spruce_log",
+    "count": 1
+  }
+}

@@ -1,2 +1,13 @@
 server/
 node_modules/
+.research/
+.venv/
+.pytest_cache/
+uv.lock
+__pycache__/
+*.pyc
+logs/
+checkpoints/
+data/connectome/*.npz
+*.safetensors
+.DS_Store

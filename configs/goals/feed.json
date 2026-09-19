@@ -1,0 +1,17 @@
+{
+  "id": "feed",
+  "injections": [
+    {
+      "modality": "gustation",
+      "pattern": { "LB3b": 0.25, "LB3c": 0.25, "LgLG3": 0.2 },
+      "strength": 0.2,
+      "falloff": "tonic",
+      "note": "sugar-GRN search tonic until TasteTable contact fires"
+    }
+  ],
+  "success": {
+    "type": "taste_contact",
+    "grn": "LB3b",
+    "min": 0.5
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "rMaxHz": 120,
+  "contact": {
+    "sugar": { "tarsal": { "LgLG3": 1.0, "LgLG4": 0.8, "WG2": 0.6 }, "labellar": { "LB3b": 1.0, "LB3c": 1.0, "PhG1a": 0.9, "PhG1b": 0.9, "PhG1c": 0.9 }, "nutrition": 1.0 },
+    "honey_block": { "alias": "sugar" },
+    "cake": { "alias": "sugar" },
+    "cookie": { "alias": "sugar" },
+    "pumpkin_pie": { "alias": "sugar" },
+    "sweet_berries": { "alias": "sugar" },
+    "glow_berries": { "alias": "sugar" },
+    "honey_bottle": { "alias": "sugar" },
+    "apple": { "tarsal": { "LgLG3": 0.8, "LgLG4": 0.6 }, "labellar": { "LB3b": 0.8, "LB3c": 0.8, "LB3a": 0.4, "PhG1a": 0.7 }, "nutrition": 0.8 },
+    "melon": { "alias": "apple" },
+    "melon_slice": { "alias": "apple" },
+    "carrot": { "alias": "apple" },
+    "bread": { "alias": "apple" },
+    "chorus_fruit": { "alias": "apple" },
+    "water": { "tarsal": {}, "labellar": { "LB3a": 1.0, "PhG3": 0.8, "PhG4": 0.8 }, "nutrition": 0.0 },
+    "spider_eye": { "tarsal": { "LgAG1": 1.0 }, "labellar": { "LB1a": 1.0, "LB1b": 1.0, "LB1c": 1.0, "LB1d": 1.0 }, "nutrition": -0.5 },
+    "poisonous_potato": { "alias": "spider_eye" },
+    "pufferfish": { "alias": "spider_eye" },
+    "fermented_spider_eye": { "alias": "spider_eye" },
+    "rotten_flesh": { "tarsal": { "LgAG1": 0.7 }, "labellar": { "LB1a": 0.6, "LB1b": 0.6, "LB1c": 0.6, "LB1d": 0.6, "LB1e": 0.8 }, "nutrition": 0.1 },
+    "dried_kelp": { "tarsal": {}, "labellar": { "LB3d": 0.9, "LB1e": 0.4 }, "nutrition": 0.1 }
+  }
+}
