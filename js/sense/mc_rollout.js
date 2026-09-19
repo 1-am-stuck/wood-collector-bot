@@ -3,6 +3,7 @@
 
 const fs = require('fs')
 const path = require('path')
+require('./loadEnv').loadRepoEnv()
 const readline = require('readline')
 const mineflayer = require('mineflayer')
 const { Vec3 } = require('vec3')
@@ -12,6 +13,8 @@ const { applyGoal } = require('./goalToSense')
 const { applyAction } = require('./actions')
 const { censusLogs, rarestLog, WOOD_LOGS } = require('./rarity')
 const { compactFrame } = require('./logger')
+const { stepReward } = require('./mc_reward')
+const { sampleEyeView } = require('./eyeView')
 
 const root = path.join(__dirname, '../..')
 const cfg = loadSenseConfig(root)
@@ -103,7 +106,40 @@ function observe (goalSpec) {
   }
   const frame = goalSpec ? applyGoal(worldFrame, goalSpec, world) : worldFrame
   lastFacts = factsNow(goalSpec)
-  return { frame: compactFrame(frame), facts: lastFacts }
+  return { frame: compactFrame(frame), facts: lastFacts, eye: sampleEyeView(bot) }
+}
+
+function sleep (ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+async function seedWoodsIfNeeded () {
+  const logs = scanLogs(bot)
+  const types = new Set(logs.map(l => l.name))
+  if (types.size >= 3) return
+  const mcData = require('minecraft-data')(bot.version)
+  const origin = bot.entity.position.floored()
+  const spots = [
+    [8, 0, 6, 'oak_log'],
+    [14, 0, -8, 'birch_log'],
+    [-10, 0, 12, 'spruce_log'],
+    [4, 0, 18, 'cherry_log'],
+  ]
+  for (const [dx, dy, dz, name] of spots) {
+    const block = mcData.blocksByName[name]
+    if (!block) continue
+    try {
+      await bot.creative.setBlock(origin.offset(dx, dy, dz), block.id)
+    } catch (_) {}
+  }
+}
+
+async function tossLogs () {
+  for (const it of bot.inventory.items()) {
+    if (String(it.name).endsWith('_log')) {
+      try { await bot.tossStack(it) } catch (_) {}
+    }
+  }
 }
 
 async function connect (opts) {
@@ -119,6 +155,16 @@ async function connect (opts) {
     bot.once('error', reject)
     bot.once('end', () => { bot = null })
   })
+  try { bot.creative.startFlying() } catch (_) {}
+  try {
+    const { mineflayer: mineflayerViewer } = require('prismarine-viewer')
+    mineflayerViewer(bot, { port: 3007, firstPerson: true, viewDistance: 6 })
+    console.error('first-person viewer http://127.0.0.1:3007/')
+  } catch (err) {
+    console.error('prismarine-viewer:', err.message)
+  }
+  await seedWoodsIfNeeded()
+  bot.chat('ppo env ready — rarest log only')
 }
 
 async function handle (msg) {
@@ -138,33 +184,33 @@ async function handle (msg) {
   if (msg.cmd === 'reset') {
     visited.length = 0
     lastFacts = {}
+    await tossLogs()
+    try { bot.creative.startFlying() } catch (_) {}
+    const ox = (Math.random() * 2 - 1) * 36
+    const oz = (Math.random() * 2 - 1) * 36
+    try {
+      await bot.creative.flyTo(bot.entity.position.offset(ox, 5, oz))
+    } catch (_) {}
+    await seedWoodsIfNeeded()
+    await sleep(250)
     rememberVisit(bot)
-    lastFacts = factsNow(null)
-    const spec = lastFacts.rarest ? catalog[lastFacts.rarest] : null
+    const peek = factsNow(null)
+    const spec = peek.rarest ? catalog[peek.rarest] : null
     const obs = observe(spec)
+    if (obs.facts.rarest) bot.chat('rarest ' + obs.facts.rarest)
     return { ...obs, reward: 0, done: false }
   }
   if (msg.cmd === 'step') {
-    const prev = { ...lastFacts }
-    const specBefore = lastFacts.rarest ? catalog[lastFacts.rarest] : null
-    await applyAction(bot, msg.action || 'noop', cfg.actions.control)
-    lastFacts = factsNow(specBefore)
-    const spec = lastFacts.rarest ? catalog[lastFacts.rarest] : specBefore
-    const obs = observe(spec)
-    let reward = 0
-    if (spec && spec.success && spec.success.type === 'inventory_contains') {
-      const item = spec.success.item
-      const a = (obs.facts.inventory || {})[item] || 0
-      const b = (prev.inventory || {})[item] || 0
-      if (a > b) reward += 15
-      if (obs.facts.distance != null && prev.distance != null) {
-        reward += (prev.distance - obs.facts.distance) * 0.3
-      }
-    } else if (obs.facts.rarest) {
-      reward += 0.05
+    const prev = {
+      inventory: { ...(lastFacts.inventory || {}) },
+      rarest: lastFacts.rarest,
+      distance: lastFacts.distance,
     }
-    const done = reward >= 15
-    return { ...obs, reward, done }
+    await applyAction(bot, msg.action || 'noop', cfg.actions.control)
+    const spec = lastFacts.rarest ? catalog[lastFacts.rarest] : null
+    const obs = observe(spec)
+    const scored = stepReward(prev, obs.facts)
+    return { ...obs, reward: scored.reward, done: scored.done }
   }
   if (msg.cmd === 'close') {
     if (bot) bot.end()

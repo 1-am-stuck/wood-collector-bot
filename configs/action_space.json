@@ -1,5 +1,5 @@
 {
-  "dtMs": 100,
+  "dtMs": 1000,
   "actions": [
     "forward",
     "back",
@@ -13,8 +13,10 @@
   ],
   "control": {
     "forwardTicks": 4,
-    "turnDeg": 15,
-    "pitchDeg": 10,
+    "turnDeg": 25,
+    "pitchDeg": 12,
+    "hopBlocks": 10,
+    "flyTimeoutMs": 900,
     "jumpForce": true
   }
 }

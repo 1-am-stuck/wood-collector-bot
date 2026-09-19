@@ -4,6 +4,7 @@
  * GoalToSense is generic. Rarest log only selects which existing GoalSpec to inject.
  */
 const path = require('path')
+require('./js/sense/loadEnv').loadRepoEnv()
 const mineflayer = require('mineflayer')
 const { loadSenseConfig } = require('./js/sense/loadConfig')
 const { startExplore } = require('./js/sense/exploreLoop')

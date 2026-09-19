@@ -13,6 +13,7 @@ import torch.nn.functional as F
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "python"))
 
+from load_env import load_repo_env
 from fly_policy.export import export_safetensors
 from fly_policy.graph import FlyGraph
 from fly_policy.policy import ACTIONS, FlyPolicy, default_graph_path
@@ -56,6 +57,27 @@ def advantages(rewards, values, gamma=0.98, lam=0.95):
     return adv, ret
 
 
+def ppo_epoch_update(model, obs_t, act_t, oldlp, adv, ret, opt, clip=0.2):
+    adv_t = torch.as_tensor(adv, dtype=torch.float32)
+    adv_t = (adv_t - adv_t.mean()) / (adv_t.std() + 1e-8)
+    ret_t = torch.as_tensor(ret, dtype=torch.float32)
+    logits, values = model(obs_t)
+    dist = torch.distributions.Categorical(logits=logits)
+    logp = dist.log_prob(act_t)
+    ratio = torch.exp(logp - oldlp)
+    surr1 = ratio * adv_t
+    surr2 = torch.clamp(ratio, 1 - clip, 1 + clip) * adv_t
+    policy_loss = -torch.min(surr1, surr2).mean()
+    value_loss = F.mse_loss(values, ret_t)
+    entropy = dist.entropy().mean()
+    loss = policy_loss + 0.5 * value_loss - 0.01 * entropy
+    opt.zero_grad()
+    loss.backward()
+    torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
+    opt.step()
+    return float(loss.item())
+
+
 def ppo(model, goal, epochs=8, episodes=16, lr=3e-4, clip=0.2):
     opt = torch.optim.Adam(model.parameters(), lr=lr)
     last_ret = 0.0
@@ -74,27 +96,17 @@ def ppo(model, goal, epochs=8, episodes=16, lr=3e-4, clip=0.2):
             batch_ret.extend(ret)
             rets.append(sum(rewards))
         last_ret = sum(rets) / max(1, len(rets))
-        obs_t = torch.stack(batch_obs)
-        act_t = torch.stack(batch_act)
-        oldlp = torch.stack(batch_oldlp).detach()
-        adv_t = torch.tensor(batch_adv, dtype=torch.float32)
-        adv_t = (adv_t - adv_t.mean()) / (adv_t.std() + 1e-8)
-        ret_t = torch.tensor(batch_ret, dtype=torch.float32)
-        logits, values = model(obs_t)
-        dist = torch.distributions.Categorical(logits=logits)
-        logp = dist.log_prob(act_t)
-        ratio = torch.exp(logp - oldlp)
-        surr1 = ratio * adv_t
-        surr2 = torch.clamp(ratio, 1 - clip, 1 + clip) * adv_t
-        policy_loss = -torch.min(surr1, surr2).mean()
-        value_loss = F.mse_loss(values, ret_t)
-        entropy = dist.entropy().mean()
-        loss = policy_loss + 0.5 * value_loss - 0.01 * entropy
-        opt.zero_grad()
-        loss.backward()
-        torch.nn.utils.clip_grad_norm_(model.parameters(), 1.0)
-        opt.step()
-        print(f"ppo epoch {ep} return={last_ret:.3f} loss={float(loss.item()):.4f}")
+        loss = ppo_epoch_update(
+            model,
+            torch.stack(batch_obs),
+            torch.stack(batch_act),
+            torch.stack(batch_oldlp).detach(),
+            batch_adv,
+            batch_ret,
+            opt,
+            clip=clip,
+        )
+        print(f"ppo epoch {ep} return={last_ret:.3f} loss={loss:.4f}")
     return model, last_ret
 
 
@@ -124,4 +136,5 @@ def main():
 
 
 if __name__ == "__main__":
+    load_repo_env()
     main()

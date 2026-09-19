@@ -13,22 +13,26 @@ Goals are **not** a wood enum into an MLP. A `GoalSpec` adds drive on the same `
 
 **Rarest log** is an outer loop only: census explored `*_log` blocks → `rarest_log()` → pick a spec from [`configs/goals/log_collect.yaml`](configs/goals/log_collect.yaml) → `applyGoal`. Do not teach GoalToSense about rarity.
 
-The fly **must** run in Minecraft (`fly.js`). Training YAML: [`configs/train/rarest_minecraft.yaml`](configs/train/rarest_minecraft.yaml).
+The fly **must** run in Minecraft (`fly.js` or `python/train.py`). Training YAML: [`configs/train/rarest_minecraft.yaml`](configs/train/rarest_minecraft.yaml). Live PPO starts from `checkpoints/fly_mc_ppo.pt` and writes `checkpoints/fly_mc_rarest.pt`.
+
+Secrets live in **`.env`** (`WANDB_API_KEY=`). Load via `python/load_env.py` / `js/sense/loadEnv.js`. Never send the key to the dashboard HTML.
 
 ## Do not
 
 - Add `requirements.txt` / `pip install`. Python is **`uv`** (`pyproject.toml`, `.venv`).
 - Hardcode “wood odor” as the world model. Woods are rows in generic odor tables.
 - Vendor the full male-cns / FlyWire graph. Mini graph only; see `python/tools/fetch_connectome.py`.
-- Overwrite `checkpoints/fly_mc.pt` with PPO. PPO writes `checkpoints/fly_mc_ppo.pt`.
+- Overwrite `checkpoints/fly_mc.pt` with PPO. Oak PPO is `fly_mc_ppo.pt`. Minecraft rarest PPO is `fly_mc_rarest.pt`.
+- Commit `.env` or paste `WANDB_API_KEY` into the browser client.
 - Edit the Cursor plan file.
 
 ## Commands
 
 ```bash
-./start-server.sh            # Paper must be up — the fly does not run synthetic
+./start-server.sh            # Paper 1.21.11 on 127.0.0.1:25565 (not the public internet)
 node fly.js                  # FruitFly: explore + interact. Chat: stop | explore | log
 uv run python python/train.py configs/train/rarest_minecraft.yaml
+# dashboard (started by train.py): http://127.0.0.1:8766/  (right pane = fly POV world rays)
 uv sync --group dev
 npm test
 uv run pytest
@@ -43,9 +47,12 @@ uv run pytest
 | `js/sense/` | SenseBridge, GoalToSense, JSONL logger, action apply, policy TCP client, `flyLoop` |
 | `python/sense/` | Same GoalToSense + `frame_to_vector` |
 | `python/fly_policy/` | Mini graph, ChessFly settle, `FlyPolicy`, synthetic oak taxis env |
-| `python/train_il.py` / `train_rl.py` / `eval_harness.py` / `infer_server.py` | Train / eval / deploy |
+| `python/train.py` | YAML trainer. Live Minecraft PPO when `minecraft.required` |
+| `python/dashboard/` | FastAPI live view: senses left, Minecraft eye right (`:8766`) |
+| `python/train_il.py` / `train_rl.py` / `eval_harness.py` / `infer_server.py` | IL / synth PPO / eval / TCP deploy |
 | `docs/SENSE_PROVENANCE.md` | Why each mapping exists (cloned refs in `.research/`, gitignored) |
-| `logs/learning_loop_001/` | First logged loop (read `SUMMARY.md`) |
+| `logs/learning_loop_001/` | Synthetic oak loop (read `SUMMARY.md`) |
+| `logs/learning_loop_002/` | Live rarest-log Minecraft PPO |
 
 ## Sensory contract
 
@@ -92,9 +99,13 @@ IL uses **class-weighted** CE so `mine` is not dropped. PPO returns include +10 
 
 Minecraft-in-the-loop IL from `brain.js` is wired (`fly.logExpert` when logging is on) but **not yet run** — next session if the Paper server is up: `log` then `go`, then `uv run python python/train_il.py --demos logs/sense_*.jsonl`.
 
+## Live dashboard
+
+`train.py` starts FastAPI on **127.0.0.1:8766**. Left pane is the current `SensoryFrame` + rarest census + action/reward. Right pane is a live first-person grid from the same Minecraft `blockAt` rays the visual cortex uses (`js/sense/eyeView.js`); the policy still only sees 64 luminance columns. Ticks are published from each Minecraft PPO step (`dashboard.hub.publish`). Live control is **1 Hz** (`control_dt_ms: 1000`) with ~10-block creative hops so each tick covers ground.
+
 ## Next loops (suggested)
 
-1. Live Paper + `infer_server` + chat `fly` with `collect_oak`.
+1. Watch `http://127.0.0.1:8766/` while `train.py` runs; confirm wandb `fly-mc` gets epoch/return/collect.
 2. Record lumberjack JSONL and IL on real SenseBridge frames.
 3. Swap GoalSpecs (`feed`, `flee_creeper`, `collect_spruce`) without changing topology.
 4. Only then consider a larger connectome (neuPrint pull). Keep sensory + DN identities.

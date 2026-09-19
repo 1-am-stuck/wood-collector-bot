@@ -23,7 +23,8 @@ wandb:
   project: fly-mc
   entity: null
   mode: online
-  base_url: http://127.0.0.1:8080
+  # Official W&B (browser login). Do not force the local :8080 instance.
+  base_url: null
   tags: [rarest_log, minecraft, ppo]
 
 train:
@@ -34,4 +35,5 @@ train:
   lr: 0.0003
   gamma: 0.98
   clip: 0.2
-  control_dt_ms: 150
+  control_dt_ms: 1000
+  hop_blocks: 10

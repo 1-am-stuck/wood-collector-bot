@@ -2,20 +2,35 @@
 
 A Minecraft bot whose purpose is to find and collect every type of wood in the overworld.
 
-## Fruit-fly connectome policy (in progress)
+## Fruit-fly connectome policy
 
-Mineflayer body + ChessFly-style frozen connectome. Minecraft maps onto real fly sensory populations; goals are extra sensory drive. Details: [docs/SENSE_PROVENANCE.md](docs/SENSE_PROVENANCE.md) and [AGENTS.md](AGENTS.md).
+Mineflayer body + ChessFly-style frozen connectome. Minecraft maps onto real fly sensory populations; goals are extra sensory drive. Rarest-log collection is an outer loop (census → pick a GoalSpec). Details: [docs/SENSE_PROVENANCE.md](docs/SENSE_PROVENANCE.md) and [AGENTS.md](AGENTS.md).
+
+Put `WANDB_API_KEY=` in **`.env`** (see `.env.example`). Do not commit it.
 
 ```bash
-npm test
+./start-server.sh   # Paper 1.21.11, localhost:25565 only
 uv sync --group dev
+npm install
 npm test
 uv run pytest
-uv run python python/tools/build_mini_graph.py
-uv run python python/train_il.py          # writes checkpoints/fly_mc.pt + logs/expert_synth.jsonl
-uv run python python/train_rl.py          # PPO on the oak GoalSpec
-uv run python python/eval_harness.py      # random vs expert vs trained
-uv run python python/infer_server.py      # TCP 8765 for the bot
+uv run python python/train.py configs/train/rarest_minecraft.yaml
+```
+
+`train.py` joins as **FruitFly**, PPO-finetunes `checkpoints/fly_mc_ppo.pt` on the live world (only the current rarest log pays), and writes `checkpoints/fly_mc_rarest.pt`.
+
+**Live HTML board (open while `train.py` is running):**
+
+**http://127.0.0.1:8766/**
+
+Left: current SensoryFrame / rarest census / action. Right: live FruitFly POV — the Minecraft world-ray grid sent to visual cortex (not the 64-col policy retina). W&B: project `fly-mc`. TLauncher: `127.0.0.1:25565`.
+
+```bash
+node fly.js                               # explore / chat: stop | explore | log
+uv run python python/train_il.py          # synthetic IL → checkpoints/fly_mc.pt
+uv run python python/train_rl.py          # synthetic oak PPO → fly_mc_ppo.pt
+uv run python python/eval_harness.py
+uv run python python/infer_server.py      # TCP 8765
 ```
 
 In game (`node bot.js`): `sense`, `goal collect_oak`, `log`, `fly` (needs infer_server), `go` (legacy lumberjack expert).

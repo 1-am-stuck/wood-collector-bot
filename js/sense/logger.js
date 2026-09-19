@@ -19,8 +19,9 @@ function openJsonl (filePath) {
 }
 
 function compactFrame (frame) {
+  const lum = (frame && frame.luminance) || []
   return {
-    luminance: frame.luminance.map(v => (Number.isNaN(v) ? null : Math.round(v * 1000) / 1000)),
+    luminance: lum.map(v => (Number.isNaN(v) ? null : Math.round(v * 1000) / 1000)),
     objects: frame.objects,
     yawRateDegPerS: frame.yawRateDegPerS,
     pitchRateDegPerS: frame.pitchRateDegPerS,
