@@ -1039,3 +1039,110 @@ step 0.0.160 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
 step 0.0.170 turn_right rew=0.008 dist=None rarest=None inv={'oak_log': 128}
 step 0.0.180 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
 step 0.0.190 camera_down rew=-0.119 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.200 jump rew=0.923 dist=None rarest=None inv={'oak_log': 128}
+reset epoch=0 ep=1 rarest=None dist=None
+step 0.1.1 back rew=1.027 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.10 turn_left rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.20 forward rew=-0.058 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.30 forward rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.40 back rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.50 camera_down rew=-0.096 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.60 camera_up rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.70 camera_up rew=1.194 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.80 camera_down rew=1.293 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.90 turn_left rew=1.119 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.100 camera_down rew=1.360 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.110 jump rew=1.629 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.120 forward rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.130 turn_right rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.140 jump rew=0.907 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.150 forward rew=-0.092 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.160 turn_right rew=2.092 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.170 camera_down rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.180 camera_up rew=0.916 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.190 camera_down rew=-0.118 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.200 mine rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+reset epoch=0 ep=0 rarest=None dist=None
+step 0.0.1 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.10 forward rew=0.032 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.20 noop rew=1.476 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.30 forward rew=1.241 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.40 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.50 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.60 forward rew=1.484 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.70 turn_left rew=1.700 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.80 camera_down rew=0.005 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.90 camera_up rew=2.488 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.100 camera_down rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.110 camera_down rew=-0.062 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.120 camera_down rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.130 camera_down rew=1.159 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.140 camera_up rew=-0.072 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 1}
+step 0.0.150 noop rew=0.949 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 4}
+step 0.0.160 forward rew=1.329 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 11}
+step 0.0.170 camera_up rew=2.160 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 11}
+step 0.0.180 mine rew=-0.073 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 11}
+step 0.0.190 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.200 forward rew=0.027 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.210 turn_left rew=1.115 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.220 mine rew=-0.094 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.230 camera_down rew=1.158 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.240 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.250 camera_down rew=1.518 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.260 camera_up rew=2.782 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.270 camera_down rew=-0.084 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.280 camera_down rew=1.635 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.290 forward rew=2.497 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.300 camera_up rew=1.357 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.310 camera_down rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.320 jump rew=-0.064 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.330 turn_right rew=-0.095 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.340 forward rew=1.475 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.350 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.360 turn_right rew=1.323 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.370 mine rew=1.499 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.380 forward rew=1.673 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.390 forward rew=1.493 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.400 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+reset epoch=0 ep=1 rarest=None dist=None
+step 0.1.1 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 15}
+step 0.1.10 turn_left rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 15}
+step 0.1.20 mine rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 17}
+step 0.1.30 turn_left rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 17}
+step 0.1.40 camera_up rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 17}
+step 0.1.50 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 19}
+step 0.1.60 camera_down rew=-0.066 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 19}
+step 0.1.70 camera_down rew=1.128 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 19}
+step 0.1.80 forward rew=-0.097 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 19}
+step 0.1.90 camera_up rew=-0.097 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 20}
+step 0.1.100 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.110 jump rew=1.175 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.120 forward rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.130 jump rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.140 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.150 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.160 forward rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 24}
+step 0.1.170 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.180 forward rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.190 noop rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.200 camera_down rew=-0.095 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.210 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.220 camera_down rew=1.178 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.230 jump rew=0.946 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.240 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.250 camera_up rew=1.170 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.260 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.270 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.280 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.290 camera_up rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.300 jump rew=0.951 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.310 camera_down rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.320 jump rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.330 forward rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.340 turn_left rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.350 turn_left rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.360 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.370 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.380 jump rew=0.953 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.390 forward rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.400 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}

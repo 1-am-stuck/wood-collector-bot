@@ -51,11 +51,15 @@ wandb:
 
 train:
   algo: ppo
-  epochs: 8
+  # Longer than the first feed pass: mine (MN9 / eat) is rare in 200-step
+  # bouts, so this recipe keeps walking and digging until that credit shows up.
+  # The run already in flight loaded the old 8×200 budget; the next start
+  # from fly_mc_feed.pt uses these numbers.
+  epochs: 32
   episodes_per_epoch: 2
   # Full connectome settle is ~260 ms on this machine, so the control period has to
-  # be longer than that. 280 ms is ~3.6 Hz; 200 steps is about a minute of walking.
-  max_steps: 200
+  # be longer than that. 280 ms is ~3.6 Hz; 400 steps is about two minutes of walking.
+  max_steps: 400
   lr: 0.0003
   gamma: 0.99
   clip: 0.2
