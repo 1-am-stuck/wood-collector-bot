@@ -25,7 +25,7 @@ Secrets live in **`.env`** (`WANDB_API_KEY=`). Load via `python/load_env.py` / `
 - Hardcode “wood odor” as the world model. Woods are rows in generic odor tables.
 - Vendor `malecns-v1.0.flyb.gz` (23 MB, belongs to its publishers). The derived NPZ is local.
 - Invent neuron types. If a cell is not in male-cns, it is not in the graph. Abdominal touch is a declared gap (`unknown_sensory`), not an `SNta_abdomen`.
-- Overwrite `checkpoints/fly_mc.pt` with PPO. Navigate writes `fly_mc_navigate.pt`. Oak PPO is `fly_mc_ppo.pt`. Rarest PPO is `fly_mc_rarest.pt`.
+- Overwrite `checkpoints/fly_mc.pt` with PPO. Navigate writes `fly_mc_navigate.pt`. Feed PPO is `fly_mc_feed.pt`. Oak PPO is `fly_mc_ppo.pt`. Rarest PPO is `fly_mc_rarest.pt`.
 - Commit `.env` or paste `WANDB_API_KEY` into the browser client.
 - Edit the Cursor plan file.
 
@@ -36,6 +36,8 @@ Secrets live in **`.env`** (`WANDB_API_KEY=`). Load via `python/load_env.py` / `
 uv run python python/tools/build_graph_from_flyb.py --variant full
 uv run python python/play.py --fresh          # open world, dashboard :8766
 uv run python python/train.py configs/train/navigate_minecraft.yaml
+uv run python python/train.py configs/train/feed_minecraft.yaml
+uv run python python/play.py --ckpt checkpoints/fly_mc_feed.pt
 # dashboard: http://127.0.0.1:8766/  (orbit world · fly retina · neuron→body)
 uv sync --group dev
 npm test
@@ -54,7 +56,7 @@ uv run pytest
 | `python/sense/` | Same GoalToSense + `frame_to_vector` + channel resolver |
 | `python/fly_policy/` | `FlyGraph`, ChessFly settle, `FlyPolicy` |
 | `python/train.py` | YAML trainer. Live Minecraft PPO when `minecraft.required` |
-| `python/play.py` | No-goal livestream of a (possibly fresh) policy |
+| `python/play.py` | Livestream. A feed checkpoint injects the same GoalSpec it trained on. |
 | `python/dashboard/` | FastAPI live view on `:8766` |
 
 ## Sensory contract

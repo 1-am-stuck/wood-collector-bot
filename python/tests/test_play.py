@@ -10,7 +10,7 @@ from sense.frame import vector_size
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def test_latest_ckpt_prefers_rarest_then_ppo(tmp_path, monkeypatch):
+def test_latest_ckpt_prefers_feed_then_navigate_then_rarest(tmp_path):
     ckpt_dir = tmp_path / "checkpoints"
     ckpt_dir.mkdir()
     (ckpt_dir / "fly_mc.pt").write_bytes(b"a")
@@ -18,6 +18,18 @@ def test_latest_ckpt_prefers_rarest_then_ppo(tmp_path, monkeypatch):
     assert latest_ckpt(tmp_path).name == "fly_mc_ppo.pt"
     (ckpt_dir / "fly_mc_rarest.pt").write_bytes(b"c")
     assert latest_ckpt(tmp_path).name == "fly_mc_rarest.pt"
+    (ckpt_dir / "fly_mc_navigate.pt").write_bytes(b"d")
+    assert latest_ckpt(tmp_path).name == "fly_mc_navigate.pt"
+    (ckpt_dir / "fly_mc_feed.pt").write_bytes(b"e")
+    assert latest_ckpt(tmp_path).name == "fly_mc_feed.pt"
+
+
+def test_feed_checkpoint_injects_the_feed_goalspec():
+    from play import uses_feed_goal
+
+    assert uses_feed_goal(Path("checkpoints/fly_mc_feed.pt"), False) is True
+    assert uses_feed_goal(Path("checkpoints/fly_mc_navigate.pt"), False) is False
+    assert uses_feed_goal(Path("checkpoints/fly_mc_feed.pt"), True) is False
 
 
 def test_inspect_returns_named_hidden_rates():

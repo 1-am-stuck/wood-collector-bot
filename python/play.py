@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Open-world FruitFly: load a checkpoint, walk Minecraft with no GoalSpec, livestream."""
+"""Open-world FruitFly: load a checkpoint, walk Minecraft, livestream.
+
+A feed checkpoint injects the same sugar-GRN GoalSpec the policy trained on.
+Anything else (including `--fresh`) is open-world with no GoalSpec.
+"""
 
 from __future__ import annotations
 
@@ -20,12 +24,27 @@ from load_env import load_repo_env
 from sense.frame import vector_size
 
 
+FEED_SPEC = ROOT / "configs" / "goals" / "feed.json"
+
+
 def latest_ckpt(root: Path) -> Path:
-    for name in ("fly_mc_rarest.pt", "fly_mc_ppo.pt", "fly_mc.pt"):
+    for name in (
+        "fly_mc_feed.pt",
+        "fly_mc_navigate.pt",
+        "fly_mc_rarest.pt",
+        "fly_mc_ppo.pt",
+        "fly_mc.pt",
+    ):
         path = root / "checkpoints" / name
         if path.exists():
             return path
     raise FileNotFoundError("no fly checkpoint in checkpoints/")
+
+
+def uses_feed_goal(ckpt: Path | None, fresh: bool) -> bool:
+    if fresh or ckpt is None:
+        return False
+    return Path(ckpt).name == "fly_mc_feed.pt"
 
 
 def minecraft_up(host: str, port: int, timeout: float = 2.0) -> bool:
@@ -100,6 +119,7 @@ def main():
     if args.fresh or ckpt is None or not ckpt.exists():
         model = FlyPolicy(graph, vector_size(graph.n_retina), len(ACTIONS))
         kept, dropped = [], []
+        feeding = False
         ckpt = Path("(fresh connectome)")
         print("starting from the connectome itself — no matching checkpoint", flush=True)
     else:
@@ -107,6 +127,7 @@ def main():
         # checkpoint is retrained, and everything indexed by neuron or edge changes shape
         # when it is. Better to run with the parts that still fit and say which did not.
         model, kept, dropped = FlyPolicy.load_compatible(graph, ckpt)
+        feeding = uses_feed_goal(ckpt, False)
     model.eval()
     print(json.dumps({
         "ckpt": str(ckpt),
@@ -118,7 +139,7 @@ def main():
         "tensors_kept": len(kept),
         "tensors_reinitialised": dropped,
         "username": args.username,
-        "goal": None,
+        "goal": "feed" if feeding else None,
     }, indent=2), flush=True)
 
     start_dashboard("127.0.0.1", args.dashboard_port)
@@ -139,9 +160,16 @@ def main():
             "stream": {"hz": 30, "radiusXZ": 28, "radiusY": 24},
         },
     }
+    if feeding:
+        cfg["mode"] = "feed"
+        cfg["goal"]["spec"] = str(FEED_SPEC)
     env = MinecraftEnv(cfg, on_stream=publish_stream)
     hello = env.start()
-    print(f"joined minecraft as {hello.get('username')} (no GoalSpec)", flush=True)
+    joined = hello.get("username")
+    if feeding:
+        print(f"joined minecraft as {joined} (feed GoalSpec)", flush=True)
+    else:
+        print(f"joined minecraft as {joined} (no GoalSpec)", flush=True)
     pkt = env.play_reset()
     step = 0
     dt = max(0.05, args.dt_ms / 1000.0)

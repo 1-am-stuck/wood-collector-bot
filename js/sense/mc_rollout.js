@@ -15,6 +15,7 @@ const { censusLogs, rarestLog, WOOD_LOGS } = require('./rarity')
 const { compactFrame } = require('./logger')
 const { stepReward } = require('./mc_reward')
 const { navReward, newVisitSet } = require('./nav_reward')
+const { scoreFeedStep } = require('./feed_reward')
 const { sampleVoxels, samplePose, snapshotStale } = require('./voxelSnapshot')
 const { planGrove, plantGrove } = require('./seedRich')
 
@@ -35,8 +36,11 @@ let richSeeded = false
 let censusEnabled = true
 // 'rarest' scores progress toward the rarest log. 'navigate' scores covering ground
 // without collisions and involves no goal, no census and no planted trees -- it is the
-// stage that has to work before a GoalSpec goes back on top.
+// stage that has to work before a GoalSpec goes back on top. 'feed' keeps the nav
+// shaping, plants the odor grove, and scores tasting sugar (LB3b) under the feed GoalSpec.
 let mode = 'rarest'
+let goalSpec = null
+let lastFrame = { odor: {}, taste: {} }
 let navCells = newVisitSet()
 const view = { hz: 30, radiusXZ: 20, radiusY: 12, timer: null, voxels: null, voxelAt: 0 }
 
@@ -125,10 +129,16 @@ function rememberVisit (bot) {
   if (!last || last[0] !== x || last[1] !== z) visited.push([x, z])
 }
 
-function factsNow (goalSpec) {
+function activeGoal () {
+  if (mode === 'navigate') return null
+  if (mode === 'feed') return goalSpec
+  return lastFacts.rarest ? catalog[lastFacts.rarest] : null
+}
+
+function factsNow (goal) {
   rememberVisit(bot)
   if (!censusEnabled) {
-    return { census: {}, rarest: null, inventory: inventoryCounts(bot), distance: null, bearing: null, goal_id: null }
+    return { census: {}, rarest: null, inventory: inventoryCounts(bot), distance: null, bearing: null, goal_id: goal && goal.id }
   }
   const logs = cachedLogs()
   const census = censusLogs(logs, visited, exploreRadius)
@@ -158,7 +168,7 @@ function factsNow (goalSpec) {
     inventory: inv,
     distance,
     bearing,
-    goal_id: goalSpec && goalSpec.id,
+    goal_id: goal && goal.id,
   }
 }
 
@@ -181,20 +191,23 @@ function navState (frame) {
   }
 }
 
-function observe (goalSpec) {
+function observe (goal) {
   const worldFrame = sampleBot(bot, cfg, senseState)
   const world = {
     position: { x: bot.entity.position.x, y: bot.entity.position.y, z: bot.entity.position.z },
-    blocks: goalSpec ? cachedLogs() : [],
+    blocks: goal ? cachedLogs() : [],
     visited,
     exploreRadius,
     census: lastFacts.census,
     rarest: lastFacts.rarest,
   }
-  const frame = goalSpec ? applyGoal(worldFrame, goalSpec, world) : worldFrame
-  lastFacts = factsNow(goalSpec)
+  const frame = goal ? applyGoal(worldFrame, goal, world) : worldFrame
+  lastFacts = factsNow(goal)
   lastFacts.nav = navState(frame)
-  return { frame: compactFrame(frame), facts: lastFacts }
+  // Success is taste_contact on facts, not on the frame the policy sees.
+  lastFacts.taste = { ...(frame.taste || {}) }
+  lastFrame = compactFrame(frame)
+  return { frame: lastFrame, facts: lastFacts }
 }
 
 function sleep (ms) {
@@ -307,9 +320,10 @@ async function handle (msg) {
     if (msg.seed_rich != null) seedRich = !!msg.seed_rich
     if (msg.census != null) censusEnabled = !!msg.census
     if (msg.mode) mode = msg.mode
-    // Navigating has no GoalSpec and no rarest-log census. A rich odor grove is
-    // still a world, not a goal: the fly has to have something to smell.
-    if (mode === 'navigate') {
+    if (msg.goal_spec) goalSpec = msg.goal_spec
+    // Navigating has no GoalSpec and no rarest-log census. Feed keeps the census
+    // off too (no wood inventory goal) but still plants the odor/taste grove.
+    if (mode === 'navigate' || mode === 'feed') {
       seedWoods = false
       censusEnabled = false
     }
@@ -322,29 +336,34 @@ async function handle (msg) {
       seed_rich: seedRich,
       census: censusEnabled,
       mode,
+      goal_id: goalSpec && goalSpec.id,
     }
   }
   if (msg.cmd === 'play_reset') {
     await ensureBot()
     lastFacts = {}
+    lastFrame = { odor: {}, taste: {} }
+    senseState.lastAction = null
     navCells = newVisitSet()
     // Stay airborne. This is a fly, not a pedestrian: landing it is what made
     // the body look dead, because DNp01 is takeoff and walking keys do nothing
     // with gravity off unless we translate the pose ourselves.
     keepFlying(bot)
     if (seedRich) await seedRichIfNeeded()
-    const obs = observe(null)
-    if (mode === 'navigate') navReward(null, obs.facts.nav, navCells)
+    const obs = observe(activeGoal())
+    if (mode === 'navigate' || mode === 'feed') navReward(null, obs.facts.nav, navCells)
     return { ...obs, reward: null, done: false }
   }
   if (msg.cmd === 'observe') {
     await ensureBot()
-    return { ...observe(null), reward: null, done: false }
+    return { ...observe(activeGoal()), reward: null, done: false }
   }
   if (msg.cmd === 'reset') {
     await ensureBot()
     visited.length = 0
     lastFacts = {}
+    lastFrame = { odor: {}, taste: {} }
+    senseState.lastAction = null
     censusCache.at = 0
     // Novelty is per episode: a fresh set, so ground covered last episode is new again.
     navCells = newVisitSet()
@@ -357,12 +376,13 @@ async function handle (msg) {
     await flyOffset(bot, ox, 8, oz, 1200)
     keepFlying(bot)
     if (seedWoods) await seedWoodsIfNeeded()
+    if (seedRich) await seedRichIfNeeded()
     await sleep(80)
     rememberVisit(bot)
     const peek = factsNow(null)
-    const spec = mode === 'navigate' || !peek.rarest ? null : catalog[peek.rarest]
+    const spec = activeGoal() || (mode === 'navigate' || !peek.rarest ? null : catalog[peek.rarest])
     const obs = observe(spec)
-    if (mode === 'navigate') {
+    if (mode === 'navigate' || mode === 'feed') {
       // Registers the starting cell without paying for it.
       navReward(null, obs.facts.nav, navCells)
     } else if (obs.facts.rarest) {
@@ -376,19 +396,40 @@ async function handle (msg) {
       inventory: { ...(lastFacts.inventory || {}) },
       rarest: lastFacts.rarest,
       distance: lastFacts.distance,
+      taste: { ...(lastFacts.taste || {}) },
     }
     const prevNav = lastFacts.nav
+    const prevFrame = lastFrame
+    senseState.lastAction = msg.action || 'noop'
     await applyAction(bot, msg.action || 'noop', {
       ...cfg.actions.control,
       dtMs: cfg.actions.dtMs,
     })
-    const spec = mode === 'navigate' || !lastFacts.rarest ? null : catalog[lastFacts.rarest]
+    const spec = activeGoal()
     const obs = observe(spec)
     if (mode === 'navigate') {
       const scored = navReward(prevNav, obs.facts.nav, navCells)
       obs.facts.nav_cells = scored.cells
       obs.facts.nav_new_cell = scored.newCell
       obs.facts.nav_moved = scored.moved
+      return { ...obs, reward: scored.reward, done: scored.done }
+    }
+    if (mode === 'feed') {
+      const scored = scoreFeedStep({
+        prevNav,
+        nextNav: obs.facts.nav,
+        navCells,
+        prevFacts: prev,
+        facts: obs.facts,
+        frame: obs.frame,
+        prevFrame,
+        goal: spec,
+      })
+      obs.facts.nav_cells = scored.nav.cells
+      obs.facts.nav_new_cell = scored.nav.newCell
+      obs.facts.nav_moved = scored.nav.moved
+      obs.facts.eat = scored.eat
+      obs.facts.odor_shaping = scored.shaping
       return { ...obs, reward: scored.reward, done: scored.done }
     }
     // No census means no goal, so there is no reward to report either.

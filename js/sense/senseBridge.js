@@ -355,6 +355,11 @@ function sampleWorld (world, cfg, state = {}) {
   return frame
 }
 
+/** MN9 / `mine` is the proboscis. No other action extends it. */
+function proboscisOut (lastAction) {
+  return lastAction === 'mine'
+}
+
 /**
  * Sample a live Mineflayer bot into a World snapshot, then SenseBridge.
  */
@@ -422,7 +427,7 @@ function sampleBot (bot, cfg, state = {}) {
     horizontalCollision: !!bot.entity.isCollidedHorizontally,
     standingOn: below ? below.name : null,
     heldItem: held,
-    proboscisOut: false,
+    proboscisOut: proboscisOut(state.lastAction),
     dayFactor: bot.time ? 1 - (bot.time.skyLightSubtracted || 0) / 15 : 1,
     blocks,
     items,
@@ -434,6 +439,7 @@ function sampleBot (bot, cfg, state = {}) {
 module.exports = {
   sampleWorld,
   sampleBot,
+  proboscisOut,
   retinaDirections,
   retinaLayout,
   toHead,

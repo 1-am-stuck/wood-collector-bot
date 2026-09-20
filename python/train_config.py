@@ -24,6 +24,10 @@ def load_train_yaml(path: str | Path) -> dict:
     if catalog:
         cp = Path(catalog)
         raw["goal"]["catalog"] = str(cp if cp.is_absolute() else ROOT / cp)
+    spec = (raw.get("goal") or {}).get("spec")
+    if spec and not isinstance(spec, dict):
+        sp = Path(spec)
+        raw["goal"]["spec"] = str(sp if sp.is_absolute() else ROOT / sp)
     return raw
 
 

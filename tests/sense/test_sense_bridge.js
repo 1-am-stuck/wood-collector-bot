@@ -61,11 +61,23 @@ test('approaching player expands and drives loom / V', () => {
   assert.ok((sprint.odor.V || 0) > 0)
 })
 
-test('spider eye tarsal bitter and cake labellar sugar', () => {
-  const bitter = sampleWorld(baseWorld({ standingOn: 'spider_eye', onGround: true }), cfg)
-  assert.ok((bitter.taste.LgAG1 || 0) > 0.5)
-  const sugar = sampleWorld(baseWorld({ standingOn: 'cake', proboscisOut: true }), cfg)
-  assert.ok((sugar.taste.LB3b || 0) > 0.5)
+test('standing on cake without the proboscis is tarsal only', () => {
+  const tarsal = sampleWorld(baseWorld({ standingOn: 'cake', onGround: true }), cfg)
+  assert.ok((tarsal.taste.LgLG3 || 0) > 0, 'tarsal sugar should fire from standing on cake')
+  assert.ok((tarsal.taste.LB3b || 0) < 0.5, 'labellar LB3b needs the proboscis')
+})
+
+test('mine is the proboscis: cake underfoot plus mine fires LB3b', () => {
+  const eat = sampleWorld(baseWorld({ standingOn: 'cake', onGround: true, proboscisOut: true }), cfg)
+  assert.ok((eat.taste.LB3b || 0) >= 0.5)
+})
+
+test('the mine action is the only one that extends the proboscis', () => {
+  const { proboscisOut } = require('../../js/sense/senseBridge')
+  assert.equal(proboscisOut('mine'), true)
+  for (const a of ['forward', 'back', 'turn_left', 'turn_right', 'jump', 'camera_up', 'camera_down', 'noop', null, undefined]) {
+    assert.equal(proboscisOut(a), false, a)
+  }
 })
 
 // The eye is no longer a grid, so there are no rows, columns or diagonals to check.

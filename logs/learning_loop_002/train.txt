@@ -658,3 +658,46 @@ step 5.0.200 turn_right rew=0.000 dist=None rarest=None inv={}
 reset epoch=5 ep=1 rarest=None dist=None
 step 5.1.1 turn_right rew=0.000 dist=None rarest=None inv={}
 step 5.1.10 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=0 ep=0 rarest=None dist=None
+step 0.0.1 jump rew=0.031 dist=None rarest=None inv={}
+step 0.0.10 jump rew=0.030 dist=None rarest=None inv={}
+step 0.0.20 turn_left rew=1.027 dist=None rarest=None inv={}
+step 0.0.30 turn_left rew=1.103 dist=None rarest=None inv={}
+step 0.0.40 camera_up rew=0.018 dist=None rarest=None inv={}
+step 0.0.50 mine rew=0.004 dist=None rarest=None inv={}
+step 0.0.60 turn_right rew=0.024 dist=None rarest=None inv={}
+step 0.0.70 turn_right rew=1.024 dist=None rarest=None inv={}
+step 0.0.80 camera_up rew=0.033 dist=None rarest=None inv={}
+step 0.0.90 camera_down rew=0.018 dist=None rarest=None inv={}
+step 0.0.100 camera_down rew=1.013 dist=None rarest=None inv={}
+step 0.0.110 camera_up rew=1.027 dist=None rarest=None inv={}
+step 0.0.120 mine rew=1.059 dist=None rarest=None inv={}
+step 0.0.130 jump rew=7.750 dist=None rarest=None inv={}
+step 0.0.140 camera_up rew=-0.019 dist=None rarest=None inv={}
+step 0.0.150 camera_up rew=1.711 dist=None rarest=None inv={}
+step 0.0.160 mine rew=-0.020 dist=None rarest=None inv={}
+step 0.0.170 camera_down rew=0.040 dist=None rarest=None inv={}
+step 0.0.180 camera_up rew=-0.020 dist=None rarest=None inv={}
+step 0.0.190 turn_left rew=2.220 dist=None rarest=None inv={}
+step 0.0.200 mine rew=1.523 dist=None rarest=None inv={}
+reset epoch=0 ep=1 rarest=None dist=None
+step 0.1.1 forward rew=0.027 dist=None rarest=None inv={}
+step 0.1.10 noop rew=1.096 dist=None rarest=None inv={}
+step 0.1.20 camera_up rew=0.005 dist=None rarest=None inv={}
+step 0.1.30 camera_up rew=0.018 dist=None rarest=None inv={}
+step 0.1.40 turn_right rew=0.003 dist=None rarest=None inv={}
+step 0.1.50 back rew=0.014 dist=None rarest=None inv={}
+step 0.1.60 jump rew=1.035 dist=None rarest=None inv={}
+step 0.1.70 noop rew=0.003 dist=None rarest=None inv={}
+step 0.1.80 jump rew=0.026 dist=None rarest=None inv={}
+step 0.1.90 jump rew=1.042 dist=None rarest=None inv={}
+step 0.1.100 turn_left rew=1.269 dist=None rarest=None inv={}
+step 0.1.110 jump rew=1.981 dist=None rarest=None inv={}
+step 0.1.120 camera_down rew=-0.020 dist=None rarest=None inv={}
+step 0.1.130 jump rew=1.813 dist=None rarest=None inv={}
+step 0.1.140 jump rew=-0.120 dist=None rarest=None inv={}
+step 0.1.150 jump rew=-0.120 dist=None rarest=None inv={}
+step 0.1.160 jump rew=-0.094 dist=None rarest=None inv={}
+step 0.1.170 jump rew=-0.073 dist=None rarest=None inv={}
+step 0.1.180 jump rew=-0.120 dist=None rarest=None inv={}
+step 0.1.190 jump rew=-0.120 dist=None rarest=None inv={}

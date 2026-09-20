@@ -56,10 +56,25 @@ class MinecraftEnv:
             payload["view"] = view["stream"]
         # `mode: navigate` scores covering ground with no goal, and switches off the
         # census and the planted trees on the Node side, so it must reach `connect`.
+        # `mode: feed` plants the grove, keeps census off, and needs the GoalSpec.
         for key in ("seed_woods", "seed_rich", "census", "mode"):
             if key in self.cfg:
                 payload[key] = self.cfg[key]
+        spec = self._goal_spec()
+        if spec:
+            payload["goal_spec"] = spec
         return self._rpc(payload)
+
+    def _goal_spec(self) -> dict | None:
+        spec = (self.cfg.get("goal") or {}).get("spec")
+        if not spec:
+            return None
+        if isinstance(spec, dict):
+            return spec
+        path = Path(spec)
+        if not path.is_absolute():
+            path = ROOT / path
+        return json.loads(path.read_text())
 
     def reset(self) -> dict:
         return self._rpc({"cmd": "reset"})

@@ -1,0 +1,64 @@
+# Learn to find fruit odor and eat it (MN9 / mine = proboscis).
+#
+#   uv run python python/train.py configs/train/feed_minecraft.yaml
+#
+# Navigate first still holds: covering ground is in the reward because there is
+# usually no fly_mc_navigate.pt to warm-start from. The GoalSpec is feed.json
+# (sugar-GRN tonic). Success is labellar LB3b, not picking up an apple.
+# Crafting is not a fly motor and is not in this recipe.
+
+run:
+  name: feed-mc
+  seed: 7
+  # Resume this recipe if a feed checkpoint exists. Otherwise train.py will
+  # warm-start from fly_mc_navigate.pt when that file is present, or from the
+  # measured connectome (`allow_fresh`).
+  allow_fresh: true
+  ckpt: checkpoints/fly_mc_feed.pt
+  out: checkpoints/fly_mc_feed.pt
+
+graph:
+  # The published male-cns:v1.0 connectome, one node per traced neuron.
+  variant: full
+
+minecraft:
+  host: 127.0.0.1
+  port: 25565
+  username: FruitFly
+  required: true
+
+mode: feed
+census: false
+seed_woods: false
+seed_rich: true
+
+goal:
+  spec: configs/goals/feed.json
+
+view:
+  stream:
+    hz: 30
+    radiusXZ: 20
+    radiusY: 12
+
+wandb:
+  project: fly-mc
+  entity: null
+  mode: online
+  base_url: null
+  tags: [feed, minecraft, ppo, malecns, full]
+
+train:
+  algo: ppo
+  epochs: 8
+  episodes_per_epoch: 2
+  # Full connectome settle is ~260 ms on this machine, so the control period has to
+  # be longer than that. 280 ms is ~3.6 Hz; 200 steps is about a minute of walking.
+  max_steps: 200
+  lr: 0.0003
+  gamma: 0.99
+  clip: 0.2
+  control_dt_ms: 280
+  # One sample at a time: a settle over 6.29M edges keeps every intermediate rate
+  # for the backward pass.
+  minibatch: 1

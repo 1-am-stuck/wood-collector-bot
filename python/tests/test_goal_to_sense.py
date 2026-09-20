@@ -31,5 +31,7 @@ def test_goals_are_injections_not_wood_hardcode():
     })
     assert loud["objectChannels"]["LC4"] > 0
     assert goal_success(oak, {"inventory": {"oak_log": 1}})
+    assert goal_success(feed, {"taste": {"LB3b": 0.5}})
+    assert not goal_success(feed, {"inventory": {"cake": 8}})
 
 

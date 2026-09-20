@@ -38,6 +38,18 @@ def start_dashboard(host: str = "127.0.0.1", port: int = 8766):
     print(f"dashboard http://{host}:{port}/", flush=True)
 
 
+def resolve_ckpt(cfg: dict) -> Path:
+    """Feed resumes from fly_mc_feed.pt, else warm-starts navigate, else connectome."""
+    ckpt = Path(cfg["run"]["ckpt"])
+    if ckpt.exists():
+        return ckpt
+    if cfg.get("mode") == "feed":
+        nav = ROOT / "checkpoints" / "fly_mc_navigate.pt"
+        if nav.exists():
+            return nav
+    return ckpt
+
+
 def minecraft_up(host: str, port: int, timeout: float = 2.0) -> bool:
     try:
         with socket.create_connection((host, port), timeout=timeout):
@@ -206,6 +218,8 @@ def main():
         banner["example_rarest"] = spec_for_log(
             catalog, rarest_log({"oak_log": 9, "cherry_log": 1})
         )["id"]
+    if goal.get("spec"):
+        banner["goal_spec"] = goal["spec"]
     print(json.dumps(banner, indent=2), flush=True)
 
     if mc.get("required", True) and not minecraft_up(mc["host"], mc["port"]):
@@ -254,7 +268,7 @@ def main():
         f"{graph.n_retina} ommatidia",
         flush=True,
     )
-    ckpt = Path(cfg["run"]["ckpt"])
+    ckpt = resolve_ckpt(cfg)
     model = None
     if ckpt.exists():
         model, kept, dropped = FlyPolicy.load_compatible(graph, ckpt)
