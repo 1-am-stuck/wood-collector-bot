@@ -4,7 +4,8 @@
 #
 # Navigate first still holds: covering ground is in the reward because there is
 # usually no fly_mc_navigate.pt to warm-start from. The GoalSpec is feed.json
-# (sugar-GRN tonic). Success is labellar LB3b, not picking up an apple.
+# Sugar-GRN tonic until labellar LB3b fires. Episode reset returns to the deck
+# and replants a dense sugar carpet underfoot (js/sense/seedRich.js).
 # Crafting is not a fly motor and is not in this recipe.
 
 run:

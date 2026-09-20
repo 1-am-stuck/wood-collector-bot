@@ -2,7 +2,7 @@ const { test } = require('node:test')
 const assert = require('node:assert/strict')
 const path = require('path')
 const { loadSenseConfig } = require('../../js/sense/loadConfig')
-const { planGrove } = require('../../js/sense/seedRich')
+const { planGrove, episodeHop } = require('../../js/sense/seedRich')
 
 const cfg = loadSenseConfig(path.join(__dirname, '../..'))
 
@@ -54,4 +54,64 @@ test('nothing is planted on the fly itself', () => {
   for (const b of plan.blocks) {
     assert.ok(b.dx !== 0 || b.dz !== 0 || b.dy < 0, `${b.name} sits on the body`)
   }
+})
+
+const SUGAR = new Set(['cake', 'melon', 'honey_block', 'sweet_berry_bush'])
+
+test('feed carpet is a dense sugar grid around the body, not one cake', () => {
+  const plan = planGrove(cfg.blockOdor, cfg.itemOdor)
+  const nearby = plan.blocks.filter(b =>
+    SUGAR.has(b.name) && b.dy === 0 && Math.max(Math.abs(b.dx), Math.abs(b.dz)) <= 4)
+  assert.ok(nearby.length >= 40, `sugar carpet too thin: ${nearby.length}`)
+  assert.ok(nearby.every(b => b.dx !== 0 || b.dz !== 0), 'carpet must not replace the fly')
+})
+
+test('feed episode hop stays on the grove; navigate still wanders', () => {
+  const feed = episodeHop('feed')
+  assert.equal(feed.dx, 0)
+  assert.equal(feed.dz, 0)
+  assert.ok(feed.dy >= 0 && feed.dy <= 3, `feed hop should hover on the carpet, got dy=${feed.dy}`)
+  const far = episodeHop('navigate', () => 1)
+  assert.ok(Math.abs(far.dx) > 10 && Math.abs(far.dz) > 10)
+})
+
+test('findDeck sees the ground from high up', () => {
+  const { findDeck } = require('../../js/sense/seedRich')
+  const bot = {
+    entity: {
+      position: {
+        x: 0, y: 231, z: 0,
+        floored () {
+          return {
+            x: 0, y: 231, z: 0,
+            offset (dx, dy, dz) { return { x: dx, y: 231 + dy, z: dz } },
+          }
+        },
+      },
+    },
+    blockAt (pos) {
+      if (pos.y === 64) return { name: 'grass_block', boundingBox: 'block', position: { x: 0, y: 64, z: 0 } }
+      return { name: 'air', boundingBox: 'empty' }
+    },
+  }
+  assert.equal(findDeck(bot).y, 64)
+})
+
+test('feed hop from the sky returns onto the deck', () => {
+  const { hopFromPose } = require('../../js/sense/seedRich')
+  const bot = {
+    entity: { position: { x: 0, y: 231, z: 0 } },
+    blockAt (pos) {
+      if (pos.y === 64) return { name: 'grass_block', boundingBox: 'block', position: { x: 0, y: 64, z: 0 } }
+      return { name: 'air', boundingBox: 'empty' }
+    },
+  }
+  bot.entity.position.floored = () => ({
+    x: 0, y: 231, z: 0,
+    offset (dx, dy, dz) { return { x: dx, y: 231 + dy, z: dz } },
+  })
+  const hop = hopFromPose(bot, 'feed')
+  assert.equal(hop.dx, 0)
+  assert.equal(hop.dz, 0)
+  assert.ok(hop.dy < -100, `should descend from 231 to the deck, dy=${hop.dy}`)
 })

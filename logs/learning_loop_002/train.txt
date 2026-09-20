@@ -701,3 +701,341 @@ step 0.1.160 jump rew=-0.094 dist=None rarest=None inv={}
 step 0.1.170 jump rew=-0.073 dist=None rarest=None inv={}
 step 0.1.180 jump rew=-0.120 dist=None rarest=None inv={}
 step 0.1.190 jump rew=-0.120 dist=None rarest=None inv={}
+step 0.1.200 jump rew=1.656 dist=None rarest=None inv={}
+ppo epoch 0 return=112.249 loss=20.3156 collect=0.00 rarest=[None, None]
+reset epoch=1 ep=0 rarest=None dist=None
+step 1.0.1 forward rew=1.032 dist=None rarest=None inv={}
+step 1.0.10 forward rew=1.036 dist=None rarest=None inv={}
+step 1.0.20 forward rew=0.028 dist=None rarest=None inv={}
+step 1.0.30 forward rew=1.586 dist=None rarest=None inv={}
+step 1.0.40 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.50 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.60 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.70 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.80 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.90 forward rew=1.409 dist=None rarest=None inv={}
+step 1.0.100 forward rew=1.372 dist=None rarest=None inv={}
+step 1.0.110 forward rew=1.249 dist=None rarest=None inv={}
+step 1.0.120 forward rew=1.219 dist=None rarest=None inv={}
+step 1.0.130 jump rew=1.353 dist=None rarest=None inv={}
+step 1.0.140 forward rew=1.225 dist=None rarest=None inv={}
+step 1.0.150 forward rew=1.393 dist=None rarest=None inv={}
+step 1.0.160 forward rew=1.325 dist=None rarest=None inv={}
+step 1.0.170 forward rew=1.654 dist=None rarest=None inv={}
+step 1.0.180 forward rew=1.483 dist=None rarest=None inv={}
+step 1.0.190 forward rew=1.393 dist=None rarest=None inv={}
+step 1.0.200 camera_up rew=1.436 dist=None rarest=None inv={}
+reset epoch=1 ep=1 rarest=None dist=None
+step 1.1.1 forward rew=1.027 dist=None rarest=None inv={}
+step 1.1.10 forward rew=1.126 dist=None rarest=None inv={}
+step 1.1.20 jump rew=1.482 dist=None rarest=None inv={}
+step 1.1.30 forward rew=1.133 dist=None rarest=None inv={}
+step 1.1.40 forward rew=1.176 dist=None rarest=None inv={}
+step 1.1.50 jump rew=1.228 dist=None rarest=None inv={}
+step 1.1.60 forward rew=1.136 dist=None rarest=None inv={}
+step 1.1.70 forward rew=1.175 dist=None rarest=None inv={}
+step 1.1.80 forward rew=1.175 dist=None rarest=None inv={}
+step 1.1.90 camera_up rew=1.304 dist=None rarest=None inv={}
+step 1.1.100 forward rew=1.174 dist=None rarest=None inv={}
+step 1.1.110 forward rew=1.132 dist=None rarest=None inv={}
+step 1.1.120 jump rew=-0.090 dist=None rarest=None inv={}
+step 1.1.130 forward rew=-0.073 dist=None rarest=None inv={}
+step 1.1.140 jump rew=-0.025 dist=None rarest=None inv={}
+step 1.1.150 jump rew=-0.028 dist=None rarest=None inv={}
+step 1.1.160 jump rew=-0.120 dist=None rarest=None inv={}
+step 1.1.170 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.1.180 jump rew=-0.120 dist=None rarest=None inv={}
+step 1.1.190 camera_up rew=-0.120 dist=None rarest=None inv={}
+step 1.1.200 forward rew=-0.120 dist=None rarest=None inv={}
+ppo epoch 1 return=175.557 loss=39.1567 collect=0.00 rarest=[None, None]
+reset epoch=2 ep=0 rarest=None dist=None
+step 2.0.1 forward rew=0.045 dist=None rarest=None inv={}
+step 2.0.10 forward rew=0.022 dist=None rarest=None inv={}
+step 2.0.20 forward rew=0.016 dist=None rarest=None inv={}
+step 2.0.30 forward rew=0.018 dist=None rarest=None inv={}
+step 2.0.40 forward rew=0.043 dist=None rarest=None inv={}
+step 2.0.50 forward rew=0.006 dist=None rarest=None inv={}
+step 2.0.60 forward rew=0.007 dist=None rarest=None inv={}
+step 2.0.70 forward rew=1.007 dist=None rarest=None inv={}
+step 2.0.80 forward rew=1.007 dist=None rarest=None inv={}
+step 2.0.90 forward rew=0.006 dist=None rarest=None inv={}
+step 2.0.100 forward rew=1.008 dist=None rarest=None inv={}
+step 2.0.110 forward rew=0.004 dist=None rarest=None inv={}
+step 2.0.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.130 forward rew=0.023 dist=None rarest=None inv={}
+step 2.0.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.160 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.170 jump rew=0.027 dist=None rarest=None inv={}
+step 2.0.180 noop rew=0.027 dist=None rarest=None inv={}
+step 2.0.190 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.200 forward rew=-0.020 dist=None rarest=None inv={}
+reset epoch=2 ep=1 rarest=None dist=None
+step 2.1.1 forward rew=1.027 dist=None rarest=None inv={}
+step 2.1.10 forward rew=0.025 dist=None rarest=None inv={}
+step 2.1.20 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.30 forward rew=0.025 dist=None rarest=None inv={}
+step 2.1.40 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.50 camera_up rew=-0.020 dist=None rarest=None inv={}
+step 2.1.60 jump rew=0.054 dist=None rarest=None inv={}
+step 2.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.80 forward rew=0.029 dist=None rarest=None inv={}
+step 2.1.90 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.100 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.110 forward rew=0.029 dist=None rarest=None inv={}
+step 2.1.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.130 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.160 forward rew=0.029 dist=None rarest=None inv={}
+step 2.1.170 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.180 forward rew=0.029 dist=None rarest=None inv={}
+step 2.1.190 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.200 forward rew=-0.020 dist=None rarest=None inv={}
+ppo epoch 2 return=12.947 loss=0.7218 collect=0.00 rarest=[None, None]
+reset epoch=3 ep=0 rarest=None dist=None
+step 3.0.1 forward rew=1.034 dist=None rarest=None inv={}
+step 3.0.10 forward rew=1.019 dist=None rarest=None inv={}
+step 3.0.20 forward rew=1.031 dist=None rarest=None inv={}
+step 3.0.30 noop rew=1.037 dist=None rarest=None inv={}
+step 3.0.40 forward rew=1.032 dist=None rarest=None inv={}
+step 3.0.50 forward rew=0.007 dist=None rarest=None inv={}
+step 3.0.60 turn_left rew=1.035 dist=None rarest=None inv={}
+step 3.0.70 noop rew=0.237 dist=None rarest=None inv={}
+step 3.0.80 forward rew=1.453 dist=None rarest=None inv={}
+step 3.0.90 forward rew=0.017 dist=None rarest=None inv={}
+step 3.0.100 forward rew=1.120 dist=None rarest=None inv={}
+step 3.0.110 noop rew=1.105 dist=None rarest=None inv={}
+step 3.0.120 jump rew=1.109 dist=None rarest=None inv={}
+step 3.0.130 jump rew=-0.082 dist=None rarest=None inv={}
+step 3.0.140 forward rew=-0.120 dist=None rarest=None inv={}
+step 3.0.150 jump rew=-0.046 dist=None rarest=None inv={}
+step 3.0.160 forward rew=-0.120 dist=None rarest=None inv={}
+step 3.0.170 jump rew=-0.073 dist=None rarest=None inv={}
+step 3.0.180 jump rew=-0.120 dist=None rarest=None inv={}
+step 3.0.190 forward rew=-0.119 dist=None rarest=None inv={}
+step 3.0.200 forward rew=1.090 dist=None rarest=None inv={}
+reset epoch=3 ep=1 rarest=None dist=None
+step 3.1.1 noop rew=-0.020 dist=None rarest=None inv={}
+step 3.1.10 forward rew=0.024 dist=None rarest=None inv={}
+step 3.1.20 noop rew=1.023 dist=None rarest=None inv={}
+step 3.1.30 forward rew=1.026 dist=None rarest=None inv={}
+step 3.1.40 forward rew=1.009 dist=None rarest=None inv={}
+step 3.1.50 forward rew=1.012 dist=None rarest=None inv={}
+step 3.1.60 forward rew=0.021 dist=None rarest=None inv={}
+step 3.1.70 forward rew=1.043 dist=None rarest=None inv={}
+step 3.1.80 forward rew=0.026 dist=None rarest=None inv={}
+step 3.1.90 noop rew=1.207 dist=None rarest=None inv={}
+step 3.1.100 noop rew=0.111 dist=None rarest=None inv={}
+step 3.1.110 noop rew=1.152 dist=None rarest=None inv={}
+step 3.1.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 3.1.130 forward rew=1.136 dist=None rarest=None inv={}
+step 3.1.140 forward rew=-0.120 dist=None rarest=None inv={}
+step 3.1.150 forward rew=0.915 dist=None rarest=None inv={}
+step 3.1.160 jump rew=-0.120 dist=None rarest=None inv={}
+step 3.1.170 jump rew=-0.120 dist=None rarest=None inv={}
+step 3.1.180 forward rew=-0.119 dist=None rarest=None inv={}
+step 3.1.190 jump rew=-0.120 dist=None rarest=None inv={}
+step 3.1.200 back rew=0.003 dist=None rarest=None inv={}
+ppo epoch 3 return=100.178 loss=16.0030 collect=0.00 rarest=[None, None]
+reset epoch=4 ep=0 rarest=None dist=None
+step 4.0.1 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.10 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.0.20 jump rew=-0.020 dist=None rarest=None inv={}
+step 4.0.30 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.40 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.0.50 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.60 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.70 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.80 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.90 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.0.100 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.110 jump rew=-0.020 dist=None rarest=None inv={}
+step 4.0.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.0.130 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.140 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.150 jump rew=-0.020 dist=None rarest=None inv={}
+step 4.0.160 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.170 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.180 jump rew=0.072 dist=None rarest=None inv={}
+step 4.0.190 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.200 jump rew=-0.020 dist=None rarest=None inv={}
+reset epoch=4 ep=1 rarest=None dist=None
+step 4.1.1 forward rew=1.051 dist=None rarest=None inv={}
+step 4.1.10 jump rew=0.065 dist=None rarest=None inv={}
+step 4.1.20 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.30 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.40 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.50 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.60 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.80 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.90 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.100 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.110 jump rew=-0.020 dist=None rarest=None inv={}
+step 4.1.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.130 jump rew=0.027 dist=None rarest=None inv={}
+step 4.1.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.160 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.170 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.180 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.190 jump rew=0.027 dist=None rarest=None inv={}
+step 4.1.200 forward rew=-0.020 dist=None rarest=None inv={}
+ppo epoch 4 return=3.001 loss=0.1156 collect=0.00 rarest=[None, None]
+reset epoch=5 ep=0 rarest=None dist=None
+step 5.0.1 jump rew=-0.018 dist=None rarest=None inv={}
+step 5.0.10 forward rew=0.025 dist=None rarest=None inv={}
+step 5.0.20 forward rew=0.027 dist=None rarest=None inv={}
+step 5.0.30 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.40 forward rew=0.027 dist=None rarest=None inv={}
+step 5.0.50 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.60 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.70 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.80 forward rew=-0.020 dist=None rarest=None inv={}
+step 5.0.90 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.100 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.110 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.120 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.130 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.140 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.150 forward rew=0.027 dist=None rarest=None inv={}
+step 5.0.160 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.170 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.180 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.190 jump rew=0.117 dist=None rarest=None inv={}
+step 5.0.200 forward rew=0.027 dist=None rarest=None inv={}
+reset epoch=5 ep=1 rarest=None dist=None
+step 5.1.1 forward rew=1.114 dist=None rarest=None inv={}
+step 5.1.10 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.20 jump rew=0.027 dist=None rarest=None inv={}
+step 5.1.30 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.40 forward rew=-0.020 dist=None rarest=None inv={}
+step 5.1.50 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.60 forward rew=1.140 dist=None rarest=None inv={}
+step 5.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 5.1.80 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.90 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.100 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.110 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.120 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.130 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.140 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.150 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.160 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.170 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.180 forward rew=-0.073 dist=None rarest=None inv={}
+step 5.1.190 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.200 forward rew=-0.020 dist=None rarest=None inv={}
+ppo epoch 5 return=4.001 loss=0.0579 collect=0.00 rarest=[None, None]
+reset epoch=6 ep=0 rarest=None dist=None
+step 6.0.1 jump rew=1.117 dist=None rarest=None inv={}
+step 6.0.10 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.20 jump rew=0.106 dist=None rarest=None inv={}
+step 6.0.30 noop rew=0.156 dist=None rarest=None inv={}
+step 6.0.40 jump rew=0.084 dist=None rarest=None inv={}
+step 6.0.50 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.0.60 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.70 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.0.80 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.90 camera_up rew=0.027 dist=None rarest=None inv={}
+step 6.0.100 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.110 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.120 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.130 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.0.150 mine rew=0.027 dist=None rarest=None inv={}
+step 6.0.160 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.170 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.180 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.190 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.0.200 jump rew=0.027 dist=None rarest=None inv={}
+reset epoch=6 ep=1 rarest=None dist=None
+step 6.1.1 jump rew=0.027 dist=None rarest=None inv={}
+step 6.1.10 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.20 jump rew=0.027 dist=None rarest=None inv={}
+step 6.1.30 forward rew=0.027 dist=None rarest=None inv={}
+step 6.1.40 forward rew=0.027 dist=None rarest=None inv={}
+step 6.1.50 jump rew=0.205 dist=None rarest=None inv={}
+step 6.1.60 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.1.80 jump rew=0.027 dist=None rarest=None inv={}
+step 6.1.90 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.100 jump rew=0.027 dist=None rarest=None inv={}
+step 6.1.110 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.1.120 jump rew=0.205 dist=None rarest=None inv={}
+step 6.1.130 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.1.140 forward rew=0.027 dist=None rarest=None inv={}
+step 6.1.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.1.160 jump rew=0.231 dist=None rarest=None inv={}
+step 6.1.170 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.180 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.190 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.200 forward rew=-0.020 dist=None rarest=None inv={}
+ppo epoch 6 return=9.097 loss=0.2550 collect=0.00 rarest=[None, None]
+reset epoch=7 ep=0 rarest=None dist=None
+step 7.0.1 forward rew=0.027 dist=None rarest=None inv={}
+step 7.0.10 forward rew=0.027 dist=None rarest=None inv={}
+step 7.0.20 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.30 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.40 forward rew=0.050 dist=None rarest=None inv={}
+step 7.0.50 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.60 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.80 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.90 forward rew=0.027 dist=None rarest=None inv={}
+step 7.0.100 turn_right rew=-0.020 dist=None rarest=None inv={}
+step 7.0.110 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.120 jump rew=0.027 dist=None rarest=None inv={}
+step 7.0.130 jump rew=0.027 dist=None rarest=None inv={}
+step 7.0.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.160 forward rew=-0.018 dist=None rarest=None inv={}
+step 7.0.170 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.180 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.190 noop rew=1.027 dist=None rarest=None inv={}
+step 7.0.200 forward rew=-0.020 dist=None rarest=None inv={}
+reset epoch=7 ep=1 rarest=None dist=None
+step 7.1.1 forward rew=1.027 dist=None rarest=None inv={}
+step 7.1.10 forward rew=-0.018 dist=None rarest=None inv={}
+step 7.1.20 forward rew=0.025 dist=None rarest=None inv={}
+step 7.1.30 forward rew=-0.019 dist=None rarest=None inv={}
+step 7.1.40 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.50 forward rew=-0.018 dist=None rarest=None inv={}
+step 7.1.60 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.80 jump rew=0.026 dist=None rarest=None inv={}
+step 7.1.90 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.100 camera_up rew=0.004 dist=None rarest=None inv={}
+step 7.1.110 jump rew=0.027 dist=None rarest=None inv={}
+step 7.1.120 jump rew=-0.019 dist=None rarest=None inv={}
+step 7.1.130 forward rew=-0.018 dist=None rarest=None inv={}
+step 7.1.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.150 noop rew=0.027 dist=None rarest=None inv={}
+step 7.1.160 forward rew=0.003 dist=None rarest=None inv={}
+step 7.1.170 forward rew=-0.019 dist=None rarest=None inv={}
+step 7.1.180 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.190 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.200 jump rew=0.027 dist=None rarest=None inv={}
+ppo epoch 7 return=0.291 loss=0.0819 collect=0.00 rarest=[None, None]
+reset epoch=0 ep=0 rarest=None dist=None
+step 0.0.1 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.10 turn_right rew=0.073 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.20 turn_left rew=1.234 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.30 mine rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.40 forward rew=1.107 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.50 mine rew=1.807 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.60 mine rew=1.028 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.70 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.80 camera_down rew=1.320 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.90 forward rew=1.376 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.100 camera_down rew=1.186 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.110 jump rew=1.250 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.120 camera_down rew=1.351 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.130 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.140 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.150 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.160 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.170 turn_right rew=0.008 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.180 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.190 camera_down rew=-0.119 dist=None rarest=None inv={'oak_log': 128}

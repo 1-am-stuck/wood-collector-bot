@@ -35,3 +35,4 @@ logs/*
 wandb/
 .env
 docs/PLAN_FLY_NAVIGATES_MINECRAFT.md
+*.pt

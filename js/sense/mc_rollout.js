@@ -17,7 +17,7 @@ const { stepReward } = require('./mc_reward')
 const { navReward, newVisitSet } = require('./nav_reward')
 const { scoreFeedStep } = require('./feed_reward')
 const { sampleVoxels, samplePose, snapshotStale } = require('./voxelSnapshot')
-const { planGrove, plantGrove } = require('./seedRich')
+const { planGrove, plantGrove, hopFromPose } = require('./seedRich')
 
 const root = path.join(__dirname, '../..')
 const cfg = loadSenseConfig(root)
@@ -292,8 +292,8 @@ async function connect (opts) {
   else if (seedWoods) await seedWoodsIfNeeded()
 }
 
-async function seedRichIfNeeded () {
-  if (!botAlive() || richSeeded) return
+async function seedRichIfNeeded (force = false) {
+  if (!botAlive() || (!force && richSeeded)) return
   const plan = planGrove(cfg.blockOdor, cfg.itemOdor)
   await plantGrove(bot, plan)
   richSeeded = true
@@ -345,11 +345,12 @@ async function handle (msg) {
     lastFrame = { odor: {}, taste: {} }
     senseState.lastAction = null
     navCells = newVisitSet()
-    // Stay airborne. This is a fly, not a pedestrian: landing it is what made
-    // the body look dead, because DNp01 is takeoff and walking keys do nothing
-    // with gravity off unless we translate the pose ourselves.
+    if (mode === 'feed') {
+      const hop = hopFromPose(bot, 'feed')
+      await flyOffset(bot, hop.dx, hop.dy, hop.dz, 4000)
+    }
     keepFlying(bot)
-    if (seedRich) await seedRichIfNeeded()
+    if (seedRich) await seedRichIfNeeded(mode === 'feed')
     const obs = observe(activeGoal())
     if (mode === 'navigate' || mode === 'feed') navReward(null, obs.facts.nav, navCells)
     return { ...obs, reward: null, done: false }
@@ -370,13 +371,18 @@ async function handle (msg) {
     releaseControls(bot)
     await tossLogs()
     await startFlying()
-    const ox = (Math.random() * 2 - 1) * 36
-    const oz = (Math.random() * 2 - 1) * 36
-    await flyOffset(bot, 0, 10, 0, 600)
-    await flyOffset(bot, ox, 8, oz, 1200)
+    const hop = hopFromPose(bot, mode)
+    if (mode === 'feed') {
+      // Come back to the deck (not +2 off wherever the last jump left us), then
+      // replant the sugar carpet underfoot.
+      await flyOffset(bot, hop.dx, hop.dy, hop.dz, 4000)
+    } else {
+      await flyOffset(bot, 0, 10, 0, 600)
+      await flyOffset(bot, hop.dx, hop.dy - 10, hop.dz, 1200)
+    }
     keepFlying(bot)
     if (seedWoods) await seedWoodsIfNeeded()
-    if (seedRich) await seedRichIfNeeded()
+    if (seedRich) await seedRichIfNeeded(mode === 'feed')
     await sleep(80)
     rememberVisit(bot)
     const peek = factsNow(null)

@@ -9,6 +9,7 @@
 const { withTimeout } = require('./actions')
 
 const SKIP_BLOCKS = new Set(['lava', 'fire', 'magma_block', 'water'])
+const SUGAR_BLOCKS = ['cake', 'melon', 'honey_block', 'sweet_berry_bush']
 
 function ring (n, radius, y) {
   const out = []
@@ -21,6 +22,33 @@ function ring (n, radius, y) {
     })
   }
   return out
+}
+
+/** Dense eatable floor around the fly. One cake in the odor ring is not enough. */
+function sugarCarpet (radius = 4) {
+  const blocks = []
+  let i = 0
+  for (let dz = -radius; dz <= radius; dz++) {
+    for (let dx = -radius; dx <= radius; dx++) {
+      if (dx === 0 && dz === 0) continue
+      blocks.push({ dx, dy: 0, dz, name: SUGAR_BLOCKS[i % SUGAR_BLOCKS.length] })
+      i++
+    }
+  }
+  return blocks
+}
+
+/**
+ * Where an episode starts relative to the current pose.
+ * Feed stays on the carpet so LB3b is reachable; other modes still wander.
+ */
+function episodeHop (mode, rng = Math.random) {
+  if (mode === 'feed') return { dx: 0, dy: 2, dz: 0 }
+  return {
+    dx: (rng() * 2 - 1) * 36,
+    dy: 18,
+    dz: (rng() * 2 - 1) * 36,
+  }
 }
 
 function planGrove (blockOdor, itemOdor) {
@@ -52,6 +80,8 @@ function planGrove (blockOdor, itemOdor) {
       }
     }
   })
+
+  blocks.push(...sugarCarpet(4))
 
   const itemRing = ring(fruit.length, 2, 0)
   const items = fruit.map((name, i) => ({
@@ -87,14 +117,25 @@ const { Vec3 } = require('vec3')
 /** Highest solid block under the fly — the grove sits on the world, not in empty sky. */
 function findDeck (bot) {
   const p = bot.entity.position.floored()
-  for (let dy = 0; dy >= -48; dy--) {
-    const b = typeof bot.blockAt === 'function' ? bot.blockAt(p.offset(0, dy, 0), false) : null
+  const minY = (bot.game && bot.game.minY != null) ? bot.game.minY : -64
+  const start = p.y
+  for (let y = start; y >= minY; y--) {
+    const b = typeof bot.blockAt === 'function' ? bot.blockAt(p.offset(0, y - start, 0), false) : null
     if (b && b.name && b.name !== 'air' && b.name !== 'cave_air' && b.name !== 'void_air' &&
         b.name !== 'water' && b.boundingBox === 'block') {
       return b.position
     }
   }
   return p.offset(0, -1, 0)
+}
+
+/** Feed: return onto the deck. Other modes: the usual wander hop from here. */
+function hopFromPose (bot, mode) {
+  const hop = episodeHop(mode)
+  if (mode !== 'feed' || !bot || !bot.entity) return hop
+  const deck = findDeck(bot)
+  const y = bot.entity.position.y
+  return { dx: hop.dx, dy: (deck.y + hop.dy) - y, dz: hop.dz }
 }
 
 async function hold (bot, name) {
@@ -161,4 +202,4 @@ async function plantGrove (bot, plan) {
   return { planted, tossed, origin }
 }
 
-module.exports = { planGrove, plantGrove, SKIP_BLOCKS }
+module.exports = { planGrove, plantGrove, SKIP_BLOCKS, sugarCarpet, episodeHop, findDeck, hopFromPose }
