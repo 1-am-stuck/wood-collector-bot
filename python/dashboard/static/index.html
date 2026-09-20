@@ -45,6 +45,7 @@
     #gl { flex: 1; min-height: 220px; cursor: grab; }
     #gl.drag { cursor: grabbing; }
     #retinaCanvas { height: 190px; }
+    #eyeRgb { height: 96px; image-rendering: pixelated; max-width: 320px; }
     #bodyCanvas { height: 300px; }
     #rasterCanvas { height: 230px; image-rendering: pixelated; }
     .hint { color: var(--muted); font-size: 12px; margin: 0; }
@@ -135,6 +136,9 @@
         <p class="hint">The policy's entire visual input: <b id="retinaHint">measured ommatidia</b>,
           one luminance sample per sampled column, placed where that ommatidium actually looks.</p>
         <canvas id="retinaCanvas"></canvas>
+        <p class="hint" style="margin-top:6px">First-person RGB from the neck (camera). Packed for an LLM;
+          the policy still only sees the luminance above.</p>
+        <canvas id="eyeRgb" width="160" height="90"></canvas>
         <p class="hint" style="margin-top:6px">Olfaction &mdash; glomeruli</p>
         <div class="bars" id="odor"></div>
         <p class="hint" style="margin-top:8px">Optic glomeruli &mdash; object channels</p>
@@ -153,9 +157,9 @@
           Each action is read from one descending population.</p>
         <canvas id="bodyCanvas"></canvas>
         <p class="hint" style="margin-top:6px">Descending populations &mdash; the nine functions of
-          <code>configs/sense/population_index.json</code>, plus the neck motor pool for head pitch.
-          Bar = that unit's live rate; <b>groom</b> and <b>flight</b> are real outputs with no
-          Minecraft action, so nothing reads them.</p>
+          <code>configs/sense/population_index.json</code>, plus FNM2/DNOVS for head pitch.
+          Bar = that unit's live rate; <b>groom</b>, <b>flight</b> and unpublished MNnm
+          are real outputs with no Minecraft action, so nothing reads them.</p>
         <div id="dns"></div>
         <p class="hint" style="margin-top:8px">Populations by live rate &mdash; computed over
           <b>every</b> cell of each one, not just the sampled ones. Count is how many of
@@ -397,12 +401,14 @@ function uploadActors (pose) {
   const parts = []
   if (pose) {
     const h = pose.height || 1.8
-    // A small marker body plus a heading spur, so which way it faces is visible.
-    box(parts, pose.x - 0.25, pose.y, pose.z - 0.25, 0.5, h * 0.62, 0.5, 240, 210, 90)
-    box(parts, pose.x - 0.18, pose.y + h * 0.62, pose.z - 0.18, 0.36, h * 0.34, 0.36, 250, 240, 160)
+    const w = pose.width || Math.max(0.02, 0.6 * (h / 1.8))
+    // Marker body + heading spur, sized from the live hitbox (flybody scale).
+    box(parts, pose.x - w / 2, pose.y, pose.z - w / 2, w, h * 0.62, w, 240, 210, 90)
+    box(parts, pose.x - w * 0.36, pose.y + h * 0.62, pose.z - w * 0.36, w * 0.72, h * 0.34, w * 0.72, 250, 240, 160)
     const fx = -Math.sin(pose.yaw || 0)
     const fz = Math.cos(pose.yaw || 0)
-    box(parts, pose.x - 0.1 + fx * 0.75, pose.y + h * 0.7, pose.z - 0.1 + fz * 0.75, 0.2, 0.2, 0.2, 126, 224, 163)
+    const nose = Math.max(w, 0.04)
+    box(parts, pose.x - nose / 2 + fx * w * 1.4, pose.y + h * 0.7, pose.z - nose / 2 + fz * w * 1.4, nose, nose, nose, 126, 224, 163)
     for (const m of pose.mobs || []) {
       const w = clamp(m.w || 0.6, 0.2, 4)
       box(parts, m.x - w / 2, m.y, m.z - w / 2, w, clamp(m.h || 1, 0.2, 4), w, 190, 120, 200)
@@ -581,6 +587,24 @@ function drawRetina (lum) {
       ctx.fill()
     }
   })
+}
+
+function drawPackedEye (eye) {
+  const c = $('eyeRgb')
+  if (!c || !eye || !eye.w || !eye.h) return
+  const rgb = b64bytes(eye.rgb)
+  if (!rgb || rgb.length < eye.w * eye.h * 3) return
+  c.width = eye.w
+  c.height = eye.h
+  const ctx = c.getContext('2d')
+  const img = ctx.createImageData(eye.w, eye.h)
+  for (let i = 0, p = 0; i < rgb.length; i += 3, p += 4) {
+    img.data[p] = rgb[i]
+    img.data[p + 1] = rgb[i + 1]
+    img.data[p + 2] = rgb[i + 2]
+    img.data[p + 3] = 255
+  }
+  ctx.putImageData(img, 0, 0)
 }
 
 // What each channel is in the fly, and what excites it in Minecraft. Fetched once
@@ -1014,6 +1038,7 @@ function renderTick (tick) {
 
   const frame = tick.frame || {}
   drawRetina(frame.luminance)
+  if (tick.eye) drawPackedEye(tick.eye)
   bars($('odor'), activeRows(frame.odor, 10), 0, 'glomeruli')
   bars($('objects'),
     Object.entries(frame.objectChannels || {}).map(([k, v]) => [k, v, 'cb']), 0, 'object_channels')
@@ -1087,6 +1112,7 @@ function connect () {
       world.seq = msg.seq
       uploadVoxels(msg.voxels)
     }
+    if (msg.eye) drawPackedEye(msg.eye)
     if (msg.tick) renderTick(msg.tick)
   }
   ws.onclose = () => {
@@ -1100,6 +1126,7 @@ if (initGl()) {
   fetch('/api/world').then(r => r.json()).then(w => {
     if (w.pose) world.pose = w.pose
     if (w.voxels) { world.seq = w.seq; uploadVoxels(w.voxels) }
+    if (w.eye) drawPackedEye(w.eye)
   }).catch(() => {})
 }
 fetch('/api/topology').then(r => r.json()).then(t => {

@@ -22,6 +22,9 @@ def test_goals_are_injections_not_wood_hardcode():
 
     f = apply_goal(empty, feed, None)
     assert f["taste"]["LB3b"] > 0
+    # Hungry search is olfactory (food-odor glomeruli), not a fake sugar taste.
+    assert f["odor"]["DM1"] > 0
+    assert f["odor"]["VA2"] > 0
 
     quiet = apply_goal(empty, flee, {"position": {"x": 0, "y": 64, "z": 0}, "entities": []})
     assert quiet["objectChannels"].get("LC4", 0) == 0

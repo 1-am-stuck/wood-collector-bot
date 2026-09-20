@@ -11,7 +11,7 @@ from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from dashboard.hub import history, latest, pose, publish, topology, voxels
+from dashboard.hub import eye, eye_seq, history, latest, pose, publish, topology, voxels
 from load_env import load_repo_env
 from sense.glossary import glossary
 
@@ -50,7 +50,7 @@ def api_glossary():
 def api_world():
     """Current geometry and pose, for a viewer that just connected."""
     snapshot, seq = voxels()
-    return {"pose": pose(), "voxels": snapshot, "seq": seq}
+    return {"pose": pose(), "voxels": snapshot, "seq": seq, "eye": eye()}
 
 
 @app.get("/api/retina")
@@ -93,6 +93,7 @@ async def ws(sock: WebSocket):
     await sock.accept()
     last_tick_t = None
     last_seq = -1
+    last_eye_seq = -1
     sent_topology = False
     period = 1.0 / STREAM_HZ
     try:
@@ -113,6 +114,10 @@ async def ws(sock: WebSocket):
                 payload["voxels"] = snapshot
                 payload["seq"] = seq
                 last_seq = seq
+            packed_eye, eseq = eye(), eye_seq()
+            if packed_eye is not None and eseq != last_eye_seq:
+                payload["eye"] = packed_eye
+                last_eye_seq = eseq
             await sock.send_json(payload)
             await asyncio.sleep(period)
     except WebSocketDisconnect:

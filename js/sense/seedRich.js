@@ -30,7 +30,6 @@ function sugarCarpet (radius = 4) {
   let i = 0
   for (let dz = -radius; dz <= radius; dz++) {
     for (let dx = -radius; dx <= radius; dx++) {
-      if (dx === 0 && dz === 0) continue
       blocks.push({ dx, dy: 0, dz, name: SUGAR_BLOCKS[i % SUGAR_BLOCKS.length] })
       i++
     }

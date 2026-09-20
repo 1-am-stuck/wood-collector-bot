@@ -354,28 +354,29 @@ def motor_anchors() -> list[MotorAnchor]:
                     "29 cells across subtypes _a.._g; a graded amplitude "
                     "controller, not a command neuron. No bare DNg02 type exists."),
         MotorAnchor("gazeYaw", Selector(types=("DNp15",)), None, "head",
-                    "DNHS1: horizontal-system yaw flow onto neck motor."),
-        MotorAnchor("gazePitch", Selector(types=("DNp20", "DNp22")), None, "head",
-                    "DNOVS1/2: ocellar and vertical-system roll/pitch gaze."),
-        # Head pitch. male-cns annotates the neck motor pool but not which muscle
-        # each neuron drives -- nerve is blank and every cell sits in T1 -- so
-        # nothing in the data says which of these is a head levator and which is a
-        # depressor. What the data does give is two genuinely distinct named pools.
-        # Because the decoder weight on each is *learned*, the direction does not
-        # have to be asserted: if training pairs them the other way round the gain
-        # simply comes out with the opposite sign and behaviour is unaffected. The
-        # population identities are real; the up/down labels are arbitrary and are
-        # recorded as such rather than dressed up as anatomy.
-        MotorAnchor("neck_nm", Selector(prefixes=("MNnm",), superclass="vnc_motor"),
+                    "DNHS1: horizontal-system yaw flow onto neck motor. Body yaw "
+                    "is already DNa02 (turn_left/right), so this stays unread."),
+        MotorAnchor("gazePitch", Selector(types=("DNp20", "DNp22")),
                     "camera_up", "head",
-                    "Neck muscle motor neurons MNnm03..MNnm14, 16 cells. Which "
-                    "pitch direction they serve is learned, not asserted."),
+                    "DNOVS1/2: ocellar and vertical-system roll/pitch gaze. "
+                    "Minecraft camera_up is that head elevation."),
+        # Head pitch. FNM2 is a published levator; ADNM1/2 the other named neck
+        # pool. MNnm exist but male-cns does not say which way each pulls, so
+        # they stay unread rather than being assigned camera_up by convention.
+        MotorAnchor("neck_nm", Selector(prefixes=("MNnm",), superclass="vnc_motor"),
+                    None, "head",
+                    "Neck muscle motor neurons MNnm03..MNnm14, 16 cells. Pull "
+                    "direction is unpublished, so they are not decoded."),
         MotorAnchor("neck_adn",
-                    Selector(types=("ADNM1 MN", "ADNM2 MN", "FNM2"),
+                    Selector(types=("ADNM1 MN", "ADNM2 MN"),
                              superclass="vnc_motor"),
                     "camera_down", "head",
-                    "The other neck pool, 8 cells. Paired with camera_down by "
-                    "convention only; see neck_nm."),
+                    "ADNM1/2 depress the head."),
+        MotorAnchor("neck_fnm",
+                    Selector(types=("FNM2",),
+                             superclass="vnc_motor"),
+                    "camera_up", "head",
+                    "FNM2 elevates the head (comparative DN/AN connectome)."),
     ]
 
 

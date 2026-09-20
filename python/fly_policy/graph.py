@@ -77,6 +77,7 @@ class FlyGraph:
         self.dn_idx = np.array([i for i, r in enumerate(self.roles) if r == "dn"], dtype=np.int64)
         self.central_idx = np.array([i for i, r in enumerate(self.roles) if r in ("central", "dn")], dtype=np.int64)
         self.n_edges = int(self.src.shape[0])
+        self.align_minecraft_motors()
 
     @property
     def derived(self) -> bool:
@@ -157,6 +158,39 @@ class FlyGraph:
 
     def index_of(self, name: str) -> int:
         return self.names.index(name)
+
+    def cells_named(self, type_name: str) -> list[str]:
+        """Nodes whose type is `type_name` (`FNM2_L`, `ADNM1 MN_R`, …)."""
+        prefix = type_name + "_"
+        return [n for n in self.names if n == type_name or n.startswith(prefix)]
+
+    def align_minecraft_motors(self) -> None:
+        """Map published DN/MN functions onto Mineflayer camera actions.
+
+        FNM2 elevates the head (comparative DN/AN connectome). DNp20/DNp22 are
+        DNOVS1/2, the pitch/roll gaze DNs driven by VS and ocelli. ADNM1/2 stay
+        on camera_down. MNnm stay in the graph but unpublished pull direction
+        means they are not decoded. Antennal grooming (DNg62/DNge078) still has
+        no Minecraft motor. Idempotent, so a rebuilt NPZ and an old one agree.
+        """
+        if not self.action_units:
+            return
+        fnm = self.cells_named("FNM2")
+        adnm = self.cells_named("ADNM1 MN") + self.cells_named("ADNM2 MN")
+        dnovs = self.cells_named("DNp20") + self.cells_named("DNp22")
+        mnnm = [n for n in self.names if n.startswith("MNnm")]
+        prev = {k: list(v) for k, v in self.action_units.items()}
+        up = sorted(set(fnm + dnovs))
+        down = sorted(set(adnm))
+        if up:
+            self.action_units["camera_up"] = up
+        if down:
+            self.action_units["camera_down"] = down
+        decoded = {u for units in self.action_units.values() for u in units}
+        leftover = set(self.unread)
+        leftover.update(mnnm)
+        leftover.update(u for units in prev.values() for u in units)
+        self.unread = sorted(leftover - decoded)
 
     def synapses(self, src_name: str, dst_name: str) -> float:
         """Measured synapse count between two nodes, so claims can be checked."""

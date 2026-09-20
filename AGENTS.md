@@ -89,7 +89,10 @@ ChessFly dynamics (`huggingface.co/mlabonne/chessfly`):
 - Actions: `forward back turn_left turn_right jump mine camera_up camera_down noop`
   - `noop` is DNg60 (GABAergic halt), not an absence
   - `turn_left` / `turn_right` both read DNa02; side is the signal
-  - `camera_up` ← MNnm* pool; `camera_down` ← ADNM/FNM; the decoder learns the sign
+  - `camera_up` ← FNM2 + DNp20/DNp22 (DNOVS); `camera_down` ← ADNM1/ADNM2
+  - `mine` is MN9 (proboscis). Labellar sugar (LB3b) fires only when tarsi are on food **and** the crosshair is on food.
+  - packed first-person RGB is for us / an LLM; the policy still only sees luminance
+  - Body is the Mineflayer player scaled from flybody (2.97 mm). Vanilla `minecraft:scale` floors at 0.0625 (~11 cm tall). Feed-at-that-size writes `fly_mc_feed_flybody.pt` so `fly_mc_feed.pt` stays the player-sized run.
 
 Obs vector: 128 ommatidia + glomeruli + bearing sin/cos + GRNs + object channels + mechano (`python/sense/frame.py`). Routing keys live on the graph (`retina:37`, `glomerulus:DM1`) and are resolved by `python/sense/channels.py`.
 

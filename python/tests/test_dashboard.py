@@ -1,4 +1,4 @@
-from dashboard.hub import history, latest, publish, reset
+from dashboard.hub import eye, history, latest, publish, publish_stream, reset
 
 
 def test_publish_keeps_latest_training_tick():
@@ -20,3 +20,14 @@ def test_publish_keeps_latest_training_tick():
     assert got["eye"]["w"] == 2
     assert got["brain"]["n"] == 3
     assert history()[-1]["reward"] == 0.3
+
+
+def test_publish_stream_keeps_packed_first_person_eye():
+    reset()
+    packed = {"w": 4, "h": 2, "rgb": "AQIDBAUGBwg=", "mode": "first"}
+    publish_stream({"stream": "eye", "eye": packed})
+    got = eye()
+    assert got["w"] == 4
+    assert got["h"] == 2
+    assert got["mode"] == "first"
+    assert got["rgb"] == packed["rgb"]

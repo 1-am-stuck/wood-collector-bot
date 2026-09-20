@@ -34,6 +34,8 @@ test('oak and spruce GoalSpecs inject different glomerular tonics', () => {
 test('feed GoalSpec injects sugar GRN tonic', () => {
   const hungry = applyGoal(emptyFrame(64), loadGoalSpec('feed', root), emptyWorld)
   assert.ok((hungry.taste.LB3b || 0) > 0)
+  assert.ok((hungry.odor.DM1 || 0) > 0)
+  assert.ok((hungry.odor.VA2 || 0) > 0)
 })
 
 test('flee:creeper only boosts LC4 / DA2 when a creeper is present', () => {

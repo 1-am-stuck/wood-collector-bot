@@ -144,6 +144,7 @@ function samplePose (bot) {
     yaw: e.yaw,
     pitch: e.pitch,
     height: e.height || 1.8,
+    width: e.width || 0.6,
     onGround: !!e.onGround,
     vx: (e.velocity && e.velocity.x) || 0,
     vy: (e.velocity && e.velocity.y) || 0,

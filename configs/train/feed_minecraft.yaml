@@ -11,12 +11,11 @@
 run:
   name: feed-mc
   seed: 7
-  # Resume this recipe if a feed checkpoint exists. Otherwise train.py will
-  # warm-start from fly_mc_navigate.pt when that file is present, or from the
-  # measured connectome (`allow_fresh`).
+  # Player-sized feed weights stay in fly_mc_feed.pt. This recipe writes a
+  # new file so those checkpoints stay intact. `--fresh` still skips loading.
   allow_fresh: true
-  ckpt: checkpoints/fly_mc_feed.pt
-  out: checkpoints/fly_mc_feed.pt
+  ckpt: checkpoints/fly_mc_feed_flybody.pt
+  out: checkpoints/fly_mc_feed_flybody.pt
 
 graph:
   # The published male-cns:v1.0 connectome, one node per traced neuron.

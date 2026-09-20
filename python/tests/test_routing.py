@@ -183,3 +183,29 @@ def test_unread_outputs_are_kept_and_not_decoded():
         assert unit in dn_names, f"{unit} was trimmed out of the graph"
         col = dn_names.index(unit)
         assert model.dec_mask[:, col].sum() == 0, f"{unit} should drive no action"
+
+
+def _of_type(units, type_name: str) -> list[str]:
+    prefix = type_name + "_"
+    return [n for n in units if n == type_name or n.startswith(prefix)]
+
+
+def test_camera_up_is_head_elevation_not_the_anonymous_neck_pool():
+    """FNM2 elevates the head; DNp20/DNp22 are DNOVS pitch gaze.
+
+    MNnm stay in the graph but unpublished direction means they are not decoded.
+    ADNM1/2 stay on camera_down. FNM2 must not sit on both.
+    """
+    graph = graph_or_skip()
+    up = graph.action_units["camera_up"]
+    down = graph.action_units["camera_down"]
+    assert _of_type(up, "FNM2"), up
+    assert _of_type(up, "DNp20") and _of_type(up, "DNp22"), up
+    assert not _of_type(up, "MNnm03"), up
+    assert not any(n.startswith("MNnm") for n in up), up
+    assert _of_type(down, "ADNM1 MN") and _of_type(down, "ADNM2 MN"), down
+    assert not _of_type(down, "FNM2"), down
+    unread = set(graph.unread)
+    assert not unread & set(_of_type(graph.names, "DNp20"))
+    assert not unread & set(_of_type(graph.names, "FNM2"))
+    assert unread & set(_of_type(graph.names, "DNg62")), "grooming aDN stays unread"

@@ -81,6 +81,8 @@ test('pose is small and carries what a camera needs', () => {
   assert.ok(Math.abs(pose.x - 0.5) < 1e-9)
   assert.deepEqual(pose.mobs, [])
   assert.ok(JSON.stringify(pose).length < 400, 'pose must stay cheap at 30 Hz')
+  assert.equal(pose.height, 1.8)
+  assert.equal(pose.width, 0.6)
 })
 
 test('snapshot goes stale once the bot walks out of the box', () => {

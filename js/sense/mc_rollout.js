@@ -10,14 +10,16 @@ const { Vec3 } = require('vec3')
 const { loadSenseConfig } = require('./loadConfig')
 const { sampleBot } = require('./senseBridge')
 const { applyGoal } = require('./goalToSense')
-const { applyAction, flyOffset, keepFlying, releaseControls, withTimeout } = require('./actions')
+const { applyAction, flyOffset, keepFlying, land, releaseControls, withTimeout } = require('./actions')
 const { censusLogs, rarestLog, WOOD_LOGS } = require('./rarity')
 const { compactFrame } = require('./logger')
 const { stepReward } = require('./mc_reward')
 const { navReward, newVisitSet } = require('./nav_reward')
 const { scoreFeedStep } = require('./feed_reward')
 const { sampleVoxels, samplePose, snapshotStale } = require('./voxelSnapshot')
+const { sampleEyeView, packEye } = require('./eyeView')
 const { planGrove, plantGrove, hopFromPose } = require('./seedRich')
+const { applyFlyBody, reachBlocks } = require('./flyBody')
 
 const root = path.join(__dirname, '../..')
 const cfg = loadSenseConfig(root)
@@ -42,7 +44,7 @@ let mode = 'rarest'
 let goalSpec = null
 let lastFrame = { odor: {}, taste: {} }
 let navCells = newVisitSet()
-const view = { hz: 30, radiusXZ: 20, radiusY: 12, timer: null, voxels: null, voxelAt: 0 }
+const view = { hz: 30, radiusXZ: 20, radiusY: 12, timer: null, voxels: null, voxelAt: 0, eye: null, eyeAt: 0 }
 
 function send (obj) {
   process.stdout.write(JSON.stringify(obj) + '\n')
@@ -63,6 +65,8 @@ function startStream (opts = {}) {
     try {
       const pose = samplePose(bot)
       if (pose) send({ stream: 'pose', t: Date.now(), pose })
+      const packed = samplePackedEye(false)
+      if (packed) send({ stream: 'eye', t: Date.now(), eye: packed })
       const now = Date.now()
       const stale = !view.voxels || snapshotStale(view.voxels, bot) || now - view.voxelAt > 4000
       if (stale) {
@@ -81,6 +85,24 @@ function startStream (opts = {}) {
 function stopStream () {
   if (view.timer) clearInterval(view.timer)
   view.timer = null
+}
+
+function samplePackedEye (force) {
+  const spec = view.eye || { width: 48, height: 27, maxDist: 24 }
+  const now = Date.now()
+  if (!force && view.eyeAt && now - view.eyeAt < 250) return null
+  try {
+    const packed = packEye(sampleEyeView(bot, {
+      width: spec.width || 48,
+      height: spec.height || 27,
+      maxDist: spec.maxDist || 24,
+      mode: 'first',
+    }))
+    view.eyeAt = now
+    return packed
+  } catch (_) {
+    return null
+  }
 }
 
 function inventoryCounts (bot) {
@@ -207,7 +229,7 @@ function observe (goal) {
   // Success is taste_contact on facts, not on the frame the policy sees.
   lastFacts.taste = { ...(frame.taste || {}) }
   lastFrame = compactFrame(frame)
-  return { frame: lastFrame, facts: lastFacts }
+  return { frame: lastFrame, facts: lastFacts, eye: samplePackedEye(true) }
 }
 
 function sleep (ms) {
@@ -277,8 +299,12 @@ async function connect (opts) {
       port: lastMc.port,
       username: lastMc.username,
     })
-    const t = setTimeout(() => reject(new Error('minecraft connect timeout')), 30000)
-    bot.once('spawn', () => { clearTimeout(t); resolve() })
+    const t = setTimeout(() => reject(new Error('minecraft connect timeout')), 60000)
+    bot.once('spawn', () => {
+      clearTimeout(t)
+      resolve()
+      applyFlyBody(bot).catch(() => {})
+    })
     bot.once('error', reject)
     bot.once('end', () => { bot = null })
   })
@@ -315,6 +341,7 @@ async function handle (msg) {
       view.hz = msg.view.hz || view.hz
       view.radiusXZ = msg.view.radiusXZ || view.radiusXZ
       view.radiusY = msg.view.radiusY || view.radiusY
+      if (msg.view.eye) view.eye = msg.view.eye
     }
     if (msg.seed_woods != null) seedWoods = !!msg.seed_woods
     if (msg.seed_rich != null) seedRich = !!msg.seed_rich
@@ -349,8 +376,9 @@ async function handle (msg) {
       const hop = hopFromPose(bot, 'feed')
       await flyOffset(bot, hop.dx, hop.dy, hop.dz, 4000)
     }
-    keepFlying(bot)
     if (seedRich) await seedRichIfNeeded(mode === 'feed')
+    if (mode === 'feed') await land(bot)
+    else keepFlying(bot)
     const obs = observe(activeGoal())
     if (mode === 'navigate' || mode === 'feed') navReward(null, obs.facts.nav, navCells)
     return { ...obs, reward: null, done: false }
@@ -373,16 +401,17 @@ async function handle (msg) {
     await startFlying()
     const hop = hopFromPose(bot, mode)
     if (mode === 'feed') {
-      // Come back to the deck (not +2 off wherever the last jump left us), then
-      // replant the sugar carpet underfoot.
+      // Come back onto the deck, plant sugar under the tarsi, then land so
+      // standingOn is food rather than air.
       await flyOffset(bot, hop.dx, hop.dy, hop.dz, 4000)
     } else {
       await flyOffset(bot, 0, 10, 0, 600)
       await flyOffset(bot, hop.dx, hop.dy - 10, hop.dz, 1200)
     }
-    keepFlying(bot)
     if (seedWoods) await seedWoodsIfNeeded()
     if (seedRich) await seedRichIfNeeded(mode === 'feed')
+    if (mode === 'feed') await land(bot)
+    else keepFlying(bot)
     await sleep(80)
     rememberVisit(bot)
     const peek = factsNow(null)
@@ -410,6 +439,7 @@ async function handle (msg) {
     await applyAction(bot, msg.action || 'noop', {
       ...cfg.actions.control,
       dtMs: cfg.actions.dtMs,
+      reachBlocks: reachBlocks(cfg.actions.control.reachBlocks),
     })
     const spec = activeGoal()
     const obs = observe(spec)

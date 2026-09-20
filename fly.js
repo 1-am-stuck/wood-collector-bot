@@ -8,6 +8,7 @@ require('./js/sense/loadEnv').loadRepoEnv()
 const mineflayer = require('mineflayer')
 const { loadSenseConfig } = require('./js/sense/loadConfig')
 const { startExplore } = require('./js/sense/exploreLoop')
+const { applyFlyBody } = require('./js/sense/flyBody')
 
 const host = process.env.MC_HOST || '127.0.0.1'
 const port = Number(process.env.MC_PORT || 25565)
@@ -19,6 +20,7 @@ let explore = null
 
 bot.once('spawn', () => {
   console.log('spawned in', bot.game.dimension, 'at', bot.entity.position)
+  applyFlyBody(bot).catch(() => {})
   explore = startExplore(bot, cfg, { exploreRadius: 32 })
   explore.run().catch(err => console.error('explore:', err))
 })

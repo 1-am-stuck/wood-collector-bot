@@ -52,8 +52,13 @@ class MinecraftEnv:
         self._rpc({"cmd": "load_catalog", "catalog": catalog or {}, "explore_radius": radius})
         payload = {"cmd": "connect", "minecraft": self.cfg.get("minecraft") or {}}
         view = self.cfg.get("view") or {}
+        payload_view: dict = {}
         if view.get("stream"):
-            payload["view"] = view["stream"]
+            payload_view.update(view["stream"])
+        if view.get("eye"):
+            payload_view["eye"] = view["eye"]
+        if payload_view:
+            payload["view"] = payload_view
         # `mode: navigate` scores covering ground with no goal, and switches off the
         # census and the planted trees on the Node side, so it must reach `connect`.
         # `mode: feed` plants the grove, keeps census off, and needs the GoalSpec.

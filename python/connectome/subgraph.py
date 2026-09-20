@@ -470,11 +470,10 @@ def _actions(names, side, motor_set: dict[int, str]) -> tuple[dict, list[str]]:
     """Map each Minecraft action to the descending units allowed to drive it.
 
     Two populations are read per side rather than as a whole: `DNa02`, because turn
-    rate is carried by the right-minus-left difference in its rate, and the neck motor
-    pool, because camera pitch is a difference too. Everything else reads the whole
-    population. Populations with no action — grooming, flight amplitude, gaze — are
-    kept in the graph and simply not decoded, because they are real outputs and
-    deleting them would change the dynamics of everything upstream.
+    rate is carried by the right-minus-left difference in its rate. Everything else
+    reads the whole population. Grooming, flight amplitude, HS yaw-gaze and the
+    unpublished MNnm pool stay in the graph and are not decoded. DNOVS pitch gaze
+    (DNp20/DNp22) and FNM2 drive camera_up; ADNM1/2 drive camera_down.
     """
     action_of = {m.population: m.action for m in motor_anchors()}
     split = {m.population for m in motor_anchors() if m.sides_split}

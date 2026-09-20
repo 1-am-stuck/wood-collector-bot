@@ -73,3 +73,13 @@ test('pack helpers stay byte-sized', () => {
   assert.equal(Buffer.from(packRgb([1, 2, 3, 4]), 'base64').length, 4)
   assert.equal(Buffer.from(packLum([0, 1, 0.5]), 'base64')[1], 255)
 })
+
+test('packEye is the LLM-sized first-person frame', () => {
+  const { packEye } = require('../../js/sense/eyeView')
+  const view = sampleEyeView(fakeBot(), { width: 8, height: 4, maxDist: 24 })
+  const packed = packEye(view)
+  assert.equal(packed.w, 8)
+  assert.equal(packed.h, 4)
+  assert.equal(packed.mode, 'first')
+  assert.equal(Buffer.from(packed.rgb, 'base64').length, 8 * 4 * 3)
+})

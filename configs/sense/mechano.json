@@ -2,7 +2,7 @@
   "flightSpeedBlocksPerS": 8,
   "windLateralGain": 0.4,
   "collisionTouch": { "head": 0.8, "legs": 0.5 },
-  "rain": { "groomDust": 0.6, "moist": 0.8 },
+  "rain": { "groomDust": 0.6, "moist": 0.8, "touchWing": 0.5 },
   "water": { "moist": 1.0, "touchLegs": 0.5 },
   "hotTempAbove": 1.2,
   "coldTempBelow": 0.15,

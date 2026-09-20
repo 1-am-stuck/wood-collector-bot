@@ -33,6 +33,7 @@ function compactFrame (frame) {
     soundLow: frame.soundLow,
     soundHigh: frame.soundHigh,
     touchHead: frame.touchHead,
+    touchWing: frame.touchWing,
     touchLegs: frame.touchLegs,
     groomDust: frame.groomDust,
     damage: frame.damage,

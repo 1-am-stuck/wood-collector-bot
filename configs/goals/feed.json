@@ -2,11 +2,18 @@
   "id": "feed",
   "injections": [
     {
+      "modality": "olfaction",
+      "pattern": { "DM1": 1.0, "VA2": 0.8 },
+      "strength": 0.15,
+      "falloff": "tonic",
+      "note": "hungry search: food-odor glomeruli (yeast/fruit esters), not a fake sugar taste"
+    },
+    {
       "modality": "gustation",
       "pattern": { "LB3b": 0.25, "LB3c": 0.25, "LgLG3": 0.2 },
       "strength": 0.2,
       "falloff": "tonic",
-      "note": "sugar-GRN search tonic until TasteTable contact fires"
+      "note": "appetite tonic until TasteTable contact fires labellar sugar"
     }
   ],
   "success": {

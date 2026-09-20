@@ -42,3 +42,22 @@ def test_the_settle_is_finite_on_a_bright_and_a_dark_world():
         h = m.forward_hidden(obs)
         assert torch.isfinite(h).all(), f"non-finite rates at luminance {fill}"
         assert h.min() >= 0.0, "rectified rates cannot go negative"
+
+
+def test_decode_is_mean_rate_so_a_large_pool_cannot_outvote_mn9():
+    """Logit = mean of an action's units, not the sum.
+
+    camera_up used to sum 16 MNnm cells. At the same firing rate that drowned
+    MN9's two cells, so an untrained fly locked onto camera/jump and never ate.
+    """
+    from fly_policy.policy import ACTIONS
+
+    g = graph_or_skip()
+    m = FlyPolicy(g, vector_size(g.n_retina))
+    dn = torch.ones(int(m.dn_idx.numel()))
+    with torch.no_grad():
+        logits = m.decode(dn)
+        by = {a: float(logits[i]) for i, a in enumerate(ACTIONS)}
+    assert abs(by["mine"] - by["camera_up"]) < 0.05, by
+    assert abs(by["mine"] - by["jump"]) < 0.05, by
+    assert abs(by["mine"] - 1.0) < 0.05, by

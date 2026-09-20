@@ -48,7 +48,9 @@ function setControl (bot, key, on) {
   try { bot.setControlState(key, on) } catch (_) {}
 }
 
-/** Start a dig without waiting for it; digging spans many ticks. */
+/** Start a dig without waiting for it; digging spans many ticks.
+ * MN9 / mine is also the proboscis: eating is this same command when the
+ * tarsi are on food and this ray hits food (see senseBridge). */
 function beginDig (bot, state, reach) {
   if (state.digging) return
   const target = typeof bot.blockAtCursor === 'function' ? bot.blockAtCursor(reach) : null

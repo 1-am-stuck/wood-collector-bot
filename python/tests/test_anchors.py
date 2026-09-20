@@ -125,9 +125,9 @@ def test_every_minecraft_action_has_a_motor_population():
 
 
 def test_outputs_without_an_action_are_still_declared():
-    """Grooming, flight amplitude and gaze are real; they just have nothing to drive."""
+    """Grooming, flight, HS yaw-gaze and the unpublished MNnm pool stay unread."""
     unread = {a.population for a in motor_anchors() if a.action is None}
-    assert unread == {"yaw", "groom", "flight", "gazeYaw", "gazePitch"}
+    assert unread == {"yaw", "groom", "flight", "gazeYaw", "neck_nm"}
 
 
 def test_optic_glomerulus_anchors_are_marked_analytic():

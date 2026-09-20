@@ -49,10 +49,10 @@ test('plantGrove places on a found deck and tosses fruit', async () => {
   await plantGrove(bot, { blocks: [{ dx: 2, dy: 0, dz: 0, name: 'oak_log' }], items: [] })
 })
 
-test('nothing is planted on the fly itself', () => {
+test('nothing is planted inside the body column above the floor', () => {
   const plan = planGrove(cfg.blockOdor, cfg.itemOdor)
   for (const b of plan.blocks) {
-    assert.ok(b.dx !== 0 || b.dz !== 0 || b.dy < 0, `${b.name} sits on the body`)
+    assert.ok(b.dx !== 0 || b.dz !== 0 || b.dy <= 0, `${b.name} sits in the body`)
   }
 })
 
@@ -63,7 +63,7 @@ test('feed carpet is a dense sugar grid around the body, not one cake', () => {
   const nearby = plan.blocks.filter(b =>
     SUGAR.has(b.name) && b.dy === 0 && Math.max(Math.abs(b.dx), Math.abs(b.dz)) <= 4)
   assert.ok(nearby.length >= 40, `sugar carpet too thin: ${nearby.length}`)
-  assert.ok(nearby.every(b => b.dx !== 0 || b.dz !== 0), 'carpet must not replace the fly')
+  assert.ok(nearby.some(b => b.dx === 0 && b.dz === 0), 'the cell underfoot must be sugar so tarsi can fire')
 })
 
 test('feed episode hop stays on the grove; navigate still wanders', () => {

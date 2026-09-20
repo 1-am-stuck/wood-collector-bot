@@ -187,8 +187,8 @@ def test_every_action_reads_only_its_own_population(graph: FlyGraph, policy: Fly
 def test_outputs_with_no_minecraft_action_are_kept_but_never_decoded(
     graph: FlyGraph, policy: FlyPolicy
 ):
-    """Grooming, flight amplitude and gaze are real outputs. Removing them would
-    change the dynamics upstream, so they stay in the graph and go unread."""
+    """Grooming, flight amplitude and HS yaw-gaze stay in the graph unread.
+    DNOVS pitch gaze is decoded as camera_up, so those cells are not in unread."""
     assert graph.unread
     dn_names = [graph.names[int(i)] for i in graph.dn_idx]
     for name in graph.unread:

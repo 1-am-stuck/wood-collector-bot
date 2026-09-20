@@ -104,9 +104,9 @@ class FlyPolicy(nn.Module):
 
         Default `nn.Linear` init assumes a dense fan-in of `n_obs`, but a routed
         sensory unit reads one to four channels, so those weights start far too
-        small to drive the settle. Unit weights also make the untrained network
+        small to drive the settle.         Unit weights also make the untrained network
         readable: a unit's current is the sum of its own channels, and each action
-        logit is its own descending rate. Symmetry between mirrored L/R units is
+        logit is the mean rate of its own descending units. Symmetry between mirrored L/R units is
         broken with a little noise so they can specialise.
         """
         with torch.no_grad():
@@ -123,6 +123,8 @@ class FlyPolicy(nn.Module):
             jitter = 1.0 + 0.05 * torch.randn_like(self.encoder.weight)
             self.encoder.weight.copy_(self.enc_mask * jitter * pol.unsqueeze(1))
             self.encoder.bias.copy_(torch.clamp(-pol, min=0.0))
+            # Unit weights plus mean pooling (see decode) make an untrained logit
+            # the mean rate of that action's own cells, not a sum over pool size.
             self.decoder.weight.copy_(self.dec_mask)
             self.decoder.bias.zero_()
 
@@ -207,8 +209,16 @@ class FlyPolicy(nn.Module):
         )
 
     def decode(self, dn: torch.Tensor) -> torch.Tensor:
-        """Each action reads only its own descending / motor unit (plus a bias)."""
-        return F.linear(dn, self.decoder.weight * self.dec_mask, self.decoder.bias)
+        """Each action's logit is the mean rate of its own motor units (plus bias).
+
+        Sum would let a 16-cell neck pool outvote 2 MN9 cells at the same rate, which
+        is why an untrained fly locked onto camera/jump and never ate. Mean keeps the
+        command identity independent of how many cells male-cns assigned to that muscle.
+        """
+        weight = self.decoder.weight * self.dec_mask
+        n = self.dec_mask.sum(dim=-1).clamp(min=1.0)
+        raw = F.linear(dn, weight, None)
+        return raw / n + self.decoder.bias
 
     def forward(self, obs: torch.Tensor):
         h = self.forward_hidden(obs)
@@ -404,7 +414,10 @@ class FlyPolicy(nn.Module):
         ckpt = torch.load(path, map_location=map_location, weights_only=False)
         model = cls(graph, ckpt["n_obs"], ckpt["n_actions"], ckpt.get("steps", 5),
                     ckpt.get("n_retina"))
-        model.load_state_dict(ckpt["state_dict"])
+        state = {k: v for k, v in ckpt["state_dict"].items()
+                 if k not in ("enc_mask", "dec_mask")}
+        model.load_state_dict(state, strict=False)
+        model._reconcile_decoder(ckpt["state_dict"])
         return model
 
     @classmethod
@@ -421,14 +434,37 @@ class FlyPolicy(nn.Module):
                     ckpt.get("n_retina"))
         current = model.state_dict()
         kept, dropped = [], []
+        # Masks are graph structure, not learned weights. Restoring an old dec_mask
+        # would keep FNM2 on camera_down after a motor remap.
+        structure = {"enc_mask", "dec_mask"}
         for key, tensor in ckpt["state_dict"].items():
+            if key in structure:
+                dropped.append(key)
+                continue
             if key in current and current[key].shape == tensor.shape:
                 current[key] = tensor
                 kept.append(key)
             else:
                 dropped.append(key)
         model.load_state_dict(current)
+        model._reconcile_decoder(ckpt["state_dict"])
         return model, kept, dropped
+
+    def _reconcile_decoder(self, old: dict) -> None:
+        """Keep learned decoder weights on pairs still routed; unit-init newly opened ones."""
+        old_w = old.get("decoder.weight")
+        if old_w is None or old_w.shape != self.decoder.weight.shape:
+            return
+        old_mask = old.get("dec_mask")
+        if old_mask is None or old_mask.shape != self.dec_mask.shape:
+            old_mask = (old_w.abs() > 0).to(dtype=self.decoder.weight.dtype)
+        else:
+            old_mask = old_mask.to(dtype=self.decoder.weight.dtype)
+        new_mask = self.dec_mask
+        with torch.no_grad():
+            keep = old_w * old_mask * new_mask
+            fresh = new_mask * (1.0 - (old_mask > 0).to(dtype=old_w.dtype))
+            self.decoder.weight.copy_(keep + fresh)
 
 
 # Every graph here is derived from male-cns:v1.0. `full` is the published connectome

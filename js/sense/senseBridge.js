@@ -1,4 +1,5 @@
 const { emptyFrame, addOdor, addTaste, clampOdor } = require('./frame')
+const { reachBlocks } = require('./flyBody')
 
 function stripNs (name) {
   if (!name) return ''
@@ -13,6 +14,12 @@ function resolveTaste (table, name) {
     row = table.contact[row.alias]
   }
   return row || null
+}
+
+function isFoodRow (row) {
+  if (!row) return false
+  const lab = row.labellar || {}
+  return (Number(lab.LB3b) || 0) > 0 || (Number(lab.LB3c) || 0) > 0 || (Number(row.nutrition) || 0) > 0
 }
 
 function forward (yawDeg) {
@@ -148,8 +155,8 @@ function applyOdorSources (frame, sources, cfg, origin, yaw, radius, falloff, ki
   return { bx, bz, total }
 }
 
-function objectChannelsFrom (objects, yawRate) {
-  const ch = { LC4: 0, LPLC2: 0, LC11: 0, LC18: 0, LC10a: 0, LC15: 0, HS: 0 }
+function objectChannelsFrom (objects, yawRate, pitchRate) {
+  const ch = { LC4: 0, LPLC2: 0, LC11: 0, LC18: 0, LC10a: 0, LC15: 0, HS: 0, VS: 0 }
   for (const o of objects) {
     const exp = Math.max(0, o.expansionDegPerS)
     ch.LC4 = Math.max(ch.LC4, hillLike(exp / 200))
@@ -163,6 +170,7 @@ function objectChannelsFrom (objects, yawRate) {
     if (o.angularSizeDeg > 25 && Math.abs(o.elevationDeg) < 20) ch.LC15 = Math.max(ch.LC15, 0.4)
   }
   ch.HS = hillLike(Math.abs(yawRate) / 300)
+  ch.VS = hillLike(Math.abs(pitchRate || 0) / 300)
   return ch
 }
 
@@ -210,6 +218,7 @@ function sampleWorld (world, cfg, state = {}) {
   if (world.raining) {
     frame.groomDust = cfg.mechano.rain.groomDust
     frame.moist = cfg.mechano.rain.moist
+    frame.touchWing = Math.max(frame.touchWing || 0, cfg.mechano.rain.touchWing || 0)
   }
   if (world.inWater) {
     frame.moist = Math.max(frame.moist, cfg.mechano.water.moist)
@@ -248,15 +257,19 @@ function sampleWorld (world, cfg, state = {}) {
   }
   clampOdor(frame)
 
-  const tasteName = world.standingOn || world.contactBlock || (world.heldItem && world.proboscisOut ? world.heldItem : null)
-  const labellar = !!world.proboscisOut || !!world.inWater
-  if (tasteName) {
-    const row = resolveTaste(cfg.taste, tasteName)
-    if (row) {
-      for (const [grn, w] of Object.entries(row.tarsal || {})) addTaste(frame, grn, w)
-      if (labellar) {
-        for (const [grn, w] of Object.entries(row.labellar || {})) addTaste(frame, grn, w)
-      }
+  const feet = resolveTaste(cfg.taste, world.standingOn)
+  const aimed = resolveTaste(cfg.taste, world.contactBlock)
+  if (feet) {
+    for (const [grn, w] of Object.entries(feet.tarsal || {})) addTaste(frame, grn, w)
+  }
+  // Labellum is MN9 / mine, and only on the food the tarsi already hold.
+  // Mineflayer's mouth is the crosshair: PER without a food block in the
+  // cursor is looking at sky; a food cursor without tarsi is hovering.
+  const labellar = !!world.proboscisOut && isFoodRow(feet) && isFoodRow(aimed)
+  if (labellar) {
+    for (const [grn, w] of Object.entries(feet.labellar || {})) addTaste(frame, grn, w)
+    if (aimed !== feet) {
+      for (const [grn, w] of Object.entries(aimed.labellar || {})) addTaste(frame, grn, w)
     }
   }
   if (world.inWater || (world.raining && world.onGround)) {
@@ -351,7 +364,7 @@ function sampleWorld (world, cfg, state = {}) {
     }
   }
 
-  frame.objectChannels = objectChannelsFrom(frame.objects, frame.yawRateDegPerS)
+  frame.objectChannels = objectChannelsFrom(frame.objects, frame.yawRateDegPerS, frame.pitchRateDegPerS)
   return frame
 }
 
@@ -412,6 +425,13 @@ function sampleBot (bot, cfg, state = {}) {
   }
   const below = bot.blockAt(origin.offset(0, -1, 0))
   const held = bot.heldItem ? bot.heldItem.name : null
+  const baseReach = (cfg.actions && cfg.actions.control && cfg.actions.control.reachBlocks) || 5
+  const reach = reachBlocks(baseReach)
+  let contact = null
+  try {
+    const hit = typeof bot.blockAtCursor === 'function' ? bot.blockAtCursor(reach) : null
+    contact = hit && hit.name ? hit.name : null
+  } catch (_) {}
   const world = {
     tick: bot.time ? bot.time.age : undefined,
     dtS: 0.05,
@@ -426,6 +446,7 @@ function sampleBot (bot, cfg, state = {}) {
     damageThisTick: 0,
     horizontalCollision: !!bot.entity.isCollidedHorizontally,
     standingOn: below ? below.name : null,
+    contactBlock: contact,
     heldItem: held,
     proboscisOut: proboscisOut(state.lastAction),
     dayFactor: bot.time ? 1 - (bot.time.skyLightSubtracted || 0) / 15 : 1,

@@ -4,6 +4,13 @@ set -e
 ROOT="$(cd "$(dirname "$0")" && pwd)"
 cd "$ROOT/server"
 mkdir -p "$ROOT/server"
+# Vanilla player is 1.8 m; flybody Drosophila is 2.97 mm. This datapack applies
+# minecraft:scale 0.0625 (the engine floor) so the bot is insect-sized vs blocks.
+mkdir -p "$ROOT/server/world/datapacks"
+if [ -d "$ROOT/configs/minecraft/datapacks/flybody_scale" ]; then
+  rm -rf "$ROOT/server/world/datapacks/flybody_scale"
+  cp -R "$ROOT/configs/minecraft/datapacks/flybody_scale" "$ROOT/server/world/datapacks/flybody_scale"
+fi
 
 if [ ! -f eula.txt ]; then
   printf '%s\n' 'eula=true' > eula.txt

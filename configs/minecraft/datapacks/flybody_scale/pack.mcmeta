@@ -1,0 +1,8 @@
+{
+  "pack": {
+    "description": "flybody Drosophila scale (2.97 mm target, vanilla min 0.0625)",
+    "pack_format": 81,
+    "min_format": 48,
+    "max_format": 81
+  }
+}

@@ -9,6 +9,8 @@ Three things update at three different rates, so they are stored separately:
 - `pose`: where the bot is and which way it faces. Stream rate, ~30 Hz.
 - `voxels`: the surrounding surface blocks. Only when the bot moves out of the
   cached box, so the viewer can keep the geometry and just move the camera.
+- `eye`: packed first-person RGB from `sampleEyeView`. For us and for an LLM;
+  the policy never sees it.
 
 The websocket sends pose every frame and the voxel snapshot only when `seq`
 changes, which is what keeps a 30 Hz view affordable.
@@ -25,16 +27,20 @@ _history: deque[dict] = deque(maxlen=240)
 _pose: dict | None = None
 _voxels: dict | None = None
 _voxel_seq = 0
+_eye: dict | None = None
+_eye_seq = 0
 _topology: dict | None = None
 
 
 def reset() -> None:
-    global _latest, _pose, _voxels, _voxel_seq, _topology
+    global _latest, _pose, _voxels, _voxel_seq, _eye, _eye_seq, _topology
     with _lock:
         _latest = None
         _pose = None
         _voxels = None
         _voxel_seq = 0
+        _eye = None
+        _eye_seq = 0
         _topology = None
         _history.clear()
 
@@ -60,7 +66,7 @@ def publish(tick: dict) -> dict:
 
 def publish_stream(frame: dict) -> None:
     """Take a `{"stream": ...}` frame from the Node rollout."""
-    global _pose, _voxels, _voxel_seq
+    global _pose, _voxels, _voxel_seq, _eye, _eye_seq
     kind = frame.get("stream")
     with _lock:
         if kind == "pose":
@@ -68,6 +74,9 @@ def publish_stream(frame: dict) -> None:
         elif kind == "voxels":
             _voxels = frame.get("voxels")
             _voxel_seq += 1
+        elif kind == "eye":
+            _eye = frame.get("eye")
+            _eye_seq += 1
 
 
 def latest() -> dict | None:
@@ -93,3 +102,13 @@ def voxels() -> tuple[dict | None, int]:
 def voxel_seq() -> int:
     with _lock:
         return _voxel_seq
+
+
+def eye() -> dict | None:
+    with _lock:
+        return _eye
+
+
+def eye_seq() -> int:
+    with _lock:
+        return _eye_seq

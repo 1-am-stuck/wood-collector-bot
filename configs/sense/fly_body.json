@@ -1,0 +1,12 @@
+{
+  "source": "TuragaLab/flybody (DeepMind + HHMI Janelia), Nature 2025 whole-body Drosophila MuJoCo model",
+  "bodyLengthM": 0.00297,
+  "wingspanM": 0.00604,
+  "massKg": 9.83e-7,
+  "playerHeightM": 1.8,
+  "playerWidthM": 0.6,
+  "playerEyeHeightM": 1.62,
+  "vanillaScaleMin": 0.0625,
+  "minReachBlocks": 0.25,
+  "note": "flybody body length is 0.297 cm. Mapping that onto the 1.8 m player hitbox wants scale ≈ 0.00165. Vanilla minecraft:scale clamps at 0.0625 (11.25 cm standing / 3.75 cm wide), so that is what Paper can actually spawn. Interaction range is scaled to contact so MN9 cannot punch a tree five metres away."
+}

@@ -43,10 +43,11 @@ test('torch drives V / VP2 and lights retina columns', () => {
   assert.ok(torch.luminance.some(v => v > 0.2))
 })
 
-test('rain loads groom dust, moist, and water GRN LB3a', () => {
+test('rain loads groom dust, moist, wing touch, and water GRN LB3a', () => {
   const rain = sampleWorld(baseWorld({ raining: true, onGround: true }), cfg)
   assert.ok(rain.groomDust > 0.5)
   assert.ok(rain.moist > 0.5)
+  assert.ok(rain.touchWing > 0, 'rain on the wings is SNta_wing / ADMN touch')
   assert.ok((rain.taste.LB3a || 0) > 0)
 })
 
@@ -62,13 +63,35 @@ test('approaching player expands and drives loom / V', () => {
 })
 
 test('standing on cake without the proboscis is tarsal only', () => {
-  const tarsal = sampleWorld(baseWorld({ standingOn: 'cake', onGround: true }), cfg)
+  const tarsal = sampleWorld(baseWorld({ standingOn: 'cake', onGround: true, contactBlock: 'cake' }), cfg)
   assert.ok((tarsal.taste.LgLG3 || 0) > 0, 'tarsal sugar should fire from standing on cake')
   assert.ok((tarsal.taste.LB3b || 0) < 0.5, 'labellar LB3b needs the proboscis')
 })
 
-test('mine is the proboscis: cake underfoot plus mine fires LB3b', () => {
-  const eat = sampleWorld(baseWorld({ standingOn: 'cake', onGround: true, proboscisOut: true }), cfg)
+test('labellar sugar needs feet on food, crosshair on food, and mine', () => {
+  // fly-brain-minecraft: tarsi = block below; labellum = PER (MN9 / mine).
+  // Mineflayer's mouth is the crosshair, so mining is eating only when both match.
+  const noLook = sampleWorld(baseWorld({
+    standingOn: 'cake', onGround: true, proboscisOut: true,
+  }), cfg)
+  assert.ok((noLook.taste.LB3b || 0) < 0.5, 'mine while looking at sky is not labellar contact')
+
+  const airborne = sampleWorld(baseWorld({
+    standingOn: 'air', onGround: false, contactBlock: 'cake', proboscisOut: true,
+  }), cfg)
+  assert.ok((airborne.taste.LgLG3 || 0) < 0.5, 'crosshair on cake is not tarsal contact')
+  assert.ok((airborne.taste.LB3b || 0) < 0.5, 'aiming at cake in the air is not standing on it')
+
+  const punchWood = sampleWorld(baseWorld({
+    standingOn: 'cake', onGround: true, contactBlock: 'oak_log', proboscisOut: true,
+  }), cfg)
+  assert.ok((punchWood.taste.LgLG3 || 0) > 0, 'feet on cake still taste tarsal sugar')
+  assert.ok((punchWood.taste.LB3b || 0) < 0.5, 'mining a log is not eating')
+
+  const eat = sampleWorld(baseWorld({
+    standingOn: 'cake', onGround: true, contactBlock: 'cake', proboscisOut: true,
+  }), cfg)
+  assert.ok((eat.taste.LgLG3 || 0) > 0)
   assert.ok((eat.taste.LB3b || 0) >= 0.5)
 })
 

@@ -33,7 +33,7 @@ function emptyFrame (nColumns) {
     airborne: false,
     legsOnGround: true,
     wingbeat: 0,
-    objectChannels: { LC4: 0, LPLC2: 0, LC11: 0, LC18: 0, LC10a: 0, LC15: 0, HS: 0 },
+    objectChannels: { LC4: 0, LPLC2: 0, LC11: 0, LC18: 0, LC10a: 0, LC15: 0, HS: 0, VS: 0 },
   }
 }
 

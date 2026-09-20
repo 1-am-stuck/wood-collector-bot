@@ -133,15 +133,19 @@ DESCENDING_WHAT: dict[str, tuple[str, str]] = {
         "head yaw gaze stabilisation",
         "DNp15 = DNHS1, driven by horizontal-system yaw optic flow onto neck motor.",
     ),
+    "gazePitch": (
+        "head pitch gaze",
+        "DNp20/DNp22 = DNOVS1/2, driven by vertical-system and ocellar flow. "
+        "Minecraft camera_up.",
+    ),
     "neck_nm": (
         "neck motor pool, MNnm*",
-        "18 cells moving the head on the neck. Which way a given MNnm pulls is not "
-        "published per type, so `camera_up` reads this pool and `camera_down` reads "
-        "the ADNM1/ADNM2/FNM2 pool, and the decoder learns the sign. The real pitch-"
-        "gaze descending neurons DNp20 and DNp22 run on ocellar and vertical-system "
-        "optic flow, neither of which the SensoryFrame carries.",
+        "16 cells moving the head on the neck. Which way a given MNnm pulls is not "
+        "published per type, so they stay unread. camera_up reads FNM2 + DNOVS "
+        "(DNp20/DNp22); camera_down reads ADNM1/ADNM2.",
     ),
-    "neck_adn": ("neck motor pool, ADNM / FNM", "The second neck motor group."),
+    "neck_adn": ("neck depressors, ADNM", "ADNM1/2; Minecraft camera_down."),
+    "neck_fnm": ("neck levator, FNM2", "FNM2 elevates the head; Minecraft camera_up."),
 }
 
 # Mineflayer action -> the descending population whose rate drives it. The units in
@@ -157,7 +161,7 @@ ACTION_POPULATIONS: dict[str, str] = {
     "turn_right": "yaw",
     "jump": "escape",
     "mine": "feed",
-    "camera_up": "neck_nm",
+    "camera_up": "gazePitch",
     "camera_down": "neck_adn",
     "noop": "halt",
 }

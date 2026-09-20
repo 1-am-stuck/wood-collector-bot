@@ -71,6 +71,7 @@ def _emit(epoch: int, episode: int, step: int, action: str, value, pkt: dict, br
         "value": float(value) if value is not None else None,
         "frame": pkt.get("frame") or {},
         "facts": pkt.get("facts") or {},
+        "eye": pkt.get("eye"),
         "brain": brain,
     })
 
@@ -200,7 +201,9 @@ def train_minecraft(model: FlyPolicy, env: MinecraftEnv, cfg: dict, log_path: Pa
 
 def main():
     p = argparse.ArgumentParser()
-    p.add_argument("config", nargs="?", default=str(ROOT / "configs/train/rarest_minecraft.yaml"))
+    p.add_argument("config", nargs="?", default=str(ROOT / "configs" / "train" / "rarest_minecraft.yaml"))
+    p.add_argument("--fresh", action="store_true",
+                   help="ignore checkpoints and start from the measured connectome")
     args = p.parse_args()
     cfg = load_train_yaml(args.config)
     goal = cfg.get("goal") or {}
@@ -270,7 +273,10 @@ def main():
     )
     ckpt = resolve_ckpt(cfg)
     model = None
-    if ckpt.exists():
+    if args.fresh:
+        model = FlyPolicy(graph, vector_size(graph.n_retina), len(ACTIONS))
+        print("starting from the connectome itself (--fresh, no checkpoint)", flush=True)
+    elif ckpt.exists():
         model, kept, dropped = FlyPolicy.load_compatible(graph, ckpt)
         if dropped:
             print(
