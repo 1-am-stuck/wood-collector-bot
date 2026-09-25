@@ -1,0 +1,77 @@
+{
+  "note": "Logical channels → neuPrint type / class strings from male-cns:v1.0 (Berg et al. 2026). Same names as fly-brain-minecraft SensoryEncoders.",
+  "dataset": "male-cns:v1.0",
+  "olfactory": {
+    "class": "class:olfactory",
+    "ornPrefix": "ORN_",
+    "glomeruli": [
+      "DM1", "DM2", "DM3", "DM4", "DM5",
+      "VA2", "VA3", "VA6", "VA1v", "VA1d",
+      "DL3", "DL4", "DL5",
+      "DC2", "DA1", "DA2",
+      "VM1", "VM2", "VM4", "VM5d",
+      "VL2a", "VC1", "VC2", "VC5",
+      "DP1l", "D", "V"
+    ],
+    "vpGlomeruli": ["VP1d", "VP1l", "VP1m", "VP2", "VP3a", "VP3b", "VP4", "VP5"]
+  },
+  "gustatory": {
+    "class": "class:gustatory",
+    "types": [
+      "LB3b", "LB3c", "LB3a", "LB3d",
+      "LB1a", "LB1b", "LB1c", "LB1d", "LB1e",
+      "PhG1a", "PhG1b", "PhG1c", "PhG3", "PhG4", "PhG16",
+      "LgLG3", "LgLG4", "LgAG1", "WG2"
+    ]
+  },
+  "mechanosensory": {
+    "joAuditory": "subclass:auditory",
+    "joWind": "subclass:wind_gravity",
+    "joGroom": "subclass:grooming,prefix:JO-F",
+    "bristleHead": "prefix:BM_",
+    "bristleEye": "BM_InOm",
+    "bristleTaste": "BM_Taste",
+    "tactileLegs": "class:mechanosensory_tactile&nerve:ProLN",
+    "tactileWing": "class:mechanosensory_tactile&nerve:ADMN",
+    "tactileNotum": "class:mechanosensory_tactile&nerve:PDMN",
+    "tactileAbdomen": "class:mechanosensory_tactile&nerve:AbN3",
+    "proprioHaltere": "class:mechanosensory_proprioceptive&subclass:haltere",
+    "proprioLegHairPlates": "class:mechanosensory_proprioceptive&subclass:hair plate"
+  },
+  "thermoHygro": {
+    "hot": "TRN_VP2",
+    "cold": "TRN_VP3a,TRN_VP3b",
+    "dry": "HRN_VP4",
+    "moist": "HRN_VP5,HRN_VP1d"
+  },
+  "vision": {
+    "photoreceptors": ["R1-R6", "R7", "R8"],
+    "lamina": ["L1", "L2", "L3"],
+    "objectChannels": ["LC4", "LPLC2", "LC11", "LC18", "LC10a", "LC15", "HSE", "HSN", "HSS"],
+    "wideField": {
+      "horizontal": ["HSE", "HSN", "HSS", "HST"],
+      "vertical": ["VS", "VST1", "VST2", "VSm"]
+    }
+  },
+  "descending": {
+    "forward": ["DNp09", "DNg100", "DNge053"],
+    "yaw": ["DNa02"],
+    "backward": ["MDN"],
+    "halt": ["DNg60"],
+    "escape": ["DNp01", "TTMn"],
+    "feed": ["MN9"],
+    "groom": ["DNg62", "DNge078"],
+    "flight": ["DNg02"]
+  },
+  "commonNames": {
+    "note": "Literature names that are not male-cns type strings. The type string is what the graph carries; these are for labels only.",
+    "DNg62": "aDN1",
+    "DNge078": "aDN2",
+    "DNg100": "BDN2",
+    "DNge053": "BDN1",
+    "MDN": "DNp50, moonwalker",
+    "DNg60": "bluebell",
+    "DNp01": "giant fibre",
+    "DNp15": "DNHS1"
+  }
+}

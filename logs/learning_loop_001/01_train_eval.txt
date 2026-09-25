@@ -1,0 +1,126 @@
+=== 2026-09-19T10:49:56Z IL train ===
+wrote /Users/agniva/Documents/GitHub/wood-collector-bot/logs/expert_synth.jsonl n=1920
+il epoch 0 loss=1.8922
+il epoch 1 loss=1.1954
+il epoch 2 loss=0.7829
+il epoch 3 loss=0.7230
+il epoch 4 loss=0.7110
+il epoch 5 loss=0.7010
+il epoch 6 loss=0.6876
+il epoch 7 loss=0.6781
+il epoch 8 loss=0.6577
+il epoch 9 loss=0.6364
+il epoch 10 loss=0.6099
+il epoch 11 loss=0.5782
+il epoch 12 loss=0.5337
+il epoch 13 loss=0.4836
+il epoch 14 loss=0.4045
+il epoch 15 loss=0.3373
+il epoch 16 loss=0.2638
+il epoch 17 loss=0.2100
+il epoch 18 loss=0.1758
+il epoch 19 loss=0.1561
+il epoch 20 loss=0.1368
+il epoch 21 loss=0.1351
+il epoch 22 loss=0.1245
+il epoch 23 loss=0.1231
+il epoch 24 loss=0.1052
+il train accuracy=0.971
+wrote checkpoints/fly_mc.pt
+=== 2026-09-19T10:50:03Z PPO fine-tune ===
+ppo epoch 0 return=-0.020 loss=1.1666
+ppo epoch 1 return=-0.104 loss=1.0287
+ppo epoch 2 return=-0.068 loss=1.0289
+ppo epoch 3 return=-0.017 loss=1.0545
+ppo epoch 4 return=-0.093 loss=1.1279
+ppo epoch 5 return=-0.040 loss=0.9422
+wrote checkpoints/fly_mc.pt return=-0.040
+=== 2026-09-19T10:50:10Z eval ===
+{
+  "goal": "collect:oak_log",
+  "random": {
+    "success_rate": 0.05,
+    "mean_steps_success": 78.0,
+    "episodes": 20
+  },
+  "expert": {
+    "success_rate": 0.05,
+    "mean_steps_success": 14.0,
+    "episodes": 20
+  },
+  "trained": {
+    "success_rate": 0.0,
+    "mean_steps_success": null,
+    "episodes": 20
+  }
+}
+Traceback (most recent call last):
+  File "/Users/agniva/Documents/GitHub/wood-collector-bot/python/eval_harness.py", line 94, in <module>
+    main()
+  File "/Users/agniva/Documents/GitHub/wood-collector-bot/python/eval_harness.py", line 89, in main
+    assert report["trained"]["success_rate"] >= report["random"]["success_rate"], "trained should beat random"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: trained should beat random
+=== 2026-09-19T10:50:11Z pytest IL+PPO ===
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_____________________________ test_il_beats_random _____________________________
+
+    def test_il_beats_random():
+        goal = load_goal(ROOT / "configs/goals/collect_oak.json")
+        rows = collect_expert_jsonl(goal, n_episodes=16, seed=2)
+        x, y = rows_to_tensors(rows)
+        g = FlyGraph(build())
+        model, _ = train(x, y, g, epochs=12, lr=2e-3, batch=64)
+        acc = accuracy(model, x, y)
+        rand = 1.0 / len(ACTIONS)
+        assert acc > rand + 0.15, f"IL acc {acc:.3f} not above random {rand:.3f}"
+    
+        env = OdorTaxisEnv(goal, seed=99)
+        wins = 0
+        for i in range(12):
+            env.rng.seed(50 + i)
+            frame, facts, _ = env.reset()
+            done = False
+            while not done:
+                o = torch.tensor(frame_to_vector(frame), dtype=torch.float32)
+                with torch.no_grad():
+                    a, _, _, _ = model.act(o, greedy=True)
+                frame, _, done, facts = env.step(ACTIONS[int(a.item())])
+            wins += int(env.have)
+>       assert wins >= 1, "trained policy should collect at least once on the oak GoalSpec"
+E       AssertionError: trained policy should collect at least once on the oak GoalSpec
+E       assert 0 >= 1
+
+python/tests/test_il.py:40: AssertionError
+----------------------------- Captured stdout call -----------------------------
+wrote /Users/agniva/Documents/GitHub/wood-collector-bot/data/connectome/mini_male_cns.npz n=63 edges=233
+il epoch 0 loss=1.8257
+il epoch 1 loss=1.2612
+il epoch 2 loss=0.8800
+il epoch 3 loss=0.7665
+il epoch 4 loss=0.7527
+il epoch 5 loss=0.7492
+il epoch 6 loss=0.7468
+il epoch 7 loss=0.7458
+il epoch 8 loss=0.7367
+il epoch 9 loss=0.7338
+il epoch 10 loss=0.7243
+il epoch 11 loss=0.7162
+=========================== short test summary info ============================
+FAILED python/tests/test_il.py::test_il_beats_random - AssertionError: traine...
+=== done 2026-09-19T10:50:17Z ===
+-rw-r--r--@ 1 agniva  staff  2258181 Sep 19 12:49 logs/expert_synth.jsonl
+
+checkpoints:
+total 120
+drwxr-xr-x@  4 agniva  staff    128 Sep 19 12:50 .
+drwxr-xr-x@ 23 agniva  staff    736 Sep 19 12:49 ..
+-rw-r--r--@  1 agniva  staff  29981 Sep 19 12:50 fly_mc.pt
+-rw-------@  1 agniva  staff  26056 Sep 19 12:50 fly_mc.safetensors
+
+data/connectome:
+total 24
+drwxr-xr-x@ 3 agniva  staff     96 Sep 19 12:49 .
+drwxr-xr-x@ 3 agniva  staff     96 Sep 19 12:49 ..
+-rw-r--r--@ 1 agniva  staff  10408 Sep 19 12:50 mini_male_cns.npz

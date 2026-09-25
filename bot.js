@@ -1,3 +1,4 @@
+require('./js/sense/loadEnv').loadRepoEnv()
 const mineflayer = require('mineflayer')
 const { pathfinder, Movements, goals } = require('mineflayer-pathfinder')
 const {
@@ -12,6 +13,7 @@ const {
   mapLocal,
   bestStepUp,
 } = require('./brain')
+const { startFlyRuntime } = require('./js/sense/flyLoop')
 
 const bot = mineflayer.createBot({
   host: 'localhost',
@@ -28,10 +30,12 @@ const blacklist = new Set()
 const trail = []
 const recentPathLens = []
 const recentHopKeys = new Set()
+let fly = null
 
 bot.once('spawn', () => {
   mcData = require('minecraft-data')(bot.version)
   bot.pathfinder.setMovements(new Movements(bot))
+  fly = startFlyRuntime(bot)
 
   // Needs `op Lumberjack` in the server console once
   bot.chat('/give @s diamond_axe')
@@ -45,6 +49,24 @@ bot.once('spawn', () => {
 bot.on('chat', (username, message) => {
   if (username === bot.username) return
   if (message === 'go') collectAllWood()
+  if (message === 'sense') {
+    const frame = fly.sample()
+    console.log('sense odor', frame.odor, 'taste', frame.taste, 'obj', frame.objectChannels)
+    bot.chat('sensed')
+  }
+  if (message.startsWith('goal ')) fly.setGoal(message.slice(5).trim())
+  if (message === 'log') {
+    const p = fly.openLog()
+    bot.chat('logging ' + p)
+  }
+  if (message === 'fly') {
+    fly.runPolicy().catch(err => console.log('fly policy:', err.message))
+  }
+  if (message === 'explore') {
+    const { startExplore } = require('./js/sense/exploreLoop')
+    const { loadSenseConfig } = require('./js/sense/loadConfig')
+    startExplore(bot, loadSenseConfig(__dirname)).run().catch(err => console.log(err))
+  }
 })
 
 bot.on('path_update', (r) => {
@@ -80,6 +102,7 @@ async function collectAllWood () {
       if (await escapeHole(toward)) continue
 
       if (action.type === 'approach') {
+        if (fly) fly.logExpert('approach', { target: target.name })
         console.log('approach', target.name, 'at', target.position, 'dist', targetDist.toFixed(1))
         rememberHere(trail, bot.entity.position.floored())
         try {
@@ -98,6 +121,7 @@ async function collectAllWood () {
       }
 
       if (action.type === 'collect') {
+        if (fly) fly.logExpert('collect', { target: target.name })
         console.log('collect', target.name, 'at', target.position)
         try {
           await bot.collectBlock.collect(target)
@@ -110,6 +134,7 @@ async function collectAllWood () {
         continue
       }
 
+      if (fly) fly.logExpert('explore')
       console.log('nothing nearby, exploring...')
       await explore(toward)
     }

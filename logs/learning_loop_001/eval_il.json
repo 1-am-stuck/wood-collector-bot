@@ -1,0 +1,18 @@
+{
+  "goal": "collect:oak_log",
+  "random": {
+    "success_rate": 0.0,
+    "mean_steps_success": null,
+    "episodes": 20
+  },
+  "expert": {
+    "success_rate": 1.0,
+    "mean_steps_success": 16.0,
+    "episodes": 20
+  },
+  "trained": {
+    "success_rate": 0.05,
+    "mean_steps_success": 42.0,
+    "episodes": 20
+  }
+}

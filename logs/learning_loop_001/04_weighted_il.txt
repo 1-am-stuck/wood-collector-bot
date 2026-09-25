@@ -1,0 +1,156 @@
+=== IL weighted 2026-09-19T10:52:28Z ===
+wrote /Users/agniva/Documents/GitHub/wood-collector-bot/logs/expert_synth.jsonl n=714
+il epoch 0 loss=2.1730
+il epoch 1 loss=2.0028
+il epoch 2 loss=1.7948
+il epoch 3 loss=1.5857
+il epoch 4 loss=1.4404
+il epoch 5 loss=1.3608
+il epoch 6 loss=1.3084
+il epoch 7 loss=1.2665
+il epoch 8 loss=1.2263
+il epoch 9 loss=1.1824
+il epoch 10 loss=1.1193
+il epoch 11 loss=1.0635
+il epoch 12 loss=1.0312
+il epoch 13 loss=0.9780
+il epoch 14 loss=0.9395
+il epoch 15 loss=0.8934
+il epoch 16 loss=0.8621
+il epoch 17 loss=0.8118
+il epoch 18 loss=0.7638
+il epoch 19 loss=0.7489
+il epoch 20 loss=0.7203
+il epoch 21 loss=0.6868
+il epoch 22 loss=0.6605
+il epoch 23 loss=0.6456
+il epoch 24 loss=0.6386
+il epoch 25 loss=0.5930
+il epoch 26 loss=0.5842
+il epoch 27 loss=0.5601
+il epoch 28 loss=0.5629
+il epoch 29 loss=0.5496
+il epoch 30 loss=0.5517
+il epoch 31 loss=0.5408
+il epoch 32 loss=0.5050
+il epoch 33 loss=0.5194
+il epoch 34 loss=0.5102
+il epoch 35 loss=0.4788
+il epoch 36 loss=0.4685
+il epoch 37 loss=0.4444
+il epoch 38 loss=0.4409
+il epoch 39 loss=0.4266
+il train accuracy=0.842
+wrote checkpoints/fly_mc.pt
+=== eval IL ===
+{
+  "goal": "collect:oak_log",
+  "random": {
+    "success_rate": 0.0,
+    "mean_steps_success": null,
+    "episodes": 20
+  },
+  "expert": {
+    "success_rate": 1.0,
+    "mean_steps_success": 16.0,
+    "episodes": 20
+  },
+  "trained": {
+    "success_rate": 0.05,
+    "mean_steps_success": 42.0,
+    "episodes": 20
+  }
+}
+=== PPO ===
+ppo epoch 0 return=16.175 loss=57.8762
+ppo epoch 1 return=17.592 loss=68.2258
+ppo epoch 2 return=17.375 loss=64.8835
+ppo epoch 3 return=17.510 loss=49.6624
+ppo epoch 4 return=16.265 loss=49.3087
+ppo epoch 5 return=16.515 loss=44.1928
+wrote checkpoints/fly_mc_ppo.pt return=16.515
+=== eval PPO ===
+{
+  "goal": "collect:oak_log",
+  "random": {
+    "success_rate": 0.0,
+    "mean_steps_success": null,
+    "episodes": 20
+  },
+  "expert": {
+    "success_rate": 1.0,
+    "mean_steps_success": 16.0,
+    "episodes": 20
+  },
+  "trained": {
+    "success_rate": 0.45,
+    "mean_steps_success": 39.666666666666664,
+    "episodes": 20
+  }
+}
+=== pytest ===
+..F..                                                                    [100%]
+=================================== FAILURES ===================================
+_____________________________ test_il_beats_random _____________________________
+
+    def test_il_beats_random():
+        goal = load_goal(ROOT / "configs/goals/collect_oak.json")
+        rows = collect_expert_jsonl(goal, n_episodes=24, seed=2)
+        x, y = rows_to_tensors(rows)
+        g = FlyGraph(build())
+        model, _ = train(x, y, g, epochs=30, lr=2e-3, batch=64)
+        acc = accuracy(model, x, y)
+        rand = 1.0 / len(ACTIONS)
+        assert acc > rand + 0.15, f"IL acc {acc:.3f} not above random {rand:.3f}"
+    
+        env = OdorTaxisEnv(goal, seed=99)
+        wins = 0
+        for i in range(12):
+            env.rng.seed(50 + i)
+            frame, facts, _ = env.reset()
+            done = False
+            while not done:
+                o = torch.tensor(frame_to_vector(frame), dtype=torch.float32)
+                with torch.no_grad():
+                    a, _, _, _ = model.act(o, greedy=True)
+                frame, _, done, facts = env.step(ACTIONS[int(a.item())])
+            wins += int(env.have)
+>       assert wins >= 1, "trained policy should collect at least once on the oak GoalSpec"
+E       AssertionError: trained policy should collect at least once on the oak GoalSpec
+E       assert 0 >= 1
+
+python/tests/test_il.py:40: AssertionError
+----------------------------- Captured stdout call -----------------------------
+wrote /Users/agniva/Documents/GitHub/wood-collector-bot/data/connectome/mini_male_cns.npz n=63 edges=233
+il epoch 0 loss=2.2012
+il epoch 1 loss=1.9389
+il epoch 2 loss=1.7521
+il epoch 3 loss=1.6154
+il epoch 4 loss=1.5084
+il epoch 5 loss=1.4089
+il epoch 6 loss=1.3650
+il epoch 7 loss=1.3152
+il epoch 8 loss=1.2828
+il epoch 9 loss=1.2533
+il epoch 10 loss=1.2213
+il epoch 11 loss=1.1935
+il epoch 12 loss=1.1548
+il epoch 13 loss=1.1258
+il epoch 14 loss=1.0717
+il epoch 15 loss=1.0224
+il epoch 16 loss=0.9762
+il epoch 17 loss=0.9215
+il epoch 18 loss=0.8775
+il epoch 19 loss=0.8352
+il epoch 20 loss=0.8055
+il epoch 21 loss=0.7535
+il epoch 22 loss=0.7101
+il epoch 23 loss=0.6692
+il epoch 24 loss=0.6513
+il epoch 25 loss=0.6345
+il epoch 26 loss=0.6134
+il epoch 27 loss=0.6079
+il epoch 28 loss=0.5778
+il epoch 29 loss=0.5493
+=========================== short test summary info ============================
+FAILED python/tests/test_il.py::test_il_beats_random - AssertionError: traine...

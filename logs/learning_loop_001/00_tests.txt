@@ -1,0 +1,12 @@
+=== 2026-09-19T10:48:57Z JS tests ===
+npm warn Unknown env config "devdir". This will stop working in the next major version of npm.
+
+> wood-collector-bot@1.0.0 test
+> node tests/sense/test_sense_bridge.js && node tests/sense/test_goal_to_sense.js
+
+test_sense_bridge: ok
+test_goal_to_sense: ok
+=== python unit tests ===
+test_goal_to_sense: ok
+wrote /Users/agniva/Documents/GitHub/wood-collector-bot/data/connectome/mini_male_cns.npz n=63 edges=233
+test_dynamics: ok

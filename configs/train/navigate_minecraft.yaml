@@ -1,0 +1,64 @@
+# Learn to move around Minecraft with no goal at all.
+#
+#   uv run python python/train.py configs/train/navigate_minecraft.yaml
+#
+# This is the stage that has to work before the rarest-log GoalSpec goes back on top.
+# There is no target block, no olfactory injection, no census and nothing planted in
+# the world: the reward is for covering ground without walking into things
+# (js/sense/nav_reward.js). The policy chooses every action -- no forced forwards, no
+# epsilon-random exploration. If it spins in place, the senses are wrong, not the
+# exploration schedule.
+
+run:
+  name: navigate-mc
+  seed: 7
+  # The 176k graph has a different shape than any earlier checkpoint, so there is
+  # nothing honest to warm-start from. Start from the measured connectome.
+  allow_fresh: true
+  ckpt: checkpoints/fly_mc_navigate.pt
+  out: checkpoints/fly_mc_navigate.pt
+
+graph:
+  # The published male-cns:v1.0 connectome, one node per traced neuron.
+  #   uv run python python/tools/build_graph_from_flyb.py --variant full
+  variant: full
+
+minecraft:
+  host: 127.0.0.1
+  port: 25565
+  username: FruitFly
+  required: true
+
+# No goal, so: no rarest-log census (a 64-block search every second, for nothing) and
+# no planted trees. The fly gets the world as it found it.
+mode: navigate
+census: false
+seed_woods: false
+
+view:
+  stream:
+    hz: 30
+    radiusXZ: 20
+    radiusY: 12
+
+wandb:
+  project: fly-mc
+  entity: null
+  mode: online
+  base_url: null
+  tags: [navigate, minecraft, ppo, malecns, full]
+
+train:
+  algo: ppo
+  epochs: 8
+  episodes_per_epoch: 2
+  # Full connectome settle is ~260 ms on this machine, so the control period has to
+  # be longer than that. 280 ms is ~3.6 Hz; 200 steps is about a minute of walking.
+  max_steps: 200
+  lr: 0.0003
+  gamma: 0.99
+  clip: 0.2
+  control_dt_ms: 280
+  # One sample at a time: a settle over 6.29M edges keeps every intermediate rate
+  # for the backward pass.
+  minibatch: 1

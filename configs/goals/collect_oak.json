@@ -1,0 +1,24 @@
+{
+  "id": "collect:oak_log",
+  "injections": [
+    {
+      "modality": "olfaction",
+      "pattern": { "DM1": 0.4, "DL5": 0.7, "VA3": 0.4 },
+      "strength": 0.15,
+      "falloff": "tonic",
+      "note": "search tonic on the oak/green-leaf glomerular pattern"
+    },
+    {
+      "modality": "vision",
+      "population": "LC11",
+      "strength": 0.4,
+      "falloff": "when_seen",
+      "source_query": { "kind": "block", "name": "oak_log" }
+    }
+  ],
+  "success": {
+    "type": "inventory_contains",
+    "item": "oak_log",
+    "count": 1
+  }
+}

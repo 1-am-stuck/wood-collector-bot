@@ -1,0 +1,126 @@
+=== 2026-09-19T10:51:40Z pytest env ===
+...                                                                      [100%]
+=== IL 2026-09-19T10:51:42Z ===
+wrote /Users/agniva/Documents/GitHub/wood-collector-bot/logs/expert_synth.jsonl n=414
+il epoch 0 loss=2.0508
+il epoch 1 loss=1.8576
+il epoch 2 loss=1.6658
+il epoch 3 loss=1.4897
+il epoch 4 loss=1.3632
+il epoch 5 loss=1.2823
+il epoch 6 loss=1.2264
+il epoch 7 loss=1.1745
+il epoch 8 loss=1.1176
+il epoch 9 loss=1.0688
+il epoch 10 loss=1.0229
+il epoch 11 loss=0.9763
+il epoch 12 loss=0.9361
+il epoch 13 loss=0.8981
+il epoch 14 loss=0.8649
+il epoch 15 loss=0.8319
+il epoch 16 loss=0.8029
+il epoch 17 loss=0.7751
+il epoch 18 loss=0.7509
+il epoch 19 loss=0.7300
+il epoch 20 loss=0.7081
+il epoch 21 loss=0.6876
+il epoch 22 loss=0.6715
+il epoch 23 loss=0.6564
+il epoch 24 loss=0.6445
+il train accuracy=0.792
+wrote checkpoints/fly_mc.pt
+=== PPO 2026-09-19T10:51:47Z ===
+ppo epoch 0 return=15.088 loss=11.6353
+ppo epoch 1 return=11.520 loss=8.9813
+ppo epoch 2 return=12.537 loss=8.7670
+ppo epoch 3 return=10.285 loss=6.4246
+ppo epoch 4 return=15.203 loss=13.1301
+ppo epoch 5 return=11.656 loss=7.5305
+wrote checkpoints/fly_mc_ppo.pt return=11.656
+=== eval IL ===
+{
+  "goal": "collect:oak_log",
+  "random": {
+    "success_rate": 0.0,
+    "mean_steps_success": null,
+    "episodes": 20
+  },
+  "expert": {
+    "success_rate": 1.0,
+    "mean_steps_success": 16.0,
+    "episodes": 20
+  },
+  "trained": {
+    "success_rate": 0.0,
+    "mean_steps_success": null,
+    "episodes": 20
+  }
+}
+=== eval PPO ===
+{
+  "goal": "collect:oak_log",
+  "random": {
+    "success_rate": 0.0,
+    "mean_steps_success": null,
+    "episodes": 20
+  },
+  "expert": {
+    "success_rate": 1.0,
+    "mean_steps_success": 16.0,
+    "episodes": 20
+  },
+  "trained": {
+    "success_rate": 0.0,
+    "mean_steps_success": null,
+    "episodes": 20
+  }
+}
+=== pytest il/ppo 2026-09-19T10:51:55Z ===
+F.                                                                       [100%]
+=================================== FAILURES ===================================
+_____________________________ test_il_beats_random _____________________________
+
+    def test_il_beats_random():
+        goal = load_goal(ROOT / "configs/goals/collect_oak.json")
+        rows = collect_expert_jsonl(goal, n_episodes=16, seed=2)
+        x, y = rows_to_tensors(rows)
+        g = FlyGraph(build())
+        model, _ = train(x, y, g, epochs=12, lr=2e-3, batch=64)
+        acc = accuracy(model, x, y)
+        rand = 1.0 / len(ACTIONS)
+        assert acc > rand + 0.15, f"IL acc {acc:.3f} not above random {rand:.3f}"
+    
+        env = OdorTaxisEnv(goal, seed=99)
+        wins = 0
+        for i in range(12):
+            env.rng.seed(50 + i)
+            frame, facts, _ = env.reset()
+            done = False
+            while not done:
+                o = torch.tensor(frame_to_vector(frame), dtype=torch.float32)
+                with torch.no_grad():
+                    a, _, _, _ = model.act(o, greedy=True)
+                frame, _, done, facts = env.step(ACTIONS[int(a.item())])
+            wins += int(env.have)
+>       assert wins >= 1, "trained policy should collect at least once on the oak GoalSpec"
+E       AssertionError: trained policy should collect at least once on the oak GoalSpec
+E       assert 0 >= 1
+
+python/tests/test_il.py:40: AssertionError
+----------------------------- Captured stdout call -----------------------------
+wrote /Users/agniva/Documents/GitHub/wood-collector-bot/data/connectome/mini_male_cns.npz n=63 edges=233
+il epoch 0 loss=2.0844
+il epoch 1 loss=1.7597
+il epoch 2 loss=1.4632
+il epoch 3 loss=1.2814
+il epoch 4 loss=1.1721
+il epoch 5 loss=1.0918
+il epoch 6 loss=1.0480
+il epoch 7 loss=1.0214
+il epoch 8 loss=0.9979
+il epoch 9 loss=0.9762
+il epoch 10 loss=0.9552
+il epoch 11 loss=0.9372
+=========================== short test summary info ============================
+FAILED python/tests/test_il.py::test_il_beats_random - AssertionError: traine...
+=== done 2026-09-19T10:52:01Z ===

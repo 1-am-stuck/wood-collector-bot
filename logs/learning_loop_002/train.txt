@@ -1,0 +1,1646 @@
+reset epoch=0 ep=0 rarest=acacia_log dist=6.172688589443931
+step 0.0.1 turn_left rew=-0.000 dist=6.172751407361461 rarest=acacia_log inv={}
+step 0.0.10 turn_left rew=0.000 dist=6.172928405332847 rarest=acacia_log inv={}
+step 0.0.20 turn_right rew=-0.059 dist=6.451995700863159 rarest=acacia_log inv={}
+step 0.0.30 turn_right rew=0.058 dist=4.876929830179812 rarest=acacia_log inv={}
+step 0.0.40 turn_right rew=-0.095 dist=5.899837313381857 rarest=acacia_log inv={}
+step 0.0.50 turn_right rew=-0.003 dist=6.445531353674226 rarest=acacia_log inv={}
+step 0.0.60 mine rew=0.191 dist=6.910913512795604 rarest=acacia_log inv={}
+step 0.0.70 turn_right rew=-0.068 dist=7.2909127020572 rarest=acacia_log inv={}
+step 0.0.80 turn_right rew=0.008 dist=9.059309321647014 rarest=acacia_log inv={}
+step 0.0.90 turn_right rew=0.004 dist=8.648926813137797 rarest=acacia_log inv={}
+step 0.0.100 turn_right rew=0.009 dist=12.192057258932552 rarest=acacia_log inv={}
+step 0.0.110 turn_right rew=0.000 dist=10.546220399246218 rarest=acacia_log inv={}
+step 0.0.120 turn_right rew=-0.006 dist=10.860048975108265 rarest=acacia_log inv={}
+step 0.0.130 turn_right rew=-0.000 dist=10.86631740382097 rarest=acacia_log inv={}
+step 0.0.140 turn_right rew=0.000 dist=11.043904260114417 rarest=acacia_log inv={}
+step 0.0.150 noop rew=0.000 dist=11.043900629754768 rarest=acacia_log inv={}
+step 0.0.160 forward rew=0.279 dist=11.082871425010323 rarest=acacia_log inv={}
+step 0.0.170 turn_right rew=0.000 dist=11.726017325952656 rarest=acacia_log inv={}
+step 0.0.180 camera_down rew=0.000 dist=11.724626665457015 rarest=acacia_log inv={}
+step 0.0.190 mine rew=0.000 dist=11.724626665456993 rarest=acacia_log inv={}
+step 0.0.200 turn_right rew=-0.000 dist=12.267688797442831 rarest=acacia_log inv={}
+reset epoch=0 ep=1 rarest=acacia_log dist=12.61805473869946
+step 0.1.1 turn_right rew=-0.000 dist=12.618060385634362 rarest=acacia_log inv={}
+step 0.1.10 turn_right rew=-0.000 dist=13.316609193622392 rarest=acacia_log inv={}
+step 0.1.20 mine rew=0.000 dist=13.316609195685265 rarest=acacia_log inv={}
+step 0.1.30 turn_right rew=0.000 dist=12.731721575487356 rarest=acacia_log inv={}
+reset epoch=0 ep=0 rarest=acacia_log dist=13.382421042627062
+step 0.0.1 turn_right rew=-0.000 dist=13.382424894099348 rarest=acacia_log inv={}
+step 0.0.10 turn_right rew=-0.000 dist=13.382433960143878 rarest=acacia_log inv={}
+step 0.0.20 turn_right rew=0.000 dist=13.382433960150218 rarest=acacia_log inv={}
+step 0.0.30 turn_right rew=0.000 dist=13.382433960150218 rarest=acacia_log inv={}
+step 0.0.40 turn_right rew=0.000 dist=13.382433960150218 rarest=acacia_log inv={}
+step 0.0.50 turn_right rew=0.001 dist=13.319630376572233 rarest=acacia_log inv={}
+step 0.0.60 turn_right rew=0.000 dist=13.314252545306896 rarest=acacia_log inv={}
+reset epoch=0 ep=0 rarest=acacia_log dist=12.368861272430264
+step 0.0.1 turn_right rew=-0.000 dist=12.368929560028107 rarest=acacia_log inv={}
+step 0.0.10 turn_left rew=-0.000 dist=12.369110110298168 rarest=acacia_log inv={}
+step 0.0.20 turn_right rew=-0.000 dist=12.369122240150967 rarest=acacia_log inv={}
+step 0.0.30 turn_right rew=-0.000 dist=12.369122663585463 rarest=acacia_log inv={}
+step 0.0.40 turn_right rew=0.062 dist=10.458745720450736 rarest=acacia_log inv={}
+step 0.0.50 turn_left rew=0.040 dist=8.80609419526355 rarest=acacia_log inv={}
+step 0.0.60 turn_right rew=0.024 dist=7.789539120476299 rarest=acacia_log inv={}
+step 0.0.70 turn_right rew=0.013 dist=7.215136174742579 rarest=acacia_log inv={}
+step 0.0.80 turn_right rew=-0.017 dist=6.841231918880572 rarest=acacia_log inv={}
+step 0.0.90 turn_right rew=-0.014 dist=7.370207857241496 rarest=acacia_log inv={}
+step 0.0.100 turn_right rew=-0.010 dist=7.773946528716895 rarest=acacia_log inv={}
+step 0.0.110 turn_right rew=0.014 dist=7.806600759219608 rarest=acacia_log inv={}
+step 0.0.120 turn_left rew=0.010 dist=7.41436076791806 rarest=acacia_log inv={}
+step 0.0.130 turn_right rew=0.007 dist=7.126643607221507 rarest=acacia_log inv={}
+step 0.0.140 turn_right rew=0.025 dist=5.210206623395758 rarest=acacia_log inv={}
+step 0.0.150 turn_right rew=0.009 dist=4.698020199355048 rarest=acacia_log inv={}
+step 0.0.160 turn_right rew=0.003 dist=4.520859945230234 rarest=acacia_log inv={}
+step 0.0.170 turn_right rew=-0.002 dist=3.4868072920061834 rarest=acacia_log inv={}
+step 0.0.180 turn_right rew=-0.000 dist=3.507781274753912 rarest=acacia_log inv={}
+step 0.0.190 turn_right rew=-0.000 dist=3.510599264750806 rarest=acacia_log inv={}
+step 0.0.200 turn_right rew=-0.000 dist=3.5109693291306736 rarest=acacia_log inv={}
+reset epoch=0 ep=1 rarest=acacia_log dist=4.066745099642074
+step 0.1.1 turn_right rew=-0.000 dist=4.066745230150266 rarest=acacia_log inv={}
+step 0.1.10 turn_right rew=-0.000 dist=4.066745401666798 rarest=acacia_log inv={}
+step 0.1.20 turn_right rew=-0.000 dist=4.388752510215409 rarest=acacia_log inv={}
+step 0.1.30 turn_right rew=-0.000 dist=4.3887565534732635 rarest=acacia_log inv={}
+step 0.1.40 turn_right rew=-0.000 dist=4.388756559472053 rarest=acacia_log inv={}
+step 0.1.50 turn_right rew=-0.000 dist=4.388756559480942 rarest=acacia_log inv={}
+step 0.1.60 turn_right rew=0.000 dist=4.388756559480956 rarest=acacia_log inv={}
+step 0.1.70 turn_right rew=0.000 dist=4.388756559480956 rarest=acacia_log inv={}
+step 0.1.80 turn_left rew=0.000 dist=4.388756559480956 rarest=acacia_log inv={}
+step 0.1.90 turn_right rew=0.000 dist=4.388756559480956 rarest=acacia_log inv={}
+step 0.1.100 turn_left rew=0.000 dist=4.526519845384772 rarest=acacia_log inv={}
+step 0.1.110 turn_right rew=0.000 dist=4.526518568008623 rarest=acacia_log inv={}
+step 0.1.120 turn_right rew=0.000 dist=4.8577142585238695 rarest=acacia_log inv={}
+step 0.1.130 forward rew=-0.093 dist=4.64085855188828 rarest=acacia_log inv={}
+step 0.1.140 turn_right rew=-0.000 dist=4.641482848374235 rarest=acacia_log inv={}
+step 0.1.150 turn_right rew=-0.000 dist=4.64148427460756 rarest=acacia_log inv={}
+step 0.1.160 turn_right rew=-0.000 dist=4.641484277841322 rarest=acacia_log inv={}
+step 0.1.170 turn_right rew=-0.000 dist=4.641484277848647 rarest=acacia_log inv={}
+step 0.1.180 turn_left rew=0.000 dist=4.641484277848657 rarest=acacia_log inv={}
+step 0.1.190 turn_right rew=0.000 dist=4.641484277848657 rarest=acacia_log inv={}
+step 0.1.200 turn_right rew=0.000 dist=4.641484277848657 rarest=acacia_log inv={}
+reset epoch=0 ep=2 rarest=acacia_log dist=5.064365106964727
+step 0.2.1 turn_right rew=-0.000 dist=5.064365309054924 rarest=acacia_log inv={}
+step 0.2.10 turn_right rew=-0.000 dist=5.064365617159084 rarest=acacia_log inv={}
+step 0.2.20 turn_right rew=-0.000 dist=5.064365620598642 rarest=acacia_log inv={}
+step 0.2.30 turn_right rew=-0.000 dist=4.5311024183413755 rarest=acacia_log inv={}
+step 0.2.40 turn_right rew=-0.000 dist=4.5311107985387435 rarest=acacia_log inv={}
+step 0.2.50 turn_right rew=-0.000 dist=4.531110840877689 rarest=acacia_log inv={}
+step 0.2.60 turn_right rew=-0.000 dist=4.531110841018966 rarest=acacia_log inv={}
+step 0.2.70 turn_right rew=-0.000 dist=4.53111084101943 rarest=acacia_log inv={}
+step 0.2.80 turn_right rew=0.000 dist=4.53111084101943 rarest=acacia_log inv={}
+step 0.2.90 turn_right rew=-0.000 dist=5.108751243113425 rarest=acacia_log inv={}
+step 0.2.100 turn_right rew=0.000 dist=5.3961827853948 rarest=acacia_log inv={}
+step 0.2.110 turn_right rew=0.000 dist=5.3961827270326905 rarest=acacia_log inv={}
+step 0.2.120 turn_right rew=0.000 dist=5.396182726910666 rarest=acacia_log inv={}
+step 0.2.130 turn_right rew=0.000 dist=5.396182726910406 rarest=acacia_log inv={}
+step 0.2.140 turn_right rew=0.000 dist=5.396182726910406 rarest=acacia_log inv={}
+step 0.2.150 turn_right rew=0.000 dist=5.396182726910406 rarest=acacia_log inv={}
+step 0.2.160 turn_right rew=0.000 dist=5.396182726910406 rarest=acacia_log inv={}
+step 0.2.170 turn_right rew=0.000 dist=5.396182726910406 rarest=acacia_log inv={}
+step 0.2.180 turn_right rew=0.000 dist=5.396182726910406 rarest=acacia_log inv={}
+step 0.2.190 turn_right rew=0.000 dist=4.9460450872174455 rarest=acacia_log inv={}
+step 0.2.200 turn_right rew=0.000 dist=5.325630925477988 rarest=acacia_log inv={}
+reset epoch=0 ep=3 rarest=acacia_log dist=5.438038025029968
+step 0.3.1 turn_right rew=0.000 dist=5.438038025027153 rarest=acacia_log inv={}
+step 0.3.10 turn_left rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.20 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.30 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.40 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.50 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.60 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.70 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.80 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.90 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.100 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.110 turn_right rew=0.000 dist=5.4380380250250555 rarest=acacia_log inv={}
+step 0.3.120 turn_right rew=0.000 dist=4.9901257281367775 rarest=acacia_log inv={}
+step 0.3.130 turn_right rew=0.000 dist=5.235286750794258 rarest=acacia_log inv={}
+step 0.3.140 turn_right rew=0.000 dist=5.23528671645234 rarest=acacia_log inv={}
+step 0.3.150 turn_left rew=0.000 dist=5.367139205855162 rarest=acacia_log inv={}
+step 0.3.160 turn_right rew=0.000 dist=5.367139202343344 rarest=acacia_log inv={}
+step 0.3.170 turn_right rew=0.000 dist=5.367139202343233 rarest=acacia_log inv={}
+step 0.3.180 turn_right rew=0.000 dist=5.367139202343233 rarest=acacia_log inv={}
+step 0.3.190 turn_right rew=0.000 dist=5.367139202343233 rarest=acacia_log inv={}
+step 0.3.200 turn_right rew=0.000 dist=5.367139202343233 rarest=acacia_log inv={}
+ppo epoch 0 return=0.607 loss=4.3962 collect=0.00 rarest=['acacia_log', 'acacia_log', 'acacia_log', 'acacia_log']
+reset epoch=1 ep=0 rarest=acacia_log dist=5.169970439194477
+step 1.0.1 turn_right rew=0.000 dist=5.169970439194463 rarest=acacia_log inv={}
+step 1.0.10 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.20 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.30 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.40 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.50 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.60 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.70 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.80 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.90 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.100 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.110 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.120 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.130 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.140 turn_right rew=0.000 dist=5.169970439194457 rarest=acacia_log inv={}
+step 1.0.150 turn_right rew=0.000 dist=5.640426271821659 rarest=acacia_log inv={}
+step 1.0.160 turn_right rew=0.000 dist=5.6404262718199085 rarest=acacia_log inv={}
+step 1.0.170 turn_right rew=0.000 dist=5.6404262718199085 rarest=acacia_log inv={}
+step 1.0.180 turn_right rew=0.000 dist=5.6404262718199085 rarest=acacia_log inv={}
+step 1.0.190 turn_left rew=0.000 dist=5.136765683292273 rarest=acacia_log inv={}
+step 1.0.200 turn_right rew=0.000 dist=5.136765666194321 rarest=acacia_log inv={}
+reset epoch=1 ep=1 rarest=acacia_log dist=6.0832154627596715
+step 1.1.1 turn_left rew=-0.000 dist=6.083215462759672 rarest=acacia_log inv={}
+step 1.1.10 turn_right rew=0.000 dist=6.083215462759672 rarest=acacia_log inv={}
+step 1.1.20 turn_right rew=0.000 dist=6.083215462759672 rarest=acacia_log inv={}
+step 1.1.30 turn_right rew=0.000 dist=5.589461797416307 rarest=acacia_log inv={}
+step 1.1.40 turn_right rew=0.000 dist=5.589461793778922 rarest=acacia_log inv={}
+step 1.1.50 turn_right rew=0.000 dist=5.589461793778909 rarest=acacia_log inv={}
+step 1.1.60 turn_left rew=0.000 dist=5.589461793778909 rarest=acacia_log inv={}
+step 1.1.70 turn_right rew=0.000 dist=5.218946246527047 rarest=acacia_log inv={}
+step 1.1.80 turn_right rew=0.000 dist=5.218946246064591 rarest=acacia_log inv={}
+step 1.1.90 turn_right rew=0.000 dist=5.218946246064589 rarest=acacia_log inv={}
+step 1.1.100 turn_right rew=0.000 dist=5.218946246064589 rarest=acacia_log inv={}
+step 1.1.110 turn_right rew=0.000 dist=5.218946246064589 rarest=acacia_log inv={}
+step 1.1.120 turn_right rew=0.000 dist=5.218946246064589 rarest=acacia_log inv={}
+step 1.1.130 turn_right rew=0.000 dist=4.697302912137128 rarest=acacia_log inv={}
+step 1.1.140 turn_right rew=0.000 dist=4.697302911959241 rarest=acacia_log inv={}
+step 1.1.150 turn_right rew=0.000 dist=4.697302911959239 rarest=acacia_log inv={}
+step 1.1.160 turn_right rew=0.000 dist=4.697302911959239 rarest=acacia_log inv={}
+step 1.1.170 turn_right rew=0.000 dist=4.697302911959239 rarest=acacia_log inv={}
+step 1.1.180 turn_right rew=0.000 dist=4.697302911959239 rarest=acacia_log inv={}
+step 1.1.190 turn_left rew=0.000 dist=4.697302911959239 rarest=acacia_log inv={}
+step 1.1.200 turn_right rew=0.000 dist=4.752655719851184 rarest=acacia_log inv={}
+reset epoch=1 ep=2 rarest=acacia_log dist=4.823601242233971
+step 1.2.1 forward rew=0.093 dist=4.51524225114779 rarest=acacia_log inv={}
+step 1.2.10 turn_right rew=0.000 dist=4.515241821042245 rarest=acacia_log inv={}
+step 1.2.20 turn_right rew=0.000 dist=4.768999613974512 rarest=acacia_log inv={}
+step 1.2.30 turn_right rew=0.000 dist=4.768999586113468 rarest=acacia_log inv={}
+step 1.2.40 turn_right rew=0.000 dist=4.768999586113409 rarest=acacia_log inv={}
+step 1.2.50 turn_right rew=0.000 dist=4.768999586113409 rarest=acacia_log inv={}
+step 1.2.60 turn_right rew=0.000 dist=4.768999586113409 rarest=acacia_log inv={}
+step 1.2.70 turn_right rew=0.000 dist=4.768999586113409 rarest=acacia_log inv={}
+step 1.2.80 turn_right rew=0.000 dist=4.768999586113409 rarest=acacia_log inv={}
+step 1.2.90 turn_right rew=0.000 dist=4.768999586113409 rarest=acacia_log inv={}
+step 1.2.100 turn_right rew=0.000 dist=4.768999586113409 rarest=acacia_log inv={}
+step 1.2.110 turn_right rew=0.000 dist=5.479401783898073 rarest=acacia_log inv={}
+step 1.2.120 turn_right rew=0.000 dist=5.479401783898073 rarest=acacia_log inv={}
+step 1.2.130 turn_right rew=0.000 dist=5.479401783898073 rarest=acacia_log inv={}
+step 1.2.140 turn_right rew=0.000 dist=5.479401783898073 rarest=acacia_log inv={}
+step 1.2.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.160 turn_right rew=0.000 dist=1.521110389797214 rarest=acacia_log inv={}
+step 1.2.170 turn_right rew=0.000 dist=1.521110389797214 rarest=acacia_log inv={}
+step 1.2.180 turn_right rew=0.000 dist=1.521110389797214 rarest=acacia_log inv={}
+step 1.2.190 turn_right rew=0.000 dist=1.521110389797214 rarest=acacia_log inv={}
+step 1.2.200 turn_right rew=0.000 dist=1.521110389797214 rarest=acacia_log inv={}
+reset epoch=0 ep=0 rarest=acacia_log dist=2.122100687348679
+step 0.0.1 turn_right rew=0.000 dist=2.122017570235915 rarest=acacia_log inv={}
+step 0.0.10 turn_right rew=-0.023 dist=3.9613334253529415 rarest=acacia_log inv={}
+step 0.0.20 turn_right rew=-0.009 dist=4.434974253222651 rarest=acacia_log inv={}
+step 0.0.30 turn_right rew=0.003 dist=6.55520846717144 rarest=acacia_log inv={}
+step 0.0.40 turn_right rew=0.001 dist=6.505184414555725 rarest=acacia_log inv={}
+step 0.0.50 turn_right rew=0.000 dist=6.494854983276201 rarest=acacia_log inv={}
+step 0.0.60 turn_right rew=0.000 dist=6.492684375530193 rarest=acacia_log inv={}
+step 0.0.70 turn_right rew=0.000 dist=6.492226536462401 rarest=acacia_log inv={}
+step 0.0.80 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.90 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.100 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.110 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.120 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.130 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.140 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.150 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.160 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.170 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.180 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.190 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+step 0.0.200 turn_right rew=0.000 dist=5.92739348205664 rarest=acacia_log inv={}
+reset epoch=0 ep=1 rarest=acacia_log dist=5.518505062746114
+step 0.1.1 turn_right rew=-0.000 dist=5.518510424816843 rarest=acacia_log inv={}
+step 0.1.10 turn_right rew=-0.000 dist=5.518523206161684 rarest=acacia_log inv={}
+step 0.1.20 turn_right rew=-0.000 dist=5.518523834855212 rarest=acacia_log inv={}
+step 0.1.30 turn_right rew=-0.000 dist=5.518523856600495 rarest=acacia_log inv={}
+step 0.1.40 turn_right rew=-0.002 dist=5.468305854596355 rarest=acacia_log inv={}
+step 0.1.50 turn_right rew=-0.001 dist=5.526989105557752 rarest=acacia_log inv={}
+step 0.1.60 turn_right rew=-0.001 dist=5.557357368077743 rarest=acacia_log inv={}
+step 0.1.70 turn_right rew=0.000 dist=5.823696296523045 rarest=acacia_log inv={}
+step 0.1.80 turn_right rew=0.033 dist=2.8450484192989998 rarest=acacia_log inv={}
+step 0.1.90 turn_right rew=0.000 dist=3.85399014535949 rarest=acacia_log inv={}
+step 0.1.100 turn_right rew=0.000 dist=3.85399014535949 rarest=acacia_log inv={}
+step 0.1.110 turn_right rew=0.000 dist=3.85399014535949 rarest=acacia_log inv={}
+step 0.1.120 turn_right rew=0.000 dist=3.85399014535949 rarest=acacia_log inv={}
+step 0.1.130 turn_left rew=0.000 dist=3.85399014535949 rarest=acacia_log inv={}
+step 0.1.140 turn_right rew=0.000 dist=3.85399014535949 rarest=acacia_log inv={}
+step 0.1.150 forward rew=-0.018 dist=3.9152425947808744 rarest=acacia_log inv={}
+step 0.1.160 turn_right rew=0.058 dist=2.1477458995886867 rarest=acacia_log inv={}
+step 0.1.170 turn_right rew=0.000 dist=4.776849599063384 rarest=acacia_log inv={}
+step 0.1.180 turn_right rew=0.000 dist=4.776849599063384 rarest=acacia_log inv={}
+step 0.1.190 forward rew=0.133 dist=4.333203274499288 rarest=acacia_log inv={}
+step 0.1.200 turn_right rew=0.000 dist=4.451737561362181 rarest=acacia_log inv={}
+reset epoch=0 ep=2 rarest=acacia_log dist=3.282030742185004
+step 0.2.1 forward rew=-0.526 dist=5.034834347330308 rarest=acacia_log inv={}
+step 0.2.10 turn_right rew=0.023 dist=6.050905011216368 rarest=acacia_log inv={}
+step 0.2.20 turn_right rew=-0.092 dist=9.346070759861496 rarest=acacia_log inv={}
+step 0.2.30 turn_right rew=-0.147 dist=21.81027834854197 rarest=acacia_log inv={}
+step 0.2.40 turn_right rew=-0.139 dist=11.939491141008586 rarest=acacia_log inv={}
+step 0.2.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.60 turn_right rew=0.000 dist=36.19791525395045 rarest=acacia_log inv={}
+step 0.2.70 turn_left rew=0.000 dist=None rarest=None inv={}
+step 0.2.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.110 turn_left rew=0.000 dist=None rarest=None inv={}
+step 0.2.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.160 turn_left rew=0.000 dist=None rarest=None inv={}
+step 0.2.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.2.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=0 ep=3 rarest=None dist=None
+step 0.3.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.70 turn_left rew=0.000 dist=None rarest=None inv={}
+step 0.3.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.110 forward rew=0.000 dist=None rarest=None inv={}
+step 0.3.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.160 turn_left rew=0.000 dist=None rarest=None inv={}
+step 0.3.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 0.3.200 turn_right rew=0.000 dist=None rarest=None inv={}
+ppo epoch 0 return=-2.175 loss=4.1632 collect=0.00 rarest=['acacia_log', 'acacia_log', None, None]
+reset epoch=1 ep=0 rarest=None dist=None
+step 1.0.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.120 turn_left rew=0.000 dist=None rarest=None inv={}
+step 1.0.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.0.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=1 ep=1 rarest=None dist=None
+step 1.1.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.1.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=1 ep=2 rarest=None dist=None
+step 1.2.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.180 turn_left rew=0.000 dist=None rarest=None inv={}
+step 1.2.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.2.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=1 ep=3 rarest=None dist=None
+step 1.3.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.10 turn_left rew=0.000 dist=None rarest=None inv={}
+step 1.3.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 1.3.200 turn_right rew=0.000 dist=None rarest=None inv={}
+ppo epoch 1 return=0.000 loss=4.1156 collect=0.00 rarest=[None, None, None, None]
+reset epoch=2 ep=0 rarest=None dist=None
+step 2.0.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.140 turn_left rew=0.000 dist=None rarest=None inv={}
+step 2.0.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.0.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=2 ep=1 rarest=None dist=None
+step 2.1.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.1.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=2 ep=2 rarest=None dist=None
+step 2.2.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.40 turn_left rew=0.000 dist=None rarest=None inv={}
+step 2.2.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.100 forward rew=0.000 dist=None rarest=None inv={}
+step 2.2.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.2.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=2 ep=3 rarest=None dist=None
+step 2.3.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 2.3.200 turn_right rew=0.000 dist=None rarest=None inv={}
+ppo epoch 2 return=0.000 loss=3.9913 collect=0.00 rarest=[None, None, None, None]
+reset epoch=3 ep=0 rarest=None dist=None
+step 3.0.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.10 turn_left rew=0.000 dist=None rarest=None inv={}
+step 3.0.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.0.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=3 ep=1 rarest=None dist=None
+step 3.1.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.100 turn_left rew=0.000 dist=None rarest=None inv={}
+step 3.1.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.1.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=3 ep=2 rarest=None dist=None
+step 3.2.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.100 turn_left rew=0.000 dist=None rarest=None inv={}
+step 3.2.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.120 turn_left rew=0.000 dist=None rarest=None inv={}
+step 3.2.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.2.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=3 ep=3 rarest=None dist=None
+step 3.3.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.120 turn_left rew=0.000 dist=None rarest=None inv={}
+step 3.3.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 3.3.200 turn_right rew=0.000 dist=None rarest=None inv={}
+ppo epoch 3 return=0.000 loss=3.8707 collect=0.00 rarest=[None, None, None, None]
+reset epoch=4 ep=0 rarest=None dist=None
+step 4.0.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.0.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=4 ep=1 rarest=None dist=None
+step 4.1.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.1.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=4 ep=2 rarest=None dist=None
+step 4.2.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.150 forward rew=0.000 dist=None rarest=None inv={}
+step 4.2.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.2.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=4 ep=3 rarest=None dist=None
+step 4.3.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.130 turn_left rew=0.000 dist=None rarest=None inv={}
+step 4.3.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 4.3.200 turn_right rew=0.000 dist=None rarest=None inv={}
+ppo epoch 4 return=0.000 loss=3.7559 collect=0.00 rarest=[None, None, None, None]
+reset epoch=5 ep=0 rarest=None dist=None
+step 5.0.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.10 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.20 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.30 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.40 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.50 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.60 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.70 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.80 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.90 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.100 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.110 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.120 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.130 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.140 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.150 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.160 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.170 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.180 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.190 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.0.200 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=5 ep=1 rarest=None dist=None
+step 5.1.1 turn_right rew=0.000 dist=None rarest=None inv={}
+step 5.1.10 turn_right rew=0.000 dist=None rarest=None inv={}
+reset epoch=0 ep=0 rarest=None dist=None
+step 0.0.1 jump rew=0.031 dist=None rarest=None inv={}
+step 0.0.10 jump rew=0.030 dist=None rarest=None inv={}
+step 0.0.20 turn_left rew=1.027 dist=None rarest=None inv={}
+step 0.0.30 turn_left rew=1.103 dist=None rarest=None inv={}
+step 0.0.40 camera_up rew=0.018 dist=None rarest=None inv={}
+step 0.0.50 mine rew=0.004 dist=None rarest=None inv={}
+step 0.0.60 turn_right rew=0.024 dist=None rarest=None inv={}
+step 0.0.70 turn_right rew=1.024 dist=None rarest=None inv={}
+step 0.0.80 camera_up rew=0.033 dist=None rarest=None inv={}
+step 0.0.90 camera_down rew=0.018 dist=None rarest=None inv={}
+step 0.0.100 camera_down rew=1.013 dist=None rarest=None inv={}
+step 0.0.110 camera_up rew=1.027 dist=None rarest=None inv={}
+step 0.0.120 mine rew=1.059 dist=None rarest=None inv={}
+step 0.0.130 jump rew=7.750 dist=None rarest=None inv={}
+step 0.0.140 camera_up rew=-0.019 dist=None rarest=None inv={}
+step 0.0.150 camera_up rew=1.711 dist=None rarest=None inv={}
+step 0.0.160 mine rew=-0.020 dist=None rarest=None inv={}
+step 0.0.170 camera_down rew=0.040 dist=None rarest=None inv={}
+step 0.0.180 camera_up rew=-0.020 dist=None rarest=None inv={}
+step 0.0.190 turn_left rew=2.220 dist=None rarest=None inv={}
+step 0.0.200 mine rew=1.523 dist=None rarest=None inv={}
+reset epoch=0 ep=1 rarest=None dist=None
+step 0.1.1 forward rew=0.027 dist=None rarest=None inv={}
+step 0.1.10 noop rew=1.096 dist=None rarest=None inv={}
+step 0.1.20 camera_up rew=0.005 dist=None rarest=None inv={}
+step 0.1.30 camera_up rew=0.018 dist=None rarest=None inv={}
+step 0.1.40 turn_right rew=0.003 dist=None rarest=None inv={}
+step 0.1.50 back rew=0.014 dist=None rarest=None inv={}
+step 0.1.60 jump rew=1.035 dist=None rarest=None inv={}
+step 0.1.70 noop rew=0.003 dist=None rarest=None inv={}
+step 0.1.80 jump rew=0.026 dist=None rarest=None inv={}
+step 0.1.90 jump rew=1.042 dist=None rarest=None inv={}
+step 0.1.100 turn_left rew=1.269 dist=None rarest=None inv={}
+step 0.1.110 jump rew=1.981 dist=None rarest=None inv={}
+step 0.1.120 camera_down rew=-0.020 dist=None rarest=None inv={}
+step 0.1.130 jump rew=1.813 dist=None rarest=None inv={}
+step 0.1.140 jump rew=-0.120 dist=None rarest=None inv={}
+step 0.1.150 jump rew=-0.120 dist=None rarest=None inv={}
+step 0.1.160 jump rew=-0.094 dist=None rarest=None inv={}
+step 0.1.170 jump rew=-0.073 dist=None rarest=None inv={}
+step 0.1.180 jump rew=-0.120 dist=None rarest=None inv={}
+step 0.1.190 jump rew=-0.120 dist=None rarest=None inv={}
+step 0.1.200 jump rew=1.656 dist=None rarest=None inv={}
+ppo epoch 0 return=112.249 loss=20.3156 collect=0.00 rarest=[None, None]
+reset epoch=1 ep=0 rarest=None dist=None
+step 1.0.1 forward rew=1.032 dist=None rarest=None inv={}
+step 1.0.10 forward rew=1.036 dist=None rarest=None inv={}
+step 1.0.20 forward rew=0.028 dist=None rarest=None inv={}
+step 1.0.30 forward rew=1.586 dist=None rarest=None inv={}
+step 1.0.40 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.50 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.60 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.70 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.80 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.0.90 forward rew=1.409 dist=None rarest=None inv={}
+step 1.0.100 forward rew=1.372 dist=None rarest=None inv={}
+step 1.0.110 forward rew=1.249 dist=None rarest=None inv={}
+step 1.0.120 forward rew=1.219 dist=None rarest=None inv={}
+step 1.0.130 jump rew=1.353 dist=None rarest=None inv={}
+step 1.0.140 forward rew=1.225 dist=None rarest=None inv={}
+step 1.0.150 forward rew=1.393 dist=None rarest=None inv={}
+step 1.0.160 forward rew=1.325 dist=None rarest=None inv={}
+step 1.0.170 forward rew=1.654 dist=None rarest=None inv={}
+step 1.0.180 forward rew=1.483 dist=None rarest=None inv={}
+step 1.0.190 forward rew=1.393 dist=None rarest=None inv={}
+step 1.0.200 camera_up rew=1.436 dist=None rarest=None inv={}
+reset epoch=1 ep=1 rarest=None dist=None
+step 1.1.1 forward rew=1.027 dist=None rarest=None inv={}
+step 1.1.10 forward rew=1.126 dist=None rarest=None inv={}
+step 1.1.20 jump rew=1.482 dist=None rarest=None inv={}
+step 1.1.30 forward rew=1.133 dist=None rarest=None inv={}
+step 1.1.40 forward rew=1.176 dist=None rarest=None inv={}
+step 1.1.50 jump rew=1.228 dist=None rarest=None inv={}
+step 1.1.60 forward rew=1.136 dist=None rarest=None inv={}
+step 1.1.70 forward rew=1.175 dist=None rarest=None inv={}
+step 1.1.80 forward rew=1.175 dist=None rarest=None inv={}
+step 1.1.90 camera_up rew=1.304 dist=None rarest=None inv={}
+step 1.1.100 forward rew=1.174 dist=None rarest=None inv={}
+step 1.1.110 forward rew=1.132 dist=None rarest=None inv={}
+step 1.1.120 jump rew=-0.090 dist=None rarest=None inv={}
+step 1.1.130 forward rew=-0.073 dist=None rarest=None inv={}
+step 1.1.140 jump rew=-0.025 dist=None rarest=None inv={}
+step 1.1.150 jump rew=-0.028 dist=None rarest=None inv={}
+step 1.1.160 jump rew=-0.120 dist=None rarest=None inv={}
+step 1.1.170 forward rew=-0.120 dist=None rarest=None inv={}
+step 1.1.180 jump rew=-0.120 dist=None rarest=None inv={}
+step 1.1.190 camera_up rew=-0.120 dist=None rarest=None inv={}
+step 1.1.200 forward rew=-0.120 dist=None rarest=None inv={}
+ppo epoch 1 return=175.557 loss=39.1567 collect=0.00 rarest=[None, None]
+reset epoch=2 ep=0 rarest=None dist=None
+step 2.0.1 forward rew=0.045 dist=None rarest=None inv={}
+step 2.0.10 forward rew=0.022 dist=None rarest=None inv={}
+step 2.0.20 forward rew=0.016 dist=None rarest=None inv={}
+step 2.0.30 forward rew=0.018 dist=None rarest=None inv={}
+step 2.0.40 forward rew=0.043 dist=None rarest=None inv={}
+step 2.0.50 forward rew=0.006 dist=None rarest=None inv={}
+step 2.0.60 forward rew=0.007 dist=None rarest=None inv={}
+step 2.0.70 forward rew=1.007 dist=None rarest=None inv={}
+step 2.0.80 forward rew=1.007 dist=None rarest=None inv={}
+step 2.0.90 forward rew=0.006 dist=None rarest=None inv={}
+step 2.0.100 forward rew=1.008 dist=None rarest=None inv={}
+step 2.0.110 forward rew=0.004 dist=None rarest=None inv={}
+step 2.0.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.130 forward rew=0.023 dist=None rarest=None inv={}
+step 2.0.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.160 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.170 jump rew=0.027 dist=None rarest=None inv={}
+step 2.0.180 noop rew=0.027 dist=None rarest=None inv={}
+step 2.0.190 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.0.200 forward rew=-0.020 dist=None rarest=None inv={}
+reset epoch=2 ep=1 rarest=None dist=None
+step 2.1.1 forward rew=1.027 dist=None rarest=None inv={}
+step 2.1.10 forward rew=0.025 dist=None rarest=None inv={}
+step 2.1.20 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.30 forward rew=0.025 dist=None rarest=None inv={}
+step 2.1.40 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.50 camera_up rew=-0.020 dist=None rarest=None inv={}
+step 2.1.60 jump rew=0.054 dist=None rarest=None inv={}
+step 2.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.80 forward rew=0.029 dist=None rarest=None inv={}
+step 2.1.90 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.100 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.110 forward rew=0.029 dist=None rarest=None inv={}
+step 2.1.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.130 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.160 forward rew=0.029 dist=None rarest=None inv={}
+step 2.1.170 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.180 forward rew=0.029 dist=None rarest=None inv={}
+step 2.1.190 forward rew=-0.020 dist=None rarest=None inv={}
+step 2.1.200 forward rew=-0.020 dist=None rarest=None inv={}
+ppo epoch 2 return=12.947 loss=0.7218 collect=0.00 rarest=[None, None]
+reset epoch=3 ep=0 rarest=None dist=None
+step 3.0.1 forward rew=1.034 dist=None rarest=None inv={}
+step 3.0.10 forward rew=1.019 dist=None rarest=None inv={}
+step 3.0.20 forward rew=1.031 dist=None rarest=None inv={}
+step 3.0.30 noop rew=1.037 dist=None rarest=None inv={}
+step 3.0.40 forward rew=1.032 dist=None rarest=None inv={}
+step 3.0.50 forward rew=0.007 dist=None rarest=None inv={}
+step 3.0.60 turn_left rew=1.035 dist=None rarest=None inv={}
+step 3.0.70 noop rew=0.237 dist=None rarest=None inv={}
+step 3.0.80 forward rew=1.453 dist=None rarest=None inv={}
+step 3.0.90 forward rew=0.017 dist=None rarest=None inv={}
+step 3.0.100 forward rew=1.120 dist=None rarest=None inv={}
+step 3.0.110 noop rew=1.105 dist=None rarest=None inv={}
+step 3.0.120 jump rew=1.109 dist=None rarest=None inv={}
+step 3.0.130 jump rew=-0.082 dist=None rarest=None inv={}
+step 3.0.140 forward rew=-0.120 dist=None rarest=None inv={}
+step 3.0.150 jump rew=-0.046 dist=None rarest=None inv={}
+step 3.0.160 forward rew=-0.120 dist=None rarest=None inv={}
+step 3.0.170 jump rew=-0.073 dist=None rarest=None inv={}
+step 3.0.180 jump rew=-0.120 dist=None rarest=None inv={}
+step 3.0.190 forward rew=-0.119 dist=None rarest=None inv={}
+step 3.0.200 forward rew=1.090 dist=None rarest=None inv={}
+reset epoch=3 ep=1 rarest=None dist=None
+step 3.1.1 noop rew=-0.020 dist=None rarest=None inv={}
+step 3.1.10 forward rew=0.024 dist=None rarest=None inv={}
+step 3.1.20 noop rew=1.023 dist=None rarest=None inv={}
+step 3.1.30 forward rew=1.026 dist=None rarest=None inv={}
+step 3.1.40 forward rew=1.009 dist=None rarest=None inv={}
+step 3.1.50 forward rew=1.012 dist=None rarest=None inv={}
+step 3.1.60 forward rew=0.021 dist=None rarest=None inv={}
+step 3.1.70 forward rew=1.043 dist=None rarest=None inv={}
+step 3.1.80 forward rew=0.026 dist=None rarest=None inv={}
+step 3.1.90 noop rew=1.207 dist=None rarest=None inv={}
+step 3.1.100 noop rew=0.111 dist=None rarest=None inv={}
+step 3.1.110 noop rew=1.152 dist=None rarest=None inv={}
+step 3.1.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 3.1.130 forward rew=1.136 dist=None rarest=None inv={}
+step 3.1.140 forward rew=-0.120 dist=None rarest=None inv={}
+step 3.1.150 forward rew=0.915 dist=None rarest=None inv={}
+step 3.1.160 jump rew=-0.120 dist=None rarest=None inv={}
+step 3.1.170 jump rew=-0.120 dist=None rarest=None inv={}
+step 3.1.180 forward rew=-0.119 dist=None rarest=None inv={}
+step 3.1.190 jump rew=-0.120 dist=None rarest=None inv={}
+step 3.1.200 back rew=0.003 dist=None rarest=None inv={}
+ppo epoch 3 return=100.178 loss=16.0030 collect=0.00 rarest=[None, None]
+reset epoch=4 ep=0 rarest=None dist=None
+step 4.0.1 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.10 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.0.20 jump rew=-0.020 dist=None rarest=None inv={}
+step 4.0.30 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.40 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.0.50 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.60 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.70 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.80 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.90 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.0.100 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.110 jump rew=-0.020 dist=None rarest=None inv={}
+step 4.0.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.0.130 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.140 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.150 jump rew=-0.020 dist=None rarest=None inv={}
+step 4.0.160 jump rew=0.027 dist=None rarest=None inv={}
+step 4.0.170 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.180 jump rew=0.072 dist=None rarest=None inv={}
+step 4.0.190 forward rew=0.027 dist=None rarest=None inv={}
+step 4.0.200 jump rew=-0.020 dist=None rarest=None inv={}
+reset epoch=4 ep=1 rarest=None dist=None
+step 4.1.1 forward rew=1.051 dist=None rarest=None inv={}
+step 4.1.10 jump rew=0.065 dist=None rarest=None inv={}
+step 4.1.20 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.30 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.40 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.50 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.60 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.80 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.90 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.100 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.110 jump rew=-0.020 dist=None rarest=None inv={}
+step 4.1.120 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.130 jump rew=0.027 dist=None rarest=None inv={}
+step 4.1.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.160 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.170 forward rew=0.027 dist=None rarest=None inv={}
+step 4.1.180 forward rew=-0.020 dist=None rarest=None inv={}
+step 4.1.190 jump rew=0.027 dist=None rarest=None inv={}
+step 4.1.200 forward rew=-0.020 dist=None rarest=None inv={}
+ppo epoch 4 return=3.001 loss=0.1156 collect=0.00 rarest=[None, None]
+reset epoch=5 ep=0 rarest=None dist=None
+step 5.0.1 jump rew=-0.018 dist=None rarest=None inv={}
+step 5.0.10 forward rew=0.025 dist=None rarest=None inv={}
+step 5.0.20 forward rew=0.027 dist=None rarest=None inv={}
+step 5.0.30 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.40 forward rew=0.027 dist=None rarest=None inv={}
+step 5.0.50 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.60 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.70 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.80 forward rew=-0.020 dist=None rarest=None inv={}
+step 5.0.90 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.100 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.110 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.120 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.130 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.140 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.150 forward rew=0.027 dist=None rarest=None inv={}
+step 5.0.160 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.0.170 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.180 jump rew=0.027 dist=None rarest=None inv={}
+step 5.0.190 jump rew=0.117 dist=None rarest=None inv={}
+step 5.0.200 forward rew=0.027 dist=None rarest=None inv={}
+reset epoch=5 ep=1 rarest=None dist=None
+step 5.1.1 forward rew=1.114 dist=None rarest=None inv={}
+step 5.1.10 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.20 jump rew=0.027 dist=None rarest=None inv={}
+step 5.1.30 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.40 forward rew=-0.020 dist=None rarest=None inv={}
+step 5.1.50 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.60 forward rew=1.140 dist=None rarest=None inv={}
+step 5.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 5.1.80 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.90 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.100 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.110 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.120 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.130 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.140 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.150 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.160 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.170 jump rew=-0.020 dist=None rarest=None inv={}
+step 5.1.180 forward rew=-0.073 dist=None rarest=None inv={}
+step 5.1.190 forward rew=0.027 dist=None rarest=None inv={}
+step 5.1.200 forward rew=-0.020 dist=None rarest=None inv={}
+ppo epoch 5 return=4.001 loss=0.0579 collect=0.00 rarest=[None, None]
+reset epoch=6 ep=0 rarest=None dist=None
+step 6.0.1 jump rew=1.117 dist=None rarest=None inv={}
+step 6.0.10 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.20 jump rew=0.106 dist=None rarest=None inv={}
+step 6.0.30 noop rew=0.156 dist=None rarest=None inv={}
+step 6.0.40 jump rew=0.084 dist=None rarest=None inv={}
+step 6.0.50 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.0.60 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.70 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.0.80 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.90 camera_up rew=0.027 dist=None rarest=None inv={}
+step 6.0.100 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.110 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.120 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.130 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.0.150 mine rew=0.027 dist=None rarest=None inv={}
+step 6.0.160 forward rew=0.027 dist=None rarest=None inv={}
+step 6.0.170 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.180 jump rew=0.027 dist=None rarest=None inv={}
+step 6.0.190 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.0.200 jump rew=0.027 dist=None rarest=None inv={}
+reset epoch=6 ep=1 rarest=None dist=None
+step 6.1.1 jump rew=0.027 dist=None rarest=None inv={}
+step 6.1.10 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.20 jump rew=0.027 dist=None rarest=None inv={}
+step 6.1.30 forward rew=0.027 dist=None rarest=None inv={}
+step 6.1.40 forward rew=0.027 dist=None rarest=None inv={}
+step 6.1.50 jump rew=0.205 dist=None rarest=None inv={}
+step 6.1.60 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.1.80 jump rew=0.027 dist=None rarest=None inv={}
+step 6.1.90 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.100 jump rew=0.027 dist=None rarest=None inv={}
+step 6.1.110 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.1.120 jump rew=0.205 dist=None rarest=None inv={}
+step 6.1.130 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.1.140 forward rew=0.027 dist=None rarest=None inv={}
+step 6.1.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 6.1.160 jump rew=0.231 dist=None rarest=None inv={}
+step 6.1.170 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.180 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.190 jump rew=-0.020 dist=None rarest=None inv={}
+step 6.1.200 forward rew=-0.020 dist=None rarest=None inv={}
+ppo epoch 6 return=9.097 loss=0.2550 collect=0.00 rarest=[None, None]
+reset epoch=7 ep=0 rarest=None dist=None
+step 7.0.1 forward rew=0.027 dist=None rarest=None inv={}
+step 7.0.10 forward rew=0.027 dist=None rarest=None inv={}
+step 7.0.20 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.30 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.40 forward rew=0.050 dist=None rarest=None inv={}
+step 7.0.50 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.60 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.80 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.90 forward rew=0.027 dist=None rarest=None inv={}
+step 7.0.100 turn_right rew=-0.020 dist=None rarest=None inv={}
+step 7.0.110 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.120 jump rew=0.027 dist=None rarest=None inv={}
+step 7.0.130 jump rew=0.027 dist=None rarest=None inv={}
+step 7.0.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.150 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.160 forward rew=-0.018 dist=None rarest=None inv={}
+step 7.0.170 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.180 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.0.190 noop rew=1.027 dist=None rarest=None inv={}
+step 7.0.200 forward rew=-0.020 dist=None rarest=None inv={}
+reset epoch=7 ep=1 rarest=None dist=None
+step 7.1.1 forward rew=1.027 dist=None rarest=None inv={}
+step 7.1.10 forward rew=-0.018 dist=None rarest=None inv={}
+step 7.1.20 forward rew=0.025 dist=None rarest=None inv={}
+step 7.1.30 forward rew=-0.019 dist=None rarest=None inv={}
+step 7.1.40 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.50 forward rew=-0.018 dist=None rarest=None inv={}
+step 7.1.60 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.70 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.80 jump rew=0.026 dist=None rarest=None inv={}
+step 7.1.90 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.100 camera_up rew=0.004 dist=None rarest=None inv={}
+step 7.1.110 jump rew=0.027 dist=None rarest=None inv={}
+step 7.1.120 jump rew=-0.019 dist=None rarest=None inv={}
+step 7.1.130 forward rew=-0.018 dist=None rarest=None inv={}
+step 7.1.140 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.150 noop rew=0.027 dist=None rarest=None inv={}
+step 7.1.160 forward rew=0.003 dist=None rarest=None inv={}
+step 7.1.170 forward rew=-0.019 dist=None rarest=None inv={}
+step 7.1.180 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.190 forward rew=-0.020 dist=None rarest=None inv={}
+step 7.1.200 jump rew=0.027 dist=None rarest=None inv={}
+ppo epoch 7 return=0.291 loss=0.0819 collect=0.00 rarest=[None, None]
+reset epoch=0 ep=0 rarest=None dist=None
+step 0.0.1 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.10 turn_right rew=0.073 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.20 turn_left rew=1.234 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.30 mine rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.40 forward rew=1.107 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.50 mine rew=1.807 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.60 mine rew=1.028 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.70 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.80 camera_down rew=1.320 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.90 forward rew=1.376 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.100 camera_down rew=1.186 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.110 jump rew=1.250 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.120 camera_down rew=1.351 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.130 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.140 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.150 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.160 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.170 turn_right rew=0.008 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.180 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.190 camera_down rew=-0.119 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.200 jump rew=0.923 dist=None rarest=None inv={'oak_log': 128}
+reset epoch=0 ep=1 rarest=None dist=None
+step 0.1.1 back rew=1.027 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.10 turn_left rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.20 forward rew=-0.058 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.30 forward rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.40 back rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.50 camera_down rew=-0.096 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.60 camera_up rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.70 camera_up rew=1.194 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.80 camera_down rew=1.293 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.90 turn_left rew=1.119 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.100 camera_down rew=1.360 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.110 jump rew=1.629 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.120 forward rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.130 turn_right rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.140 jump rew=0.907 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.150 forward rew=-0.092 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.160 turn_right rew=2.092 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.170 camera_down rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.180 camera_up rew=0.916 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.190 camera_down rew=-0.118 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+step 0.1.200 mine rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 128}
+reset epoch=0 ep=0 rarest=None dist=None
+step 0.0.1 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.10 forward rew=0.032 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.20 noop rew=1.476 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.30 forward rew=1.241 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.40 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.50 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.60 forward rew=1.484 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.70 turn_left rew=1.700 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.80 camera_down rew=0.005 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.90 camera_up rew=2.488 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.100 camera_down rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.110 camera_down rew=-0.062 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.120 camera_down rew=-0.120 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.130 camera_down rew=1.159 dist=None rarest=None inv={'oak_log': 128}
+step 0.0.140 camera_up rew=-0.072 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 1}
+step 0.0.150 noop rew=0.949 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 4}
+step 0.0.160 forward rew=1.329 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 11}
+step 0.0.170 camera_up rew=2.160 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 11}
+step 0.0.180 mine rew=-0.073 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 11}
+step 0.0.190 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.200 forward rew=0.027 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.210 turn_left rew=1.115 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.220 mine rew=-0.094 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.230 camera_down rew=1.158 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.240 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.250 camera_down rew=1.518 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.260 camera_up rew=2.782 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.270 camera_down rew=-0.084 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.280 camera_down rew=1.635 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.290 forward rew=2.497 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.300 camera_up rew=1.357 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.310 camera_down rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.320 jump rew=-0.064 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.330 turn_right rew=-0.095 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.340 forward rew=1.475 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.350 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.360 turn_right rew=1.323 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.370 mine rew=1.499 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.380 forward rew=1.673 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.390 forward rew=1.493 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+step 0.0.400 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 15}
+reset epoch=0 ep=1 rarest=None dist=None
+step 0.1.1 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 15}
+step 0.1.10 turn_left rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 15}
+step 0.1.20 mine rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 17}
+step 0.1.30 turn_left rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 17}
+step 0.1.40 camera_up rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 17}
+step 0.1.50 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 19}
+step 0.1.60 camera_down rew=-0.066 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 19}
+step 0.1.70 camera_down rew=1.128 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 19}
+step 0.1.80 forward rew=-0.097 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 19}
+step 0.1.90 camera_up rew=-0.097 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 20}
+step 0.1.100 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.110 jump rew=1.175 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.120 forward rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.130 jump rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.140 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.150 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 23}
+step 0.1.160 forward rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 24}
+step 0.1.170 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.180 forward rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.190 noop rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.200 camera_down rew=-0.095 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.210 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.220 camera_down rew=1.178 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.230 jump rew=0.946 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.240 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.250 camera_up rew=1.170 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.260 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.270 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.280 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 25}
+step 0.1.290 camera_up rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.300 jump rew=0.951 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.310 camera_down rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.320 jump rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.330 forward rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.340 turn_left rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.350 turn_left rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.360 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.370 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.380 jump rew=0.953 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.390 forward rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+step 0.1.400 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 28}
+ppo epoch 0 return=179.819 loss=21.9580 collect=0.00 rarest=[None, None]
+reset epoch=1 ep=0 rarest=None dist=None
+step 1.0.1 back rew=1.027 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 28}
+step 1.0.10 jump rew=-0.073 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 28}
+step 1.0.20 mine rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 28}
+step 1.0.30 noop rew=-0.120 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.40 noop rew=1.195 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.50 camera_down rew=-0.119 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.60 forward rew=-0.120 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.70 camera_down rew=-0.120 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.80 jump rew=1.118 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.90 back rew=1.331 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.100 noop rew=1.242 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.110 back rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.120 back rew=0.013 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.130 noop rew=-0.075 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.140 noop rew=1.403 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.150 back rew=-0.096 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.160 back rew=0.030 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.170 back rew=0.095 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.180 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.190 camera_down rew=1.053 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.200 turn_right rew=0.021 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.210 back rew=1.108 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.220 jump rew=0.030 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.230 turn_left rew=0.021 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.240 noop rew=0.031 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.250 camera_up rew=0.119 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.260 camera_down rew=0.075 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.270 noop rew=1.172 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.280 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.290 back rew=1.275 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.300 turn_left rew=1.147 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.310 turn_left rew=-0.094 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.320 camera_down rew=-0.096 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.330 noop rew=1.151 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.340 turn_right rew=0.018 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.350 turn_left rew=1.108 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.360 noop rew=1.013 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.370 noop rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.380 forward rew=1.268 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.390 camera_up rew=0.161 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+step 1.0.400 back rew=0.013 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 31}
+reset epoch=1 ep=1 rarest=None dist=None
+step 1.1.1 back rew=1.027 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 31}
+step 1.1.10 jump rew=0.161 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 31}
+step 1.1.20 noop rew=1.103 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 31}
+step 1.1.30 camera_down rew=1.159 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 31}
+step 1.1.40 noop rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.50 back rew=0.030 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.60 turn_right rew=0.085 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.70 back rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.80 camera_down rew=-0.118 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.90 back rew=-0.119 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.100 turn_left rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.110 camera_down rew=-0.092 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.120 camera_up rew=1.140 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.130 back rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.140 turn_left rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.150 jump rew=0.135 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.160 camera_down rew=0.236 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.170 camera_down rew=-0.096 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.180 noop rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.190 jump rew=0.079 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.200 back rew=0.013 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.210 back rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.220 noop rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.230 jump rew=0.027 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.240 noop rew=1.231 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.250 camera_down rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.260 jump rew=1.050 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.270 turn_left rew=1.115 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.280 back rew=1.104 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.290 jump rew=1.122 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.300 camera_up rew=1.101 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.310 noop rew=0.943 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.320 noop rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.330 back rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.340 camera_up rew=0.104 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 34}
+step 1.1.350 jump rew=-0.086 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 37}
+step 1.1.360 camera_down rew=-0.096 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 37}
+step 1.1.370 noop rew=0.014 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 37}
+step 1.1.380 turn_left rew=0.033 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 37}
+step 1.1.390 jump rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 37}
+step 1.1.400 camera_up rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 37}
+ppo epoch 1 return=160.260 loss=6.7513 collect=0.00 rarest=[None, None]
+reset epoch=2 ep=0 rarest=None dist=None
+step 2.0.1 noop rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.10 forward rew=-0.046 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.20 forward rew=-0.062 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.30 back rew=-0.080 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.40 forward rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.50 back rew=-0.119 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.60 noop rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.70 noop rew=-0.079 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.80 noop rew=-0.078 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.90 forward rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.100 turn_right rew=-0.119 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.110 turn_right rew=-0.093 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.120 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.130 forward rew=-0.079 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.140 back rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.150 noop rew=-0.077 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.160 noop rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.170 noop rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.180 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.190 back rew=-0.094 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.200 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.210 forward rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.220 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 2.0.230 mine rew=-0.082 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+reset epoch=0 ep=0 rarest=None dist=None
+step 0.0.1 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 0.0.10 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 0.0.20 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 0.0.30 forward rew=1.045 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 0.0.40 camera_down rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 0.0.50 forward rew=-0.119 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 37}
+step 0.0.60 turn_left rew=-0.094 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.70 turn_left rew=0.908 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.80 turn_right rew=0.027 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.90 noop rew=1.349 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.100 camera_down rew=-0.096 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.110 camera_down rew=-0.096 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.120 jump rew=-0.081 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.130 camera_up rew=1.722 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.140 camera_up rew=1.090 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.150 camera_down rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.160 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.170 back rew=1.031 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.180 forward rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.190 mine rew=0.033 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.200 camera_down rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.210 jump rew=1.225 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.220 noop rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.230 camera_down rew=-0.073 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.240 back rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.250 camera_down rew=-0.096 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.260 jump rew=-0.073 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.270 turn_right rew=-0.119 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.280 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.290 turn_left rew=-0.094 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.300 camera_up rew=-0.095 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.310 turn_left rew=-0.118 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.320 turn_left rew=-0.118 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.330 jump rew=1.039 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.340 back rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.350 noop rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.360 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.370 camera_down rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.380 camera_down rew=1.001 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.390 turn_right rew=-0.097 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+step 0.0.400 noop rew=-0.067 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 40}
+reset epoch=0 ep=1 rarest=None dist=None
+step 0.1.1 jump rew=0.027 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.10 camera_down rew=-0.119 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.20 forward rew=-0.046 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.30 jump rew=1.172 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.40 turn_right rew=0.927 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.50 camera_down rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.60 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.70 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.80 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.90 jump rew=0.027 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.100 jump rew=1.255 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.110 turn_right rew=0.047 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.120 back rew=1.131 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.130 turn_right rew=0.027 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.140 forward rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.150 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.160 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.170 forward rew=1.241 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.180 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.190 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.200 turn_right rew=-0.097 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.210 back rew=0.027 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.220 camera_down rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.230 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.240 camera_down rew=0.969 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.250 turn_left rew=-0.119 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.260 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.270 camera_down rew=0.960 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.280 back rew=0.954 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.290 back rew=-0.073 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.300 camera_down rew=0.214 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.310 forward rew=0.945 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.320 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.330 camera_down rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.340 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.350 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.360 camera_up rew=-0.035 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.370 noop rew=-0.073 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.380 forward rew=0.085 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.390 camera_down rew=1.451 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+step 0.1.400 mine rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'leaf_litter': 40}
+ppo epoch 0 return=114.261 loss=6.5300 collect=0.00 rarest=[None, None]
+reset epoch=1 ep=0 rarest=None dist=None
+step 1.0.1 forward rew=0.027 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 40}
+step 1.0.10 turn_right rew=1.118 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 40}
+step 1.0.20 back rew=1.090 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 40}
+step 1.0.30 turn_left rew=-0.120 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 41}
+step 1.0.40 mine rew=-0.095 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 41}
+step 1.0.50 turn_right rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 42}
+step 1.0.60 jump rew=1.107 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 42}
+step 1.0.70 turn_left rew=-0.120 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 42}
+step 1.0.80 turn_left rew=-0.118 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 42}
+step 1.0.90 jump rew=1.044 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 42}
+step 1.0.100 jump rew=0.027 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 42}
+step 1.0.110 noop rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 42}
+step 1.0.120 forward rew=0.084 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.130 forward rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.140 noop rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.150 forward rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.160 camera_down rew=-0.096 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.170 forward rew=-0.073 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.180 camera_down rew=-0.080 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.190 noop rew=-0.120 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.200 noop rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.210 camera_down rew=-0.120 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.220 camera_up rew=-0.120 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.230 mine rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 45}
+step 1.0.240 forward rew=-0.119 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 47}
+step 1.0.250 noop rew=-0.120 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 47}
+step 1.0.260 turn_right rew=-0.120 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 47}
+step 1.0.270 back rew=0.159 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 47}
+step 1.0.280 forward rew=-0.120 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 47}
+step 1.0.290 back rew=-0.120 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 47}
+step 1.0.300 turn_right rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 47}
+step 1.0.310 back rew=0.954 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 47}
+step 1.0.320 turn_right rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 47}
+step 1.0.330 turn_right rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 48}
+step 1.0.340 turn_left rew=-0.073 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 48}
+step 1.0.350 noop rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 48}
+step 1.0.360 forward rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 48}
+step 1.0.370 mine rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 48}
+step 1.0.380 camera_down rew=1.148 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 48}
+step 1.0.390 camera_up rew=-0.020 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 48}
+step 1.0.400 turn_right rew=-0.080 dist=None rarest=None inv={'jungle_leaves': 64, 'oak_log': 128, 'leaf_litter': 48}
+reset epoch=1 ep=1 rarest=None dist=None
+step 1.1.1 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.10 noop rew=-0.080 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.20 noop rew=-0.097 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.30 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.40 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.50 turn_right rew=1.379 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.60 camera_up rew=1.482 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.70 turn_right rew=1.611 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.80 back rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.90 turn_left rew=-0.092 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.100 camera_down rew=0.989 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.110 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.120 mine rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 48}
+step 1.1.130 forward rew=-0.118 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.140 noop rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.150 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.160 turn_left rew=-0.118 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.170 turn_left rew=0.014 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.180 forward rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.190 noop rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.200 jump rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.210 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.220 camera_up rew=1.126 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.230 camera_down rew=1.299 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.240 turn_right rew=1.013 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.250 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.260 back rew=1.163 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.270 forward rew=0.065 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.280 turn_left rew=-0.119 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.290 forward rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.300 turn_right rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.310 forward rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.320 noop rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.330 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.340 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.350 back rew=1.228 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.360 turn_right rew=0.943 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.370 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.380 turn_right rew=0.030 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.390 turn_right rew=-0.079 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 1.1.400 turn_left rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+reset epoch=0 ep=0 rarest=None dist=None
+step 0.0.1 turn_right rew=0.043 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.10 jump rew=0.927 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.20 back rew=-0.046 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.30 jump rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.40 noop rew=-0.073 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.50 turn_right rew=-0.118 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.60 jump rew=0.927 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.70 noop rew=0.122 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.80 camera_up rew=0.929 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.90 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.100 camera_up rew=-0.076 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.110 jump rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.120 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.130 mine rew=1.417 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.140 turn_right rew=-0.074 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.150 forward rew=1.373 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.160 camera_up rew=0.030 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.170 jump rew=-0.075 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.180 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.190 back rew=1.065 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.200 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.210 jump rew=1.016 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.220 turn_right rew=-0.097 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.230 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.240 camera_down rew=1.271 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.250 camera_up rew=1.101 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.260 camera_down rew=1.056 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.270 turn_right rew=0.010 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.280 noop rew=1.436 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.290 turn_left rew=0.496 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.300 jump rew=-0.018 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.310 noop rew=1.384 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.320 camera_up rew=1.013 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.330 noop rew=1.065 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.340 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.350 camera_up rew=-0.092 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.360 turn_right rew=0.920 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.370 jump rew=0.029 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.380 camera_up rew=1.133 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.390 back rew=1.088 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+step 0.0.400 jump rew=0.027 dist=None rarest=None inv={'oak_log': 192, 'leaf_litter': 49}
+reset epoch=0 ep=1 rarest=None dist=None
+step 0.1.1 camera_up rew=0.027 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.10 camera_up rew=0.974 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.20 noop rew=1.634 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.30 camera_down rew=-0.080 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.40 camera_down rew=-0.097 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.50 jump rew=0.027 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.60 noop rew=1.517 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.70 back rew=1.568 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.80 turn_left rew=1.616 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.90 turn_left rew=1.222 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.100 camera_up rew=1.204 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.110 turn_right rew=1.440 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.120 mine rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.130 mine rew=1.314 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.140 jump rew=1.213 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.150 turn_left rew=-0.085 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.160 camera_down rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.170 camera_up rew=1.084 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.180 back rew=0.021 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.190 noop rew=0.970 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.200 noop rew=1.219 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.210 camera_up rew=1.199 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.220 camera_down rew=1.132 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.230 jump rew=0.120 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.240 jump rew=0.027 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.250 camera_up rew=-0.119 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.260 noop rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.270 camera_down rew=0.943 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.280 jump rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.290 camera_down rew=1.229 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.300 turn_left rew=-0.097 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.310 mine rew=-0.118 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.320 jump rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.330 camera_down rew=-0.096 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.340 turn_left rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.350 mine rew=1.062 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.360 jump rew=1.113 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.370 jump rew=1.103 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.380 back rew=1.156 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.390 mine rew=1.351 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+step 0.1.400 mine rew=1.053 dist=None rarest=None inv={'oak_leaves': 64, 'oak_log': 192, 'leaf_litter': 49}
+ppo epoch 0 return=244.370 loss=13.2393 collect=0.00 rarest=[None, None]
+reset epoch=1 ep=0 rarest=None dist=None
+step 1.0.1 noop rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 49}
+step 1.0.10 forward rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'leaf_litter': 49}
+step 1.0.20 mine rew=1.189 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.30 turn_left rew=-0.073 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.40 mine rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.50 turn_right rew=-0.095 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.60 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.70 mine rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.80 mine rew=-0.067 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.90 jump rew=0.175 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.100 turn_left rew=1.440 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.110 mine rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.120 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.130 forward rew=-0.046 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.140 turn_left rew=-0.095 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.150 turn_left rew=-0.073 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.160 turn_right rew=-0.095 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.170 camera_up rew=1.147 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.180 forward rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.190 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.200 turn_right rew=-0.090 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49}
+step 1.0.210 jump rew=-0.072 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.220 camera_down rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.230 jump rew=-0.073 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.240 back rew=-0.120 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.250 camera_up rew=-0.076 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.260 jump rew=-0.073 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.270 jump rew=1.962 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.280 back rew=1.175 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.290 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.300 noop rew=-0.075 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.310 camera_down rew=1.017 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.320 back rew=1.277 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.330 jump rew=-0.072 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.340 jump rew=0.261 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.350 forward rew=1.049 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.360 jump rew=0.027 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.370 noop rew=-0.020 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.380 noop rew=2.478 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.390 noop rew=1.043 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.0.400 back rew=0.913 dist=None rarest=None inv={'oak_log': 256, 'leaf_litter': 49, 'moss_carpet': 1}
+reset epoch=1 ep=1 rarest=None dist=None
+step 1.1.1 camera_down rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.10 mine rew=1.243 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.20 jump rew=0.945 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.30 noop rew=1.267 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.40 forward rew=-0.046 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.50 jump rew=-0.118 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.60 jump rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.70 noop rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.80 turn_right rew=-0.071 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 1, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.90 camera_up rew=-0.077 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 1, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.100 turn_right rew=0.027 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 1, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.110 jump rew=1.407 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 1, 'leaf_litter': 49, 'moss_carpet': 1}
+step 1.1.120 camera_up rew=1.271 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 1, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.130 mine rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 1, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.140 forward rew=0.927 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.150 mine rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.160 forward rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.170 mine rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.180 jump rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.190 back rew=-0.055 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.200 camera_down rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.210 camera_up rew=-0.077 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.220 forward rew=0.046 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.230 mine rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.240 turn_right rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.250 turn_right rew=-0.095 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.260 turn_left rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.270 mine rew=-0.035 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 2}
+step 1.1.280 camera_up rew=-0.096 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.290 jump rew=-0.081 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.300 forward rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.310 turn_left rew=-0.035 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.320 camera_up rew=-0.096 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.330 camera_down rew=1.038 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.340 camera_up rew=-0.095 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.350 camera_up rew=-0.097 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.360 jump rew=-0.120 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.370 camera_down rew=-0.096 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.380 jump rew=-0.073 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.390 noop rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 1.1.400 camera_up rew=-0.020 dist=None rarest=None inv={'oak_leaves': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+reset epoch=0 ep=0 rarest=None dist=None
+step 0.0.1 mine rew=1.033 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.10 jump rew=1.027 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.20 turn_left rew=1.079 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.30 back rew=1.157 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.40 camera_up rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.50 camera_down rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.60 turn_right rew=-0.018 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.70 turn_left rew=0.033 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.80 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.90 forward rew=-0.120 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.100 jump rew=0.027 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.110 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.120 noop rew=0.027 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.130 camera_up rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.140 forward rew=-0.059 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.150 turn_right rew=-0.073 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.160 turn_right rew=1.140 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.170 camera_up rew=1.664 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.180 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.190 jump rew=1.358 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.200 back rew=1.380 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.210 noop rew=1.635 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.220 turn_right rew=0.957 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.230 camera_up rew=1.203 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.240 turn_left rew=1.652 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.250 back rew=1.271 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.260 back rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.270 jump rew=0.027 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.280 mine rew=1.097 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.290 camera_down rew=-0.096 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.300 jump rew=1.247 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.310 turn_left rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.320 camera_up rew=0.966 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.330 back rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.340 jump rew=1.051 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.350 camera_down rew=-0.086 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.360 turn_right rew=-0.020 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.370 turn_right rew=-0.094 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.380 turn_left rew=1.628 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.390 forward rew=-0.046 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.0.400 camera_up rew=-0.096 dist=None rarest=None inv={'oak_log': 128, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+reset epoch=0 ep=1 rarest=None dist=None
+step 0.1.1 jump rew=0.012 dist=None rarest=None inv={'oak_log': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.1.10 back rew=-0.020 dist=None rarest=None inv={'oak_log': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.1.20 jump rew=0.088 dist=None rarest=None inv={'oak_log': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.1.30 mine rew=-0.120 dist=None rarest=None inv={'oak_log': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.1.40 camera_down rew=-0.018 dist=None rarest=None inv={'oak_log': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}
+step 0.1.50 jump rew=0.953 dist=None rarest=None inv={'oak_log': 64, 'mangrove_propagule': 2, 'leaf_litter': 49, 'moss_carpet': 3}

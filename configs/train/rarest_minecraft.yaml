@@ -1,0 +1,49 @@
+# Entry point for the trainer:
+#   uv run python python/train.py configs/train/rarest_minecraft.yaml
+
+run:
+  name: rarest-log-mc
+  seed: 7
+  ckpt: checkpoints/fly_mc_ppo.pt
+  out: checkpoints/fly_mc_rarest.pt
+
+minecraft:
+  host: 127.0.0.1
+  port: 25565
+  username: FruitFly
+  required: true
+
+view:
+  # The dashboard renders from a voxel stream, not from server-side raycasts, so
+  # the picture runs at 30 Hz regardless of the policy tick. Geometry is only
+  # resent when the bot leaves the cached box.
+  stream:
+    hz: 30
+    radiusXZ: 20
+    radiusY: 12
+
+goal:
+  selector: rarest_log
+  catalog: configs/goals/log_collect.yaml
+  explore_radius: 32
+  # no census yet → keep walking (no GoalSpec / no collect reward)
+
+wandb:
+  project: fly-mc
+  entity: null
+  mode: online
+  # Official W&B (browser login). Do not force the local :8080 instance.
+  base_url: null
+  tags: [rarest_log, minecraft, ppo]
+
+train:
+  algo: ppo
+  epochs: 12
+  episodes_per_epoch: 4
+  # 15 Hz: 900 steps is a 60 s episode. gamma 0.98 at 1 Hz looked 50 steps ahead;
+  # at 15 Hz the same horizon in seconds needs gamma ~0.9985.
+  max_steps: 900
+  lr: 0.0003
+  gamma: 0.998
+  clip: 0.2
+  control_dt_ms: 67
